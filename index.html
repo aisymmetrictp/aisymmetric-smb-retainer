@@ -6,6 +6,7 @@
 <title>AISymmetric — SMB AI Retainer</title>
 <meta name="description" content="Your dedicated AI strategy partner. Weekly advisory, agile builds, automation & full-stack AI delivery in one flat monthly retainer.">
 <link rel="icon" type="image/png" href="./logo.png">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -1114,12 +1115,60 @@ footer .foot-note { font-size: 12px; color: rgba(255,255,255,.2); }
       <button class="btn-white" onclick="openModal()">
         &#x2726; Draft My Documents
       </button>
-      <a class="btn-outline-white" href="mailto:tyler.perleberg@aisymmetricsolutions.com">
-        Talk to Tyler First
-      </a>
+      <button class="btn-outline-white" onclick="openCalModal()">
+        &#x1F4C5; Talk to Tyler First
+      </button>
     </div>
   </div>
 </section>
+
+<!-- CALENDAR MODAL -->
+<div class="modal-overlay" id="calModalOverlay" onclick="handleCalOverlayClick(event)" style="z-index:300">
+  <div class="modal" id="calModal" style="max-width:800px">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">Book a Discovery Call</div>
+        <div class="modal-subtitle">30 minutes &middot; No commitment &middot; Tyler Perleberg, AISymmetric LLC</div>
+      </div>
+      <button class="modal-close" onclick="closeCalModal()">&#x2715;</button>
+    </div>
+    <div id="calCapture" style="padding:20px 28px 0;display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" id="cal_name" placeholder="Jane Smith">
+      </div>
+      <div class="form-group">
+        <label>Your Email</label>
+        <input type="email" id="cal_email" placeholder="jane@company.com">
+      </div>
+      <div class="form-group">
+        <label>Company</label>
+        <input type="text" id="cal_company" placeholder="Acme Co.">
+      </div>
+    </div>
+    <div style="padding:8px 28px 14px">
+      <p style="font-size:12px;color:var(--muted)">Fill in your details above, then pick a time below. Tyler will receive an email notification once you confirm.</p>
+    </div>
+    <div id="calConfirmBanner" style="display:none;padding:14px 28px;background:var(--emerald-lt);border-top:1px solid #6ee7b7;border-bottom:1px solid #6ee7b7">
+      <div style="font-size:14px;font-weight:700;color:var(--emerald)">&#x2713; You're booked! Check your email for confirmation.</div>
+      <div style="font-size:12px;color:var(--emerald);margin-top:2px">Tyler has been notified and will be in touch shortly.</div>
+    </div>
+    <div style="border-top:1px solid var(--border)">
+      <iframe
+        src="https://calendar.app.google/UBYKESuX8bRKRXio8"
+        style="width:100%;height:510px;border:none;display:block"
+        frameborder="0"
+        title="Book a Discovery Call with AISymmetric"
+      ></iframe>
+    </div>
+    <div style="padding:16px 28px;background:var(--surface);border-top:1px solid var(--border);border-radius:0 0 20px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+      <div style="font-size:12px;color:var(--muted)">&#128205; Minnesota-based &middot; Serving SMBs Nationwide &middot; Remote-friendly</div>
+      <button class="btn-primary" onclick="notifyBooking()" style="font-size:13px;padding:10px 20px">
+        &#x2713; I've Selected a Time &mdash; Notify Tyler
+      </button>
+    </div>
+  </div>
+</div>
 
 <!-- FOOTER -->
 <footer>
@@ -1261,18 +1310,38 @@ footer .foot-note { font-size: 12px; color: rgba(255,255,255,.2); }
 
       <!-- Section 3 -->
       <div class="form-section" id="fsec2">
-        <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Review your generated documents below. Copy or download to share with your team or attorney.</p>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Review your generated documents below. Copy, download, or save directly to Google Drive as branded docs.</p>
         <div class="modal-tabs" style="margin-bottom:16px">
           <button class="mtab active" onclick="switchDocTab(0)" id="doctab0">MSA Preview</button>
           <button class="mtab" onclick="switchDocTab(1)" id="doctab1">SOW Preview</button>
         </div>
         <div id="msaPreview" class="preview-pane"></div>
         <div id="sowPreview" class="preview-pane" style="display:none"></div>
+        <!-- Google Drive Auth Status -->
+        <div id="gdriveStatus" style="display:none;margin-top:14px;margin-bottom:14px;padding:10px 14px;border-radius:8px;font-size:13px;align-items:center;gap:8px;"></div>
+
         <div class="export-actions">
+          <!-- Google Drive primary action -->
+          <button class="btn-export" id="btnGoogleAuth" onclick="handleGoogleAuth()" style="background:white;border:1.5px solid #dadce0;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#3c4043;padding:10px 18px;border-radius:8px;cursor:pointer;transition:all .2s">
+            <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z"/></svg>
+            Connect Google Drive
+          </button>
+          <button class="btn-export" id="btnSaveDrive" onclick="saveBothToDrive()" style="display:none;background:linear-gradient(135deg,#1a73e8,#0ea5e9);color:white;border-color:transparent;box-shadow:0 2px 12px rgba(26,115,232,.25)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+            Save Both to Google Drive
+          </button>
           <button class="btn-export primary-export" onclick="downloadDoc('msa')">&#x2B07; Download MSA (.txt)</button>
           <button class="btn-export primary-export" onclick="downloadDoc('sow')">&#x2B07; Download SOW (.txt)</button>
           <button class="btn-export" onclick="copyDoc('msa')">&#x29C9; Copy MSA</button>
           <button class="btn-export" onclick="copyDoc('sow')">&#x29C9; Copy SOW</button>
+        </div>
+
+        <!-- Drive links after upload -->
+        <div id="driveLinks" style="display:none;margin-top:16px;padding:16px;background:var(--surface);border-radius:10px;border:1px solid var(--border)">
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);margin-bottom:12px">&#x1F4C1; Saved to Google Drive</div>
+          <div id="driveLinkMSA" style="margin-bottom:8px"></div>
+          <div id="driveLinkSOW"></div>
+          <div style="font-size:11px;color:var(--muted);margin-top:10px">Open in Google Docs &rarr; share with your client for review and signature.</div>
         </div>
       </div>
     </div>
@@ -1777,6 +1846,515 @@ document.querySelectorAll('.nav-link').forEach(link => {
     }
   });
 });
+
+// ─── CALENDAR MODAL ───
+function openCalModal() {
+  document.getElementById('calModalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeCalModal() {
+  document.getElementById('calModalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function handleCalOverlayClick(e) {
+  if (e.target === document.getElementById('calModalOverlay')) closeCalModal();
+}
+
+async function notifyBooking() {
+  const name    = document.getElementById('cal_name').value.trim();
+  const email   = document.getElementById('cal_email').value.trim();
+  const company = document.getElementById('cal_company').value.trim();
+
+  if (!name || !email) {
+    showToast('Please enter your name and email above first.');
+    return;
+  }
+
+  const banner = document.getElementById('calConfirmBanner');
+  banner.style.display = 'block';
+
+  const subject = encodeURIComponent(`New Discovery Call Booked — ${name}${company ? ' / ' + company : ''}`);
+  const body = encodeURIComponent(
+    `Hi Tyler,\n\nA new discovery call has been booked via the AISymmetric proposal page.\n\n` +
+    `Name:    ${name}\n` +
+    `Email:   ${email}\n` +
+    `Company: ${company || 'Not provided'}\n` +
+    `Time:    Selected via Google Calendar (https://calendar.app.google/UBYKESuX8bRKRXio8)\n\n` +
+    `This is an automated notification from the AISymmetric proposal page.`
+  );
+
+  const mailtoLink = `mailto:tyler.perleberg@aisymmetricsolutions.com?subject=${subject}&body=${body}`;
+  window.open(mailtoLink, '_blank');
+
+  showToast('Booking confirmed! Tyler has been notified.');
+
+  setTimeout(() => {
+    closeCalModal();
+    banner.style.display = 'none';
+  }, 4000);
+}
+
+// ─────────────────────────────────────────
+// GOOGLE DRIVE INTEGRATION
+// ─────────────────────────────────────────
+// SETUP: Google Cloud Console → Enable Google Docs API + Google Drive API
+// Create OAuth 2.0 Client ID → Add authorized JS origins for your domain
+const GOOGLE_CLIENT_ID   = '144394253191-k4986h9nna4u55a1ng04gp6m75nat6hj.apps.googleusercontent.com';
+const GDRIVE_FOLDER_ID   = '1Cn23lRaOcTitls2v1aHmHU-v2mGkOx-c';
+const GDRIVE_SCOPES      = 'https://www.googleapis.com/auth/documents https://www.googleapis.com/auth/drive.file';
+
+let googleAccessToken = null;
+let tokenClient       = null;
+
+function initGoogleClient() {
+  if (!window.google || !window.google.accounts) {
+    setTimeout(initGoogleClient, 300);
+    return;
+  }
+  tokenClient = google.accounts.oauth2.initTokenClient({
+    client_id: GOOGLE_CLIENT_ID,
+    scope: GDRIVE_SCOPES,
+    hint: 'tyler.perleberg@aisymmetricsolutions.com',
+    callback: (resp) => {
+      if (resp.error) {
+        setDriveStatus('error', '\u26A0 Google auth failed: ' + resp.error);
+        return;
+      }
+      googleAccessToken = resp.access_token;
+      setDriveStatus('connected', '\u2713 Connected as tyler.perleberg@aisymmetricsolutions.com');
+      document.getElementById('btnGoogleAuth').style.display = 'none';
+      document.getElementById('btnSaveDrive').style.display  = '';
+    }
+  });
+}
+window.addEventListener('load', initGoogleClient);
+
+function handleGoogleAuth() {
+  if (!tokenClient) {
+    setDriveStatus('error', '\u26A0 Google Sign-In not loaded yet. Try again in a moment.');
+    return;
+  }
+  if (GOOGLE_CLIENT_ID === 'YOUR_GOOGLE_CLIENT_ID_HERE') {
+    setDriveStatus('error', '\u26A0 Google Client ID not configured.');
+    return;
+  }
+  tokenClient.requestAccessToken({ prompt: 'consent' });
+}
+
+function setDriveStatus(type, msg) {
+  const el = document.getElementById('gdriveStatus');
+  el.style.display = 'flex';
+  const colors = {
+    connected: { bg: 'var(--emerald-lt)', color: 'var(--emerald)', border: '#6ee7b7' },
+    error:     { bg: 'var(--rose-lt)',    color: 'var(--rose)',    border: '#fca5a5' },
+    loading:   { bg: 'var(--blue-lt)',    color: 'var(--blue)',    border: '#93c5fd' }
+  };
+  const c = colors[type] || colors.loading;
+  el.style.background   = c.bg;
+  el.style.color        = c.color;
+  el.style.border       = `1px solid ${c.border}`;
+  el.style.borderRadius = '8px';
+  el.style.padding      = '10px 14px';
+  el.innerHTML          = msg;
+}
+
+// ─── BRANDED DOC BUILDER ───
+function rgb(hex) {
+  const r = parseInt(hex.slice(0,2),16)/255;
+  const g = parseInt(hex.slice(2,4),16)/255;
+  const b = parseInt(hex.slice(4,6),16)/255;
+  return { red: r, green: g, blue: b };
+}
+
+function buildMSAContent(d) {
+  return [
+    { type:'title',    text:'Master Services Agreement (MSA)' },
+    { type:'spacer' },
+    { type:'meta',     label:'Client:', value:` ${d.company}` },
+    { type:'meta',     label:'Service Provider:', value:' AISymmetric, LLC, a Minnesota limited liability company' },
+    { type:'meta',     label:'Effective Date:', value:` ${d.date}` },
+    { type:'spacer' },
+    { type:'h2',       text:'1. Purpose' },
+    { type:'body',     text:`This Agreement sets forth the general terms and conditions under which AISymmetric, LLC ("Service Provider") will provide advisory, technology, and AI services to ${d.company} ("Client"), as defined in one or more Statements of Work ("SOWs") governed by this Agreement.` },
+    { type:'h2',       text:'2. Services & Statements of Work' },
+    { type:'body',     text:'Each SOW shall detail the scope of services, deliverables, timelines, and compensation. SOWs will be incorporated into this Agreement by reference and shall be subject to the terms herein.' },
+    { type:'h2',       text:'3. Term and Termination' },
+    { type:'body',     text:"This Agreement shall remain in effect until terminated by either party with 30 days' written notice. Either party may terminate immediately for cause in the event of a material breach." },
+    { type:'h2',       text:'4. Payment Terms' },
+    { type:'body',     text:'AISymmetric, LLC shall invoice monthly. Invoices are due within fifteen (15) days of receipt. Late payments are subject to a 1.5% monthly interest charge. AISymmetric, LLC reserves the right to suspend services upon ten (10) days\' written notice if any invoice remains unpaid past thirty (30) days from due date.' },
+    { type:'h2',       text:'5. Independent Contractor Relationship' },
+    { type:'body',     text:`AISymmetric, LLC is an independent contractor and not an employee, partner, or joint venture of ${d.company}. The Service Provider shall be solely responsible for all taxes, insurance, and employment-related obligations.` },
+    { type:'h2',       text:'6. Confidentiality' },
+    { type:'body',     text:"Both parties agree to maintain the confidentiality of all proprietary and confidential information disclosed during the term of this Agreement. This obligation shall survive termination for a period of three (3) years, or indefinitely with respect to trade secrets. Upon termination, each party shall promptly return or certifiably destroy all Confidential Information upon written request." },
+    { type:'h2',       text:'7. Intellectual Property' },
+    { type:'body',     text:'Subject to full payment of applicable fees, Client shall own all final deliverables expressly identified as such in an applicable Statement of Work. Notwithstanding the foregoing, AISymmetric, LLC retains all right, title, and interest in and to: pre-existing materials, methodologies, frameworks, tools, templates, models, and know-how; any AI models, machine learning models, prompt architectures, automation workflows, and system configurations developed by AISymmetric, LLC. AISymmetric, LLC grants Client a non-exclusive, royalty-free license to use any such retained materials solely as incorporated into the Deliverables for Client\'s internal business purposes.' },
+    { type:'h2',       text:'8. Indemnification' },
+    { type:'body',     text:"Each party agrees to indemnify, defend, and hold harmless the other party from any third-party claims arising out of that party's gross negligence, willful misconduct, or material breach of this Agreement." },
+    { type:'h2',       text:'9. Limitation of Liability' },
+    { type:'body',     text:'Except for liability arising from breach of confidentiality or indemnification obligations, neither party shall be liable for any indirect, incidental, or consequential damages. Total liability shall not exceed the fees paid under the relevant SOW in the preceding three (3) months.' },
+    { type:'h2',       text:'10. Non-Solicitation' },
+    { type:'body',     text:'During the term of this Agreement and for 12 months following termination, each party agrees not to directly solicit or hire employees or contractors of the other party without prior written consent.' },
+    { type:'h2',       text:'11. Governing Law' },
+    { type:'body',     text:'This Agreement shall be governed by and construed in accordance with the laws of the State of Minnesota, without regard to its conflict of law principles.' },
+    { type:'h2',       text:'12. Non-Circumvention & Customer Protection' },
+    { type:'body',     text:"Contractor acknowledges that introductions to the Company's clients, prospects, partners, or vendors are confidential and proprietary to AISymmetric, LLC. This provision shall apply only to parties first introduced by AISymmetric, LLC." },
+    { type:'h2',       text:'13. Dispute Resolution' },
+    { type:'body',     text:'The parties agree to first attempt resolution through good-faith negotiation for a period of thirty (30) days. If unresolved, disputes shall be resolved through binding arbitration in Hennepin County, Minnesota, under AAA rules. The prevailing party shall recover reasonable attorneys\' fees and costs.' },
+    { type:'h2',       text:'14. Force Majeure' },
+    { type:'body',     text:'Neither party shall be liable for delays caused by events beyond its reasonable control. If a Force Majeure Event continues for more than thirty (30) days, either party may terminate the affected Statement of Work upon written notice, without further liability.' },
+    { type:'h2',       text:'15. Assignment' },
+    { type:'body',     text:'Neither party may assign or transfer this Agreement without prior written consent of the other party. Either party may assign in connection with a merger, acquisition, or sale of all or substantially all of its assets, provided the assignee agrees in writing to be bound by this Agreement.' },
+    { type:'h2',       text:'16. Entire Agreement' },
+    { type:'body',     text:'This Agreement, along with any applicable SOWs, constitutes the entire agreement between the parties. Amendments must be made in writing and signed by both parties.' },
+    { type:'spacer' },
+    { type:'h2',       text:'17. Signatures' },
+    { type:'body',     text:'IN WITNESS WHEREOF, the parties have executed this Agreement as of the Effective Date.' },
+    { type:'spacer' },
+    { type:'meta',     label:`Client (${d.company}):`, value:' __________________________' },
+    { type:'meta',     label:'Name:', value:` ${d.first} ${d.last}` },
+    { type:'meta',     label:'Title:', value:` ${d.title}` },
+    { type:'meta',     label:'Signature:', value:' ________________________________' },
+    { type:'meta',     label:'Date:', value:' _______________' },
+    { type:'spacer' },
+    { type:'meta',     label:'Service Provider (AISymmetric, LLC):', value:' __________________________' },
+    { type:'meta',     label:'Name:', value:' Tyler Perleberg' },
+    { type:'meta',     label:'Title:', value:' Founder & CEO' },
+    { type:'meta',     label:'Signature:', value:' ________________________________' },
+    { type:'meta',     label:'Date:', value:' _______________' },
+    { type:'spacer' },
+    { type:'exhibit',  text:'Exhibit A \u2014 Non-Disclosure Agreement (NDA)' },
+    { type:'body',     text:`This Non-Disclosure Agreement ("Agreement") is made and entered into as of ${d.date} by and between ${d.company} and AISymmetric, LLC. Each party may act as a Disclosing Party or Receiving Party.` },
+    { type:'spacer' },
+    { type:'meta',     label:'1. Confidential Information:', value:' Includes all non-public business, technical, or financial information disclosed by Disclosing Party to Receiving Party.' },
+    { type:'meta',     label:'2. Obligations:', value:' Receiving Party agrees to (a) maintain confidentiality, (b) use information solely to fulfill obligations under the MSA, and (c) not disclose without prior written consent.' },
+    { type:'meta',     label:'3. Exclusions:', value:' Information that is publicly known, independently developed, or rightfully received from a third party is not Confidential Information.' },
+    { type:'meta',     label:'4. Term:', value:' Obligations survive three (3) years following termination of the MSA, or indefinitely for trade secrets.' },
+    { type:'meta',     label:'5. Return or Destruction:', value:' Upon request or termination, all Confidential Information shall be returned or certifiably destroyed within ten (10) business days.' },
+    { type:'spacer' },
+    { type:'body',     text:'IN WITNESS WHEREOF, the parties have executed this NDA as of the Effective Date.' },
+    { type:'spacer' },
+    { type:'meta',     label:`Disclosing Party (${d.company}):`, value:' __________________________' },
+    { type:'meta',     label:'Name:', value:` ${d.first} ${d.last} / ${d.title}` },
+    { type:'meta',     label:'Signature:', value:' ________________________________  Date: ___________' },
+    { type:'spacer' },
+    { type:'meta',     label:'Receiving Party (AISymmetric, LLC):', value:' __________________________' },
+    { type:'meta',     label:'Signature:', value:' ________________________________  Date: ___________' },
+    { type:'footer_line' },
+  ];
+}
+
+function buildSOWContent(d) {
+  const focusLines = d.focusAreas.length > 0
+    ? d.focusAreas.map(a => `   \u2022 ${a}`)
+    : ['   \u2022 To be defined during kickoff'];
+  const stackLine = d.stack ? `Current Tech Stack: ${d.stack}` : null;
+
+  const items = [
+    { type:'title',    text:'Statement of Work' },
+    { type:'subtitle', text:'AI Strategy & Delivery Retainer' },
+    { type:'spacer' },
+    { type:'meta',     label:'Client:', value:` ${d.company}` },
+    { type:'meta',     label:'Contact:', value:` ${d.first} ${d.last}, ${d.title}` },
+    { type:'meta',     label:'Email:', value:` ${d.email}` },
+    { type:'meta',     label:'Industry:', value:` ${d.industry}` },
+    { type:'meta',     label:'Service Provider:', value:' Tyler Perleberg / AISymmetric, LLC' },
+    { type:'meta',     label:'Retainer Fee:', value:` ${d.fee} / month` },
+    { type:'meta',     label:'Effective Date:', value:` ${d.date}` },
+    { type:'meta',     label:'Billing:', value:` ${d.billing}` },
+    { type:'meta',     label:'Governing Agreements:', value:' Master Services Agreement and Non-Disclosure Agreement (both executed)' },
+    { type:'spacer' },
+    { type:'h2',       text:'1. Purpose' },
+    { type:'body',     text:`This Statement of Work defines the scope, deliverables, and terms of the AI Strategy & Delivery Retainer between AISymmetric, LLC ("Service Provider") and ${d.company} ("Client"). The purpose of this engagement is to:\n\n${d.goal}` },
+  ];
+  if (stackLine) items.push({ type:'body', text: stackLine });
+  items.push(
+    { type:'h2',   text:'2. Scope of Services' },
+    { type:'body', text:'The engagement is structured as monthly agile sprints, prioritized collaboratively at the start of each billing cycle. Service focus areas for this engagement:' },
+    { type:'body', text: focusLines.join('\n') },
+    { type:'h2',   text:'3. Monthly Deliverables' },
+    { type:'body', text:'Each month, AISymmetric, LLC will deliver:\n   \u2022 4 \u00d7 weekly 30-minute strategy & advisory sessions\n   \u2022 1\u20132 AI workflow, automation, or campaign builds per sprint\n   \u2022 Continuous async support via Slack or email\n   \u2022 Sprint planning & retrospective documentation\n   \u2022 Monthly progress summary with key metrics and next-cycle recommendations' },
+    { type:'h2',   text:'4. Success Metrics' },
+    { type:'body', text:'Performance will be evaluated against business outcomes including:\n   \u2022 Volume and quality of AI-driven outputs (leads, automations, campaigns)\n   \u2022 Hours of manual operational work eliminated\n   \u2022 Conversion rate improvements in targeted workflows\n   \u2022 Platform adoption and integration health\n\nBaseline metrics will be established during the kickoff session.' },
+    { type:'h2',   text:'5. Pricing & Payment Terms' },
+    { type:'meta', label:'Monthly Retainer:', value:` ${d.fee} USD` },
+    { type:'meta', label:'Billing Cycle:', value:` ${d.billing}` },
+    { type:'meta', label:'Payment Due:', value:' Within 15 days of invoice receipt' },
+    { type:'meta', label:'Late Fee:', value:' 1.5% per month on outstanding balances' },
+    { type:'body', text:'Additional engagement models (performance-based, revenue share, project-based hourly) are available upon mutual written agreement and SOW amendment.' },
+    { type:'h2',   text:'6. Scope Exclusions' },
+    { type:'body', text:'The following are outside the scope of this retainer unless separately agreed in writing:\n   \u2022 Full platform migrations or large-scale CRM rebuilds (>40 hours in a single sprint)\n   \u2022 Third-party software licensing or paid media/advertising costs\n   \u2022 Work outside agreed sprint scope (requires written change order)\n   \u2022 Dedicated developer or designer resources beyond AISymmetric, LLC principals' },
+    { type:'h2',   text:'7. Immediate Next Steps' },
+    { type:'meta', label:`${d.first} ${d.last} (${d.company}):`, value:'' },
+    { type:'body', text:'   \u2610 Execute MSA and this SOW\n   \u2610 Share access credentials for relevant platforms\n   \u2610 Confirm kickoff session availability\n   \u2610 Provide any existing data, lists, or assets' },
+    { type:'spacer' },
+    { type:'meta', label:'AISymmetric, LLC:', value:'' },
+    { type:'body', text:'   \u2610 Schedule 60-minute kickoff session\n   \u2610 Conduct initial tech stack & process assessment\n   \u2610 Deliver Sprint 1 plan within 5 business days of kickoff' },
+    { type:'h2',   text:'8. Engagement Evolution' },
+    { type:'body', text:`This SOW is designed to start focused and expand as the engagement matures. Scope, pricing, and service areas will be reviewed quarterly by mutual agreement to reflect ${d.company}'s evolving needs and demonstrated results.` },
+    { type:'spacer' },
+    { type:'h2',   text:'9. Signatures' },
+    { type:'body', text:'By signing below, both parties agree to the terms of this Statement of Work, governed by the executed Master Services Agreement and Non-Disclosure Agreement.' },
+    { type:'spacer' },
+    { type:'meta', label:'Service Provider (AISymmetric, LLC):', value:' __________________________' },
+    { type:'meta', label:'Name:', value:' Tyler Perleberg' },
+    { type:'meta', label:'Title:', value:' Founder & CEO' },
+    { type:'meta', label:'Signature:', value:' ________________________________' },
+    { type:'meta', label:'Date:', value:' _______________' },
+    { type:'spacer' },
+    { type:'meta', label:`Client (${d.company}):`, value:' __________________________' },
+    { type:'meta', label:'Name:', value:` ${d.first} ${d.last}` },
+    { type:'meta', label:'Title:', value:` ${d.title}` },
+    { type:'meta', label:'Signature:', value:' ________________________________' },
+    { type:'meta', label:'Date:', value:' _______________' },
+    { type:'footer_line' },
+  );
+  if (d.notes) {
+    items.splice(items.length - 1, 0,
+      { type:'h2',  text:'Additional Notes' },
+      { type:'body', text: d.notes }
+    );
+  }
+  return items;
+}
+
+// Convert structured content into Google Docs API batchUpdate requests
+function buildDocRequests(contentItems) {
+  let text = '';
+  const segments = [];
+
+  for (const item of contentItems) {
+    const start = text.length + 1;
+    if (item.type === 'spacer') {
+      text += '\n';
+    } else if (item.type === 'footer_line') {
+      text += '_______________________________________________________________\n\u00A9 2026 AISymmetric, LLC. All rights reserved.\nThis document is proprietary and confidential. No part may be reproduced without express written consent of AISymmetric, LLC.\n';
+    } else if (item.type === 'meta') {
+      text += item.label + item.value + '\n';
+    } else {
+      text += item.text + '\n';
+    }
+    const end = text.length + 1;
+    segments.push({ ...item, start, end });
+  }
+
+  const requests = [];
+  requests.push({ insertText: { location: { index: 1 }, text } });
+
+  const revSegments = [...segments].reverse();
+  for (const seg of revSegments) {
+    const s = seg.start;
+    const e = seg.end - 1;
+
+    if (seg.type === 'title') {
+      requests.push({
+        updateTextStyle: {
+          range: { startIndex: s, endIndex: e },
+          textStyle: { bold: true, fontSize: { magnitude: 24, unit: 'PT' }, foregroundColor: { color: { rgbColor: rgb('17365D') } }, weightedFontFamily: { fontFamily: 'Calibri' } },
+          fields: 'bold,fontSize,foregroundColor,weightedFontFamily'
+        }
+      });
+      requests.push({
+        updateParagraphStyle: {
+          range: { startIndex: s, endIndex: e },
+          paragraphStyle: { namedStyleType: 'TITLE', alignment: 'CENTER', spaceBelow: { magnitude: 6, unit: 'PT' } },
+          fields: 'namedStyleType,alignment,spaceBelow'
+        }
+      });
+    } else if (seg.type === 'subtitle') {
+      requests.push({
+        updateTextStyle: {
+          range: { startIndex: s, endIndex: e },
+          textStyle: { bold: true, fontSize: { magnitude: 12, unit: 'PT' }, foregroundColor: { color: { rgbColor: rgb('17365D') } } },
+          fields: 'bold,fontSize,foregroundColor'
+        }
+      });
+      requests.push({
+        updateParagraphStyle: {
+          range: { startIndex: s, endIndex: e },
+          paragraphStyle: { alignment: 'CENTER', spaceBelow: { magnitude: 4, unit: 'PT' } },
+          fields: 'alignment,spaceBelow'
+        }
+      });
+    } else if (seg.type === 'exhibit') {
+      requests.push({
+        updateTextStyle: {
+          range: { startIndex: s, endIndex: e },
+          textStyle: { bold: true, fontSize: { magnitude: 14, unit: 'PT' }, foregroundColor: { color: { rgbColor: rgb('366091') } } },
+          fields: 'bold,fontSize,foregroundColor'
+        }
+      });
+      requests.push({
+        updateParagraphStyle: {
+          range: { startIndex: s, endIndex: e },
+          paragraphStyle: { namedStyleType: 'HEADING_1', spaceAbove: { magnitude: 12, unit: 'PT' }, spaceBelow: { magnitude: 6, unit: 'PT' } },
+          fields: 'namedStyleType,spaceAbove,spaceBelow'
+        }
+      });
+    } else if (seg.type === 'h2') {
+      requests.push({
+        updateTextStyle: {
+          range: { startIndex: s, endIndex: e },
+          textStyle: { bold: true, fontSize: { magnitude: 13, unit: 'PT' }, foregroundColor: { color: { rgbColor: rgb('4F81BD') } } },
+          fields: 'bold,fontSize,foregroundColor'
+        }
+      });
+      requests.push({
+        updateParagraphStyle: {
+          range: { startIndex: s, endIndex: e },
+          paragraphStyle: { namedStyleType: 'HEADING_2', spaceAbove: { magnitude: 10, unit: 'PT' }, spaceBelow: { magnitude: 4, unit: 'PT' } },
+          fields: 'namedStyleType,spaceAbove,spaceBelow'
+        }
+      });
+    } else if (seg.type === 'meta') {
+      const labelEnd = s + seg.label.length;
+      requests.push({
+        updateTextStyle: {
+          range: { startIndex: s, endIndex: labelEnd },
+          textStyle: { bold: true, fontSize: { magnitude: 11, unit: 'PT' } },
+          fields: 'bold,fontSize'
+        }
+      });
+      if (seg.value) {
+        requests.push({
+          updateTextStyle: {
+            range: { startIndex: labelEnd, endIndex: e },
+            textStyle: { bold: false, fontSize: { magnitude: 11, unit: 'PT' } },
+            fields: 'bold,fontSize'
+          }
+        });
+      }
+      requests.push({
+        updateParagraphStyle: {
+          range: { startIndex: s, endIndex: e },
+          paragraphStyle: { namedStyleType: 'NORMAL_TEXT', spaceBelow: { magnitude: 2, unit: 'PT' } },
+          fields: 'namedStyleType,spaceBelow'
+        }
+      });
+    } else if (seg.type === 'body') {
+      requests.push({
+        updateTextStyle: {
+          range: { startIndex: s, endIndex: e },
+          textStyle: { bold: false, fontSize: { magnitude: 11, unit: 'PT' } },
+          fields: 'bold,fontSize'
+        }
+      });
+      requests.push({
+        updateParagraphStyle: {
+          range: { startIndex: s, endIndex: e },
+          paragraphStyle: { namedStyleType: 'NORMAL_TEXT', spaceBelow: { magnitude: 6, unit: 'PT' }, lineSpacing: 115 },
+          fields: 'namedStyleType,spaceBelow,lineSpacing'
+        }
+      });
+    } else if (seg.type === 'footer_line') {
+      requests.push({
+        updateTextStyle: {
+          range: { startIndex: s, endIndex: e },
+          textStyle: { italic: true, fontSize: { magnitude: 9, unit: 'PT' }, foregroundColor: { color: { rgbColor: rgb('666666') } } },
+          fields: 'italic,fontSize,foregroundColor'
+        }
+      });
+      requests.push({
+        updateParagraphStyle: {
+          range: { startIndex: s, endIndex: e },
+          paragraphStyle: { alignment: 'CENTER', spaceAbove: { magnitude: 12, unit: 'PT' } },
+          fields: 'alignment,spaceAbove'
+        }
+      });
+    }
+  }
+
+  requests.push({
+    updateDocumentStyle: {
+      documentStyle: {
+        marginTop: { magnitude: 72, unit: 'PT' }, marginBottom: { magnitude: 72, unit: 'PT' },
+        marginLeft: { magnitude: 72, unit: 'PT' }, marginRight: { magnitude: 72, unit: 'PT' },
+      },
+      fields: 'marginTop,marginBottom,marginLeft,marginRight'
+    }
+  });
+
+  return requests;
+}
+
+async function createGoogleDoc(docTitle, contentItems) {
+  const createResp = await fetch('https://docs.googleapis.com/v1/documents', {
+    method: 'POST',
+    headers: { 'Authorization': 'Bearer ' + googleAccessToken, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ title: docTitle })
+  });
+  if (!createResp.ok) throw new Error('Failed to create doc: ' + createResp.status);
+  const doc   = await createResp.json();
+  const docId = doc.documentId;
+  const docUrl = 'https://docs.google.com/document/d/' + docId + '/edit';
+
+  const requests = buildDocRequests(contentItems);
+  const batchResp = await fetch(`https://docs.googleapis.com/v1/documents/${docId}:batchUpdate`, {
+    method: 'POST',
+    headers: { 'Authorization': 'Bearer ' + googleAccessToken, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ requests })
+  });
+  if (!batchResp.ok) {
+    const err = await batchResp.json();
+    throw new Error('Failed to format doc: ' + JSON.stringify(err.error?.message || batchResp.status));
+  }
+
+  const moveResp = await fetch(
+    `https://www.googleapis.com/drive/v3/files/${docId}?addParents=${GDRIVE_FOLDER_ID}&removeParents=root&fields=id,parents`,
+    { method: 'PATCH', headers: { 'Authorization': 'Bearer ' + googleAccessToken } }
+  );
+  if (!moveResp.ok) throw new Error('Failed to move to folder: ' + moveResp.status);
+
+  return { docId, docUrl, title: docTitle };
+}
+
+async function saveBothToDrive() {
+  buildPreviews();
+  if (!googleAccessToken) {
+    setDriveStatus('error', '\u26A0 Not connected to Google. Click "Connect Google Drive" first.');
+    return;
+  }
+  const d       = getFormData();
+  const company = d.company || 'Client';
+  const dateStr = new Date().toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' });
+  const msaTitle = `AISymmetric MSA \u2014 ${company} (${dateStr})`;
+  const sowTitle = `AISymmetric SOW \u2014 ${company} (${dateStr})`;
+
+  const btn = document.getElementById('btnSaveDrive');
+  btn.disabled  = true;
+  btn.innerHTML = '<span style="opacity:.7">\u23F3 Building branded documents\u2026</span>';
+  setDriveStatus('loading', '\u23F3 Creating branded documents in Google Drive\u2026');
+
+  try {
+    const msaContent = buildMSAContent(d);
+    const sowContent = buildSOWContent(d);
+
+    const msa = await createGoogleDoc(msaTitle, msaContent);
+    const sow = await createGoogleDoc(sowTitle, sowContent);
+
+    setDriveStatus('connected', '\u2713 Both branded documents saved to <strong>AISymmetric / Client Agreements / MSA+SOW</strong>');
+
+    const linksDiv = document.getElementById('driveLinks');
+    linksDiv.style.display = 'block';
+    document.getElementById('driveLinkMSA').innerHTML =
+      `<a href="${msa.docUrl}" target="_blank" style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--blue);text-decoration:none">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Open MSA in Google Docs \u2197
+      </a>`;
+    document.getElementById('driveLinkSOW').innerHTML =
+      `<a href="${sow.docUrl}" target="_blank" style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--blue);text-decoration:none">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Open SOW in Google Docs \u2197
+      </a>`;
+
+    btn.innerHTML = '\u2713 Saved to Drive';
+    showToast('Both branded documents saved to Google Drive!');
+  } catch (err) {
+    setDriveStatus('error', '\u26A0 Error: ' + err.message);
+    btn.disabled  = false;
+    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg> Save Both to Google Drive';
+    console.error(err);
+  }
+}
 </script>
 </body>
 </html>
