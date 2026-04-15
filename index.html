@@ -10,496 +10,308 @@
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-/* ════════════════════════════════════════════════════════
-   AISymmetric Design System — Premium SMB Retainer
-   ════════════════════════════════════════════════════════ */
-
 :root {
-  /* Brand */
-  --primary: #3B82F6;
-  --secondary: #22D3EE;
-  --gradient: linear-gradient(135deg, #3B82F6, #22D3EE);
-  --dark: #111111;
+  --primary: #8B5CF6;
+  --secondary: #06B6D4;
+  --gradient: linear-gradient(135deg, #8B5CF6, #06B6D4);
+  --gradient-warm: linear-gradient(135deg, #7C3AED, #8B5CF6, #06B6D4);
+  --dark: #0F0F14;
+  --dark-card: #18181F;
   --green: #10B981;
   --gold: #F59E0B;
-  --purple: #7C3AED;
   --red: #EF4444;
-
-  /* Gray scale */
-  --gray-50: #F9FAFB;
-  --gray-100: #F3F4F6;
-  --gray-200: #E5E7EB;
-  --gray-300: #D1D5DB;
-  --gray-400: #9CA3AF;
-  --gray-500: #6B7280;
-  --gray-600: #4B5563;
-  --gray-700: #374151;
-  --gray-900: #111827;
+  --gray-50: #F9FAFB; --gray-100: #F3F4F6; --gray-200: #E5E7EB; --gray-300: #D1D5DB;
+  --gray-400: #9CA3AF; --gray-500: #6B7280; --gray-600: #4B5563; --gray-700: #374151; --gray-900: #111827;
   --white: #ffffff;
-
-  /* Spacing scale */
-  --sp-xs: 4px;
-  --sp-sm: 8px;
-  --sp-md: 16px;
-  --sp-lg: 24px;
-  --sp-xl: 32px;
-  --sp-2xl: 48px;
-  --sp-3xl: 64px;
-  --sp-4xl: 96px;
-  --sp-5xl: 120px;
-
-  /* Type scale */
-  --text-xs: 11px;
-  --text-sm: 13px;
-  --text-base: 15px;
-  --text-md: 17px;
-  --text-lg: 20px;
-  --text-xl: 24px;
-  --text-2xl: 32px;
-  --text-3xl: clamp(32px, 4vw, 48px);
-  --text-4xl: clamp(40px, 5.5vw, 64px);
-
-  /* Radius */
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 20px;
-  --radius-full: 9999px;
-
-  /* Shadows */
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
-  --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
-  --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
-  --shadow-xl: 0 20px 60px rgba(0,0,0,0.06), 0 0 40px rgba(59,130,246,0.06);
-  --shadow-blue: 0 8px 30px rgba(59,130,246,0.3);
-
-  /* Transitions */
-  --ease: cubic-bezier(0.16, 1, 0.3, 1);
-  --dur: 0.4s;
+  --sp-xs:4px;--sp-sm:8px;--sp-md:16px;--sp-lg:24px;--sp-xl:32px;--sp-2xl:48px;--sp-3xl:64px;--sp-4xl:96px;--sp-5xl:120px;
+  --text-xs:11px;--text-sm:13px;--text-base:15px;--text-md:17px;--text-lg:20px;--text-xl:24px;--text-2xl:32px;
+  --text-3xl:clamp(32px,4vw,48px);--text-4xl:clamp(40px,5.5vw,64px);
+  --radius-sm:8px;--radius-md:12px;--radius-lg:16px;--radius-xl:20px;--radius-full:9999px;
+  --shadow-sm:0 1px 3px rgba(0,0,0,0.04);--shadow-md:0 4px 16px rgba(0,0,0,0.06);--shadow-lg:0 12px 40px rgba(0,0,0,0.08);
+  --shadow-xl:0 20px 60px rgba(0,0,0,0.06),0 0 40px rgba(139,92,246,0.06);
+  --shadow-glow:0 8px 30px rgba(139,92,246,0.3);
+  --ease:cubic-bezier(0.16,1,0.3,1);--dur:0.4s;
 }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--white);color:var(--gray-900);line-height:1.7;font-size:var(--text-base);overflow-x:hidden}
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+/* ─ Utility ─ */
+.container{max-width:1200px;margin:0 auto;padding:0 var(--sp-lg)}
+.gradient-text{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.section-tag{font-size:12px;text-transform:uppercase;letter-spacing:0.1em;color:var(--primary);font-weight:600;margin-bottom:var(--sp-md)}
+.section-title{font-size:var(--text-3xl);font-weight:800;letter-spacing:-0.03em;color:var(--gray-900);line-height:1.12;margin-bottom:var(--sp-md)}
+.section-subtitle{font-size:var(--text-md);color:var(--gray-500);line-height:1.7;max-width:560px}
+.section-header-center{text-align:center}
+.section-header-center .section-subtitle{margin:0 auto}
 
-body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: var(--white);
-  color: var(--gray-900);
-  line-height: 1.7;
-  font-size: var(--text-base);
-  overflow-x: hidden;
-}
+/* ─ Particles Canvas ─ */
+#particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.7}
 
-/* ─── UTILITY ─── */
-.container { max-width: 1200px; margin: 0 auto; padding: 0 var(--sp-lg); }
-.gradient-text { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.section-tag { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--primary); font-weight: 600; margin-bottom: var(--sp-md); }
-.section-title { font-size: var(--text-3xl); font-weight: 800; letter-spacing: -0.03em; color: var(--gray-900); line-height: 1.12; margin-bottom: var(--sp-md); }
-.section-subtitle { font-size: var(--text-md); color: var(--gray-500); line-height: 1.7; max-width: 560px; }
-.section-header-center { text-align: center; }
-.section-header-center .section-subtitle { margin: 0 auto; }
+/* ─ Nav ─ */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:64px;padding:0 var(--sp-2xl);display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.88);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,0,0,0.06);transition:all var(--dur) var(--ease)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-logo img{height:32px;object-fit:contain}
+.nav-logo span{font-size:18px;font-weight:800;color:var(--gray-900);letter-spacing:-0.02em}
+.nav-links{display:flex;gap:var(--sp-xs)}
+.nav-link{padding:6px 14px;border-radius:var(--radius-sm);font-size:14px;font-weight:500;color:var(--gray-600);cursor:pointer;text-decoration:none;transition:all 0.2s var(--ease);border:none;background:none}
+.nav-link:hover{color:var(--gray-900);background:var(--gray-50)}
+.nav-cta{padding:8px 20px;border-radius:var(--radius-sm);background:var(--dark);color:var(--white);font-size:13px;font-weight:600;border:none;cursor:pointer;transition:all 0.25s var(--ease);text-decoration:none}
+.nav-cta:hover{background:var(--primary);box-shadow:var(--shadow-glow)}
+.nav-hamburger{display:none;background:none;border:none;cursor:pointer;padding:8px}
 
-/* ─── NAV ─── */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  height: 64px; padding: 0 var(--sp-2xl);
-  display: flex; align-items: center; justify-content: space-between;
-  background: rgba(255,255,255,0.85);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(0,0,0,0.06);
-  transition: all var(--dur) var(--ease);
-}
-.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-.nav-logo img { height: 32px; object-fit: contain; }
-.nav-logo span { font-size: 18px; font-weight: 800; color: var(--gray-900); letter-spacing: -0.02em; }
-.nav-links { display: flex; gap: var(--sp-xs); }
-.nav-link { padding: 6px 14px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 500; color: var(--gray-600); cursor: pointer; text-decoration: none; transition: all 0.2s var(--ease); border: none; background: none; }
-.nav-link:hover { color: var(--gray-900); background: var(--gray-50); }
-.nav-cta { padding: 8px 20px; border-radius: var(--radius-sm); background: var(--dark); color: var(--white); font-size: 13px; font-weight: 600; border: none; cursor: pointer; transition: all 0.25s var(--ease); text-decoration: none; }
-.nav-cta:hover { background: var(--primary); box-shadow: var(--shadow-blue); }
-.nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
-.nav-hamburger svg { display: block; }
+/* ─ Hero ─ */
+.hero{min-height:100vh;padding:160px var(--sp-lg) var(--sp-5xl);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;text-align:center}
+.hero-content{position:relative;max-width:720px;margin:0 auto;z-index:1}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:var(--radius-full);background:rgba(139,92,246,0.06);border:1px solid rgba(139,92,246,0.12);font-size:12px;font-weight:600;color:var(--primary);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:var(--sp-xl)}
+.hero-eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--primary);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(0.7)}}
+.hero h1{font-size:var(--text-4xl);font-weight:800;line-height:1.08;letter-spacing:-0.03em;color:var(--gray-900);margin-bottom:var(--sp-lg)}
+.hero-sub{font-size:var(--text-md);color:var(--gray-500);line-height:1.7;max-width:540px;margin:0 auto var(--sp-2xl)}
+.hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
 
-/* ─── HERO ─── */
-.hero {
-  min-height: 100vh;
-  padding: 160px var(--sp-lg) var(--sp-5xl);
-  display: flex; align-items: center; justify-content: center;
-  position: relative; overflow: hidden;
-  text-align: center;
-}
-.hero-bg { position: absolute; inset: 0; pointer-events: none; }
-.hero-dots {
-  position: absolute; inset: 0;
-  background-image: radial-gradient(circle, rgba(59,130,246,0.06) 1px, transparent 1px);
-  background-size: 40px 40px;
-}
-.hero-glow {
-  position: absolute; width: 600px; height: 600px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 70%);
-  top: -100px; right: -100px;
-}
-.hero-glow2 {
-  position: absolute; width: 400px; height: 400px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(34,211,238,0.05) 0%, transparent 70%);
-  bottom: 50px; left: 200px;
-}
-.hero-content { position: relative; max-width: 720px; margin: 0 auto; }
-.hero-eyebrow {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 6px 16px; border-radius: var(--radius-full);
-  background: rgba(59,130,246,0.06); border: 1px solid rgba(59,130,246,0.12);
-  font-size: 12px; font-weight: 600; color: var(--primary);
-  text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: var(--sp-xl);
-}
-.hero-eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--primary); animation: pulse 2s infinite; }
-@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(0.7)} }
-.hero h1 {
-  font-size: var(--text-4xl); font-weight: 800;
-  line-height: 1.08; letter-spacing: -0.03em;
-  color: var(--gray-900); margin-bottom: var(--sp-lg);
-}
-.hero-sub {
-  font-size: var(--text-md); color: var(--gray-500);
-  line-height: 1.7; max-width: 540px; margin: 0 auto var(--sp-2xl);
-}
-.hero-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+/* ─ Buttons ─ */
+.btn-primary{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:10px;background:var(--dark);color:var(--white);font-size:var(--text-base);font-weight:700;border:none;cursor:pointer;transition:all 0.3s var(--ease);text-decoration:none}
+.btn-primary:hover{background:var(--primary);transform:translateY(-2px);box-shadow:var(--shadow-glow)}
+.btn-secondary{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:10px;background:transparent;color:var(--gray-700);font-size:var(--text-base);font-weight:600;cursor:pointer;border:1px solid var(--gray-200);transition:all 0.3s var(--ease);text-decoration:none}
+.btn-secondary:hover{transform:translateY(-2px);border-color:var(--primary);color:var(--primary);box-shadow:var(--shadow-md)}
 
-/* ─── BUTTONS ─── */
-.btn-primary {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 14px 28px; border-radius: 10px;
-  background: var(--dark); color: var(--white);
-  font-size: var(--text-base); font-weight: 700; border: none; cursor: pointer;
-  transition: all 0.3s var(--ease); text-decoration: none;
-}
-.btn-primary:hover { background: var(--primary); transform: translateY(-2px); box-shadow: var(--shadow-blue); }
-.btn-secondary {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 14px 28px; border-radius: 10px;
-  background: transparent; color: var(--gray-700);
-  font-size: var(--text-base); font-weight: 600; cursor: pointer;
-  border: 1px solid var(--gray-200); transition: all 0.3s var(--ease); text-decoration: none;
-}
-.btn-secondary:hover { transform: translateY(-2px); border-color: var(--primary); color: var(--primary); box-shadow: var(--shadow-md); }
+/* ─ Stats Band ─ */
+.stats-band{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--gray-100);border-radius:var(--radius-lg);overflow:hidden;background:var(--white);margin-top:var(--sp-3xl);position:relative;z-index:1}
+.stat-item{padding:var(--sp-xl) var(--sp-lg);text-align:center;border-right:1px solid var(--gray-100)}
+.stat-item:last-child{border-right:none}
+.stat-num{font-size:42px;font-weight:800;line-height:1;letter-spacing:-0.03em}
+.stat-label{font-size:var(--text-xs);color:var(--gray-400);margin-top:6px;text-transform:uppercase;letter-spacing:0.06em;font-weight:500}
 
-/* ─── STATS BAND ─── */
-.stats-band {
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  border: 1px solid var(--gray-100); border-radius: var(--radius-lg);
-  overflow: hidden; background: var(--white); margin-top: var(--sp-3xl);
-}
-.stat-item { padding: var(--sp-xl) var(--sp-lg); text-align: center; border-right: 1px solid var(--gray-100); }
-.stat-item:last-child { border-right: none; }
-.stat-num { font-size: 42px; font-weight: 800; line-height: 1; letter-spacing: -0.03em; }
-.stat-label { font-size: var(--text-xs); color: var(--gray-400); margin-top: 6px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500; }
+/* ─ Sections ─ */
+.section{padding:var(--sp-5xl) 0;position:relative;z-index:1}
+.section-alt{background:var(--gray-50)}
+.divider{height:1px;background:var(--gray-200);max-width:1200px;margin:0 auto}
 
-/* ─── SECTIONS ─── */
-.section { padding: var(--sp-5xl) 0; }
-.section-alt { background: var(--gray-50); }
-.divider { height: 1px; background: var(--gray-200); margin: 0 var(--sp-lg); max-width: 1200px; margin-left: auto; margin-right: auto; }
+/* ─ Glass Cards ─ */
+.card{padding:var(--sp-xl);border-radius:var(--radius-lg);background:rgba(255,255,255,0.7);border:1px solid var(--gray-100);backdrop-filter:blur(10px);transition:all 0.4s var(--ease);position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gradient);opacity:0;transition:opacity 0.3s var(--ease)}
+.card:hover{transform:translateY(-4px);border-color:rgba(139,92,246,0.2);box-shadow:var(--shadow-xl)}
+.card:hover::before{opacity:1}
+.card-icon{width:48px;height:48px;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:var(--sp-md)}
+.card h3,.card h4{font-size:var(--text-base);font-weight:700;color:var(--gray-900);margin-bottom:var(--sp-sm)}
+.card p{font-size:var(--text-sm);color:var(--gray-500);line-height:1.7}
+.card-tag{display:inline-flex;margin-top:var(--sp-md);padding:3px 10px;border-radius:6px;font-size:var(--text-xs);font-weight:600;letter-spacing:0.04em}
 
-/* ─── GLASS CARDS ─── */
-.card {
-  padding: var(--sp-xl); border-radius: var(--radius-lg);
-  background: rgba(255,255,255,0.7);
-  border: 1px solid var(--gray-100);
-  backdrop-filter: blur(10px);
-  transition: all 0.4s var(--ease);
-  position: relative; overflow: hidden;
-}
-.card::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0;
-  height: 2px; background: var(--gradient);
-  opacity: 0; transition: opacity 0.3s var(--ease);
-}
-.card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(59,130,246,0.2);
-  box-shadow: var(--shadow-xl);
-}
-.card:hover::before { opacity: 1; }
-.card-icon {
-  width: 48px; height: 48px; border-radius: var(--radius-md);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; margin-bottom: var(--sp-md);
-}
-.card h3 { font-size: var(--text-base); font-weight: 700; color: var(--gray-900); margin-bottom: var(--sp-sm); letter-spacing: -0.01em; }
-.card p { font-size: var(--text-sm); color: var(--gray-500); line-height: 1.7; }
-.card-tag {
-  display: inline-flex; margin-top: var(--sp-md);
-  padding: 3px 10px; border-radius: 6px;
-  font-size: var(--text-xs); font-weight: 600; letter-spacing: 0.04em;
-}
+/* ─ Grids ─ */
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-lg);margin-top:var(--sp-2xl)}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--sp-lg);margin-top:var(--sp-2xl)}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--sp-lg);margin-top:var(--sp-2xl)}
 
-/* ─── GRIDS ─── */
-.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-lg); margin-top: var(--sp-2xl); }
-.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-lg); margin-top: var(--sp-2xl); }
-.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--sp-lg); margin-top: var(--sp-2xl); }
+/* ─ Bucket Cards ─ */
+.bucket-card{padding:var(--sp-xl) var(--sp-lg);border-radius:var(--radius-xl);background:var(--white);border:1px solid var(--gray-100);position:relative;overflow:hidden;transition:all 0.4s var(--ease)}
+.bucket-card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.bucket-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-xl)}
+.bucket-violet::after{background:var(--gradient)}
+.bucket-green::after{background:linear-gradient(90deg,#10B981,#34D399)}
+.bucket-gold::after{background:linear-gradient(90deg,#F59E0B,#FBBF24)}
+.bucket-card h3{font-size:var(--text-lg);font-weight:800;color:var(--gray-900);margin-bottom:var(--sp-sm);letter-spacing:-0.02em}
+.bucket-card>p{font-size:14px;color:var(--gray-500);line-height:1.7;margin-bottom:var(--sp-md)}
+.bucket-list{list-style:none}
+.bucket-list li{display:flex;align-items:flex-start;gap:10px;padding:5px 0;font-size:var(--text-sm);color:var(--gray-600)}
+.bucket-list li::before{content:'';width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:7px}
+.bl-violet li::before{background:var(--primary)}
+.bl-green li::before{background:var(--green)}
+.bl-gold li::before{background:var(--gold)}
 
-/* ─── WHY CARDS ─── */
-.why-card { padding: var(--sp-lg); }
-.why-card h4 { font-size: var(--text-base); font-weight: 700; color: var(--gray-900); margin-bottom: var(--sp-sm); }
-.why-card p { font-size: var(--text-sm); color: var(--gray-500); line-height: 1.7; }
+/* ─ ROI ─ */
+.roi-card{padding:var(--sp-xl) var(--sp-lg);border-radius:var(--radius-lg);text-align:center;background:var(--white);border:1px solid var(--gray-100);transition:all 0.4s var(--ease)}
+.roi-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-xl)}
+.roi-label{font-size:var(--text-xs);color:var(--gray-400);text-transform:uppercase;letter-spacing:0.08em;font-weight:600;margin-bottom:var(--sp-md)}
+.roi-value{font-size:36px;font-weight:800;margin-bottom:var(--sp-sm);letter-spacing:-0.03em}
+.roi-desc{font-size:var(--text-sm);color:var(--gray-500);line-height:1.6}
 
-/* ─── BUCKET CARDS ─── */
-.bucket-card {
-  padding: var(--sp-xl) var(--sp-lg); border-radius: var(--radius-xl);
-  background: var(--white); border: 1px solid var(--gray-100);
-  position: relative; overflow: hidden;
-  transition: all 0.4s var(--ease);
-}
-.bucket-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
-.bucket-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-xl); }
-.bucket-blue::after { background: var(--gradient); }
-.bucket-green::after { background: linear-gradient(90deg, #10B981, #34D399); }
-.bucket-gold::after { background: linear-gradient(90deg, #F59E0B, #FBBF24); }
-.bucket-card h3 { font-size: var(--text-lg); font-weight: 800; color: var(--gray-900); margin-bottom: var(--sp-sm); letter-spacing: -0.02em; }
-.bucket-card > p { font-size: 14px; color: var(--gray-500); line-height: 1.7; margin-bottom: var(--sp-md); }
-.bucket-list { list-style: none; }
-.bucket-list li { display: flex; align-items: flex-start; gap: 10px; padding: 5px 0; font-size: var(--text-sm); color: var(--gray-600); }
-.bucket-list li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; margin-top: 7px; }
-.bl-blue li::before { background: var(--primary); }
-.bl-green li::before { background: var(--green); }
-.bl-gold li::before { background: var(--gold); }
+/* ─ Sprint Section ─ */
+.sprint-visual{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:var(--sp-2xl);position:relative;border:1px solid var(--gray-100);border-radius:var(--radius-xl);overflow:hidden;background:var(--white)}
+.sprint-week{padding:var(--sp-xl) var(--sp-lg);border-right:1px solid var(--gray-100);position:relative}
+.sprint-week:last-child{border-right:none}
+.sprint-week::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.sw-1::before{background:#8B5CF6}
+.sw-2::before{background:#7C3AED}
+.sw-3::before{background:#2DD4BF}
+.sw-4::before{background:#06B6D4}
+.sprint-week .week-label{font-size:var(--text-xs);font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:var(--sp-sm)}
+.sw-1 .week-label{color:#8B5CF6}
+.sw-2 .week-label{color:#7C3AED}
+.sw-3 .week-label{color:#2DD4BF}
+.sw-4 .week-label{color:#06B6D4}
+.sprint-week h4{font-size:14px;font-weight:700;color:var(--gray-900);margin-bottom:var(--sp-sm)}
+.sprint-week ul{list-style:none;font-size:var(--text-sm);color:var(--gray-500)}
+.sprint-week li{padding:3px 0;display:flex;align-items:flex-start;gap:6px}
+.sprint-week li::before{content:'\2022';color:var(--gray-300);flex-shrink:0}
+.sprint-callouts{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-md);margin-top:var(--sp-lg)}
+.sprint-callout{padding:var(--sp-md) var(--sp-lg);border-radius:var(--radius-md);background:rgba(139,92,246,0.04);border:1px solid rgba(139,92,246,0.1);text-align:center}
+.sprint-callout .sc-num{font-size:var(--text-xl);font-weight:800;margin-bottom:2px}
+.sprint-callout .sc-label{font-size:var(--text-xs);color:var(--gray-400);text-transform:uppercase;letter-spacing:0.06em}
 
-/* ─── ROI CARDS ─── */
-.roi-card {
-  padding: var(--sp-xl) var(--sp-lg); border-radius: var(--radius-lg);
-  text-align: center; background: var(--white); border: 1px solid var(--gray-100);
-  transition: all 0.4s var(--ease);
-}
-.roi-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-xl); }
-.roi-label { font-size: var(--text-xs); color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-bottom: var(--sp-md); }
-.roi-value { font-size: 36px; font-weight: 800; margin-bottom: var(--sp-sm); letter-spacing: -0.03em; }
-.roi-desc { font-size: var(--text-sm); color: var(--gray-500); line-height: 1.6; }
+/* ─ How It Works ─ */
+.how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:var(--sp-2xl);position:relative}
+.how-grid::before{content:'';position:absolute;top:28px;left:12%;right:12%;height:1px;background:linear-gradient(90deg,transparent,var(--gray-200) 20%,var(--gray-200) 80%,transparent)}
+.how-step{padding:0 var(--sp-lg);text-align:center;position:relative}
+.how-num{width:56px;height:56px;border-radius:var(--radius-md);background:var(--white);border:1.5px solid var(--gray-200);display:flex;align-items:center;justify-content:center;font-size:var(--text-lg);font-weight:800;color:var(--primary);margin:0 auto var(--sp-md);position:relative;z-index:1;box-shadow:var(--shadow-sm)}
+.how-step h4{font-size:14px;font-weight:700;color:var(--gray-900);margin-bottom:6px}
+.how-step p{font-size:var(--text-sm);color:var(--gray-500);line-height:1.6}
 
-/* ─── HOW IT WORKS ─── */
-.how-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: var(--sp-2xl); position: relative; }
-.how-grid::before {
-  content: ''; position: absolute; top: 28px; left: 12%; right: 12%;
-  height: 1px; background: linear-gradient(90deg, transparent, var(--gray-200) 20%, var(--gray-200) 80%, transparent);
-}
-.how-step { padding: 0 var(--sp-lg); text-align: center; position: relative; }
-.how-num {
-  width: 56px; height: 56px; border-radius: var(--radius-md);
-  background: var(--white); border: 1.5px solid var(--gray-200);
-  display: flex; align-items: center; justify-content: center;
-  font-size: var(--text-lg); font-weight: 800; color: var(--primary);
-  margin: 0 auto var(--sp-md); position: relative; z-index: 1;
-  box-shadow: var(--shadow-sm);
-}
-.how-step h4 { font-size: 14px; font-weight: 700; color: var(--gray-900); margin-bottom: 6px; }
-.how-step p { font-size: var(--text-sm); color: var(--gray-500); line-height: 1.6; }
+/* ─ Pricing ─ */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-lg);margin-top:var(--sp-2xl)}
+.pricing-card{border-radius:var(--radius-xl);overflow:hidden;border:1px solid var(--gray-100);background:var(--white);transition:all 0.4s var(--ease);position:relative}
+.pricing-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-xl)}
+.pricing-card.featured{border-color:rgba(139,92,246,0.3);box-shadow:0 0 0 4px rgba(139,92,246,0.06)}
+.pricing-card.featured .pricing-head{background:var(--gradient-warm)}
+.pricing-head{padding:var(--sp-xl) var(--sp-lg);background:var(--dark);color:var(--white)}
+.pricing-head .tier{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;opacity:0.6;margin-bottom:var(--sp-sm)}
+.pricing-head .amount{font-size:44px;font-weight:800;letter-spacing:-0.04em;line-height:1}
+.pricing-head .period{font-size:var(--text-base);opacity:0.5}
+.pricing-head .note{font-size:var(--text-sm);opacity:0.4;margin-top:var(--sp-sm)}
+.pricing-body{padding:var(--sp-lg)}
+.pricing-body h4{font-size:12px;font-weight:700;color:var(--gray-900);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:var(--sp-md)}
+.pi{display:flex;align-items:flex-start;gap:10px;font-size:var(--text-sm);color:var(--gray-600);margin-bottom:10px}
+.pi-check{width:18px;height:18px;border-radius:50%;background:rgba(139,92,246,0.08);color:var(--primary);display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;margin-top:1px}
+.pricing-foot{padding:var(--sp-md) var(--sp-lg) var(--sp-lg)}
+.pricing-foot .btn-primary{width:100%;justify-content:center;padding:12px;font-size:14px}
+.popular-tag{position:absolute;top:var(--sp-md);right:var(--sp-md);padding:4px 12px;border-radius:var(--radius-full);background:rgba(255,255,255,0.15);color:white;font-size:var(--text-xs);font-weight:600}
 
-/* ─── PRICING ─── */
-.pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-lg); margin-top: var(--sp-2xl); }
-.pricing-card {
-  border-radius: var(--radius-xl); overflow: hidden;
-  border: 1px solid var(--gray-100); background: var(--white);
-  transition: all 0.4s var(--ease); position: relative;
-}
-.pricing-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-xl); }
-.pricing-card.featured { border-color: rgba(59,130,246,0.3); box-shadow: 0 0 0 4px rgba(59,130,246,0.06); }
-.pricing-card.featured .pricing-head { background: var(--dark); }
-.pricing-head { padding: var(--sp-xl) var(--sp-lg); background: var(--gray-900); color: var(--white); }
-.pricing-head .tier { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.6; margin-bottom: var(--sp-sm); }
-.pricing-head .amount { font-size: 44px; font-weight: 800; letter-spacing: -0.04em; line-height: 1; }
-.pricing-head .period { font-size: var(--text-base); opacity: 0.5; }
-.pricing-head .note { font-size: var(--text-sm); opacity: 0.4; margin-top: var(--sp-sm); }
-.pricing-body { padding: var(--sp-lg); }
-.pricing-body h4 { font-size: 12px; font-weight: 700; color: var(--gray-900); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: var(--sp-md); }
-.pi { display: flex; align-items: flex-start; gap: 10px; font-size: var(--text-sm); color: var(--gray-600); margin-bottom: 10px; }
-.pi-check { width: 18px; height: 18px; border-radius: 50%; background: rgba(16,185,129,0.1); color: var(--green); display: flex; align-items: center; justify-content: center; font-size: 10px; flex-shrink: 0; margin-top: 1px; }
-.pricing-foot { padding: var(--sp-md) var(--sp-lg) var(--sp-lg); }
-.pricing-foot .btn-primary { width: 100%; justify-content: center; padding: 12px; font-size: 14px; }
-.popular-tag { position: absolute; top: var(--sp-md); right: var(--sp-md); padding: 4px 12px; border-radius: var(--radius-full); background: rgba(255,255,255,0.15); color: white; font-size: var(--text-xs); font-weight: 600; }
+/* ─ Contract ─ */
+.contract-card{padding:var(--sp-lg);border-radius:var(--radius-lg);background:var(--white);border:1px solid var(--gray-100);transition:all 0.4s var(--ease)}
+.contract-card:hover{transform:translateY(-2px);border-color:rgba(139,92,246,0.2);box-shadow:var(--shadow-md)}
+.contract-card h4{font-size:var(--text-base);font-weight:700;color:var(--gray-900);margin-bottom:var(--sp-sm);display:flex;align-items:center;gap:10px}
+.contract-card p{font-size:var(--text-sm);color:var(--gray-500);line-height:1.7}
+.badge{display:inline-block;padding:2px 8px;border-radius:6px;font-size:var(--text-xs);font-weight:600}
+.badge-green{background:rgba(16,185,129,0.08);color:var(--green)}
 
-/* ─── CONTRACT OPTIONS ─── */
-.contract-card {
-  padding: var(--sp-lg); border-radius: var(--radius-lg);
-  background: var(--white); border: 1px solid var(--gray-100);
-  transition: all 0.4s var(--ease);
-}
-.contract-card:hover { transform: translateY(-2px); border-color: rgba(59,130,246,0.2); box-shadow: var(--shadow-md); }
-.contract-card h4 { font-size: var(--text-base); font-weight: 700; color: var(--gray-900); margin-bottom: var(--sp-sm); display: flex; align-items: center; gap: 10px; }
-.contract-card p { font-size: var(--text-sm); color: var(--gray-500); line-height: 1.7; }
-.badge { display: inline-block; padding: 2px 8px; border-radius: 6px; font-size: var(--text-xs); font-weight: 600; }
-.badge-green { background: rgba(16,185,129,0.08); color: var(--green); }
+/* ─ Trust ─ */
+.trust-band{padding:var(--sp-4xl) 0;background:var(--dark);color:var(--white);position:relative;z-index:1}
+.trust-band .section-tag{color:rgba(255,255,255,0.3)}
+.trust-band .section-title{color:var(--white)}
+.trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-lg);margin-top:var(--sp-2xl)}
+.trust-card{padding:var(--sp-xl);border-radius:var(--radius-lg);background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06)}
+.trust-card .quote{font-size:var(--text-sm);color:rgba(255,255,255,0.5);line-height:1.8;margin-bottom:var(--sp-md);font-style:italic}
+.trust-author{display:flex;align-items:center;gap:12px}
+.trust-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:white}
+.trust-name{font-size:var(--text-sm);font-weight:600;color:var(--white)}
+.trust-role{font-size:var(--text-xs);color:rgba(255,255,255,0.35);margin-top:2px}
 
-/* ─── TRUST BAND ─── */
-.trust-band { padding: var(--sp-4xl) 0; background: var(--dark); color: var(--white); }
-.trust-band .section-tag { color: rgba(255,255,255,0.3); }
-.trust-band .section-title { color: var(--white); }
-.trust-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-lg); margin-top: var(--sp-2xl); }
-.trust-card { padding: var(--sp-xl); border-radius: var(--radius-lg); background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); }
-.trust-card .quote { font-size: var(--text-sm); color: rgba(255,255,255,0.5); line-height: 1.8; margin-bottom: var(--sp-md); font-style: italic; }
-.trust-author { display: flex; align-items: center; gap: 12px; }
-.trust-avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: white; }
-.trust-name { font-size: var(--text-sm); font-weight: 600; color: var(--white); }
-.trust-role { font-size: var(--text-xs); color: rgba(255,255,255,0.35); margin-top: 2px; }
+/* ─ Agreements ─ */
+.agreements-section{padding:var(--sp-5xl) 0;background:var(--gray-50);position:relative;z-index:1}
+.agreement-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-lg);margin-top:var(--sp-2xl)}
+.agreement-card{padding:var(--sp-xl);border-radius:var(--radius-lg);background:var(--white);border:1px solid var(--gray-100);text-align:center;transition:all 0.4s var(--ease)}
+.agreement-card:hover{transform:translateY(-4px);border-color:rgba(139,92,246,0.2);box-shadow:var(--shadow-xl)}
+.agreement-icon{width:56px;height:56px;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto var(--sp-md)}
+.agreement-card h4{font-size:var(--text-base);font-weight:700;color:var(--gray-900);margin-bottom:var(--sp-sm)}
+.agreement-card p{font-size:var(--text-sm);color:var(--gray-500);line-height:1.65;margin-bottom:var(--sp-md)}
+.btn-doc{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:var(--radius-sm);font-size:var(--text-sm);font-weight:600;cursor:pointer;border:1px solid var(--gray-200);background:var(--white);color:var(--gray-700);transition:all 0.3s var(--ease);text-decoration:none}
+.btn-doc:hover{border-color:var(--primary);color:var(--primary);background:rgba(139,92,246,0.04)}
 
-/* ─── AGREEMENTS ─── */
-.agreements-section { padding: var(--sp-5xl) 0; background: var(--gray-50); }
-.agreement-card {
-  padding: var(--sp-xl); border-radius: var(--radius-lg);
-  background: var(--white); border: 1px solid var(--gray-100);
-  text-align: center; transition: all 0.4s var(--ease);
-}
-.agreement-card:hover { transform: translateY(-4px); border-color: rgba(59,130,246,0.2); box-shadow: var(--shadow-xl); }
-.agreement-icon { width: 56px; height: 56px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 26px; margin: 0 auto var(--sp-md); }
-.agreement-card h4 { font-size: var(--text-base); font-weight: 700; color: var(--gray-900); margin-bottom: var(--sp-sm); }
-.agreement-card p { font-size: var(--text-sm); color: var(--gray-500); line-height: 1.65; margin-bottom: var(--sp-md); }
-.btn-doc { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border-radius: var(--radius-sm); font-size: var(--text-sm); font-weight: 600; cursor: pointer; border: 1px solid var(--gray-200); background: var(--white); color: var(--gray-700); transition: all 0.3s var(--ease); text-decoration: none; }
-.btn-doc:hover { border-color: var(--primary); color: var(--primary); background: rgba(59,130,246,0.04); }
+/* ─ CTA ─ */
+.cta-section{padding:var(--sp-5xl) 0;background:var(--dark);text-align:center;position:relative;overflow:hidden;z-index:1}
+.cta-glow{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(139,92,246,0.12) 0%,transparent 65%);top:-200px;left:50%;transform:translateX(-50%);pointer-events:none}
+.cta-section .section-tag{color:rgba(255,255,255,0.25)}
+.cta-section h2{font-size:var(--text-3xl);font-weight:800;color:var(--white);letter-spacing:-0.03em;line-height:1.12;margin-bottom:var(--sp-md)}
+.cta-section p{font-size:var(--text-md);color:rgba(255,255,255,0.4);margin-bottom:var(--sp-2xl)}
+.cta-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn-white{padding:14px 28px;border-radius:10px;background:var(--white);color:var(--gray-900);font-size:var(--text-base);font-weight:700;cursor:pointer;border:none;transition:all 0.3s var(--ease);display:inline-flex;align-items:center;gap:8px;text-decoration:none}
+.btn-white:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,255,255,0.15)}
+.btn-ghost{padding:14px 24px;border-radius:10px;background:transparent;color:rgba(255,255,255,0.6);font-size:var(--text-base);font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,0.15);transition:all 0.3s var(--ease);text-decoration:none}
+.btn-ghost:hover{border-color:rgba(255,255,255,0.4);color:var(--white)}
 
-/* ─── CTA ─── */
-.cta-section { padding: var(--sp-5xl) 0; background: var(--dark); text-align: center; position: relative; overflow: hidden; }
-.cta-glow { position: absolute; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 65%); top: -200px; left: 50%; transform: translateX(-50%); pointer-events: none; }
-.cta-section .section-tag { color: rgba(255,255,255,0.25); }
-.cta-section h2 { font-size: var(--text-3xl); font-weight: 800; color: var(--white); letter-spacing: -0.03em; line-height: 1.12; margin-bottom: var(--sp-md); }
-.cta-section p { font-size: var(--text-md); color: rgba(255,255,255,0.4); margin-bottom: var(--sp-2xl); }
-.cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-.btn-white { padding: 14px 28px; border-radius: 10px; background: var(--white); color: var(--gray-900); font-size: var(--text-base); font-weight: 700; cursor: pointer; border: none; transition: all 0.3s var(--ease); display: inline-flex; align-items: center; gap: 8px; text-decoration: none; }
-.btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,255,255,0.15); }
-.btn-ghost { padding: 14px 24px; border-radius: 10px; background: transparent; color: rgba(255,255,255,0.6); font-size: var(--text-base); font-weight: 600; cursor: pointer; border: 1px solid rgba(255,255,255,0.15); transition: all 0.3s var(--ease); text-decoration: none; }
-.btn-ghost:hover { border-color: rgba(255,255,255,0.4); color: var(--white); }
+/* ─ Footer ─ */
+footer{padding:var(--sp-lg) var(--sp-2xl);background:var(--gray-900);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;position:relative;z-index:1}
+footer .foot-brand{font-size:14px;font-weight:700;color:rgba(255,255,255,0.3)}
+footer .foot-note{font-size:12px;color:rgba(255,255,255,0.15)}
+footer a{color:rgba(255,255,255,0.2);text-decoration:none}
 
-/* ─── FOOTER ─── */
-footer { padding: var(--sp-lg) var(--sp-2xl); background: var(--gray-900); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-footer .foot-brand { font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.3); }
-footer .foot-note { font-size: 12px; color: rgba(255,255,255,0.15); }
-footer a { color: rgba(255,255,255,0.2); text-decoration: none; }
+/* ─ Modal ─ */
+.modal-overlay{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.5);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity 0.3s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{background:var(--white);border-radius:var(--radius-xl);width:100%;max-width:720px;max-height:90vh;overflow-y:auto;transform:translateY(20px) scale(.98);transition:transform 0.3s var(--ease);box-shadow:0 32px 80px rgba(0,0,0,0.2)}
+.modal-overlay.open .modal{transform:translateY(0) scale(1)}
+.modal-header{padding:var(--sp-xl) var(--sp-xl) var(--sp-lg);border-bottom:1px solid var(--gray-100);display:flex;align-items:flex-start;justify-content:space-between;position:sticky;top:0;background:var(--white);z-index:10;border-radius:var(--radius-xl) var(--radius-xl) 0 0}
+.modal-title{font-size:var(--text-xl);font-weight:800;color:var(--gray-900);letter-spacing:-0.02em}
+.modal-subtitle{font-size:var(--text-sm);color:var(--gray-400);margin-top:4px}
+.modal-close{width:32px;height:32px;border-radius:var(--radius-sm);background:var(--gray-50);border:1px solid var(--gray-100);cursor:pointer;font-size:16px;color:var(--gray-400);display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0}
+.modal-close:hover{background:var(--gray-100);color:var(--gray-900)}
+.modal-body{padding:var(--sp-xl)}
+.modal-tabs{display:flex;gap:4px;margin-bottom:var(--sp-lg);background:var(--gray-50);padding:4px;border-radius:10px}
+.mtab{flex:1;padding:8px;border-radius:var(--radius-sm);font-size:var(--text-sm);font-weight:600;cursor:pointer;border:none;background:none;color:var(--gray-400);transition:all 0.2s}
+.mtab.active{background:var(--white);color:var(--gray-900);box-shadow:var(--shadow-sm)}
+.form-section{display:none}.form-section.active{display:block}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-md);margin-bottom:var(--sp-md)}
+.form-row.full{grid-template-columns:1fr}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group label{font-size:12px;font-weight:600;color:var(--gray-600);text-transform:uppercase;letter-spacing:0.06em}
+.form-group input,.form-group select,.form-group textarea{padding:10px 14px;border-radius:var(--radius-sm);border:1.5px solid var(--gray-200);font-family:'Inter',sans-serif;font-size:14px;color:var(--gray-900);background:var(--white);transition:border-color 0.2s;outline:none}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(139,92,246,0.08)}
+.form-group textarea{resize:vertical;min-height:80px}
+.form-group select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239CA3AF' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+.section-divider{font-size:var(--text-xs);font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--primary);padding:var(--sp-md) 0 var(--sp-sm);border-top:1px solid var(--gray-100);margin:var(--sp-sm) 0}
+.checkbox-group{display:flex;flex-direction:column;gap:8px}
+.cb-item{display:flex;align-items:center;gap:10px;cursor:pointer}
+.cb-item input[type="checkbox"]{width:16px;height:16px;accent-color:var(--primary)}
+.cb-item span{font-size:var(--text-sm);color:var(--gray-600)}
+.modal-footer{padding:var(--sp-md) var(--sp-xl);border-top:1px solid var(--gray-100);display:flex;gap:12px;align-items:center;justify-content:flex-end;background:var(--gray-50);border-radius:0 0 var(--radius-xl) var(--radius-xl);position:sticky;bottom:0}
+.btn-modal-prev{padding:10px 22px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;cursor:pointer;border:1px solid var(--gray-200);background:var(--white);color:var(--gray-500);transition:all 0.2s}
+.btn-modal-prev:hover{color:var(--gray-900);border-color:var(--gray-400)}
+.btn-modal-next{padding:10px 22px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;cursor:pointer;border:none;background:var(--dark);color:var(--white);transition:all 0.2s var(--ease)}
+.btn-modal-next:hover{background:var(--primary)}
+.btn-modal-generate{padding:10px 22px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;cursor:pointer;border:none;background:var(--green);color:var(--white);display:flex;align-items:center;gap:8px;transition:all 0.2s}
+.btn-modal-generate:hover{opacity:0.9}
+.step-indicator{display:flex;gap:6px;margin-right:auto}
+.step-dot{width:8px;height:8px;border-radius:50%;background:var(--gray-200);transition:all 0.3s var(--ease)}
+.step-dot.active{background:var(--primary);width:20px;border-radius:4px}
+.step-dot.done{background:var(--green)}
+.preview-pane{background:var(--gray-50);border-radius:var(--radius-md);padding:var(--sp-lg);font-size:12px;color:var(--gray-600);line-height:1.8;white-space:pre-wrap;font-family:'Inter',monospace;border:1px solid var(--gray-100);max-height:360px;overflow-y:auto}
+.export-actions{display:flex;gap:10px;margin-top:var(--sp-md);flex-wrap:wrap}
+.btn-export{display:inline-flex;align-items:center;gap:6px;padding:10px 18px;border-radius:var(--radius-sm);font-size:var(--text-sm);font-weight:600;cursor:pointer;border:1px solid var(--gray-200);background:var(--white);color:var(--gray-700);transition:all 0.3s var(--ease)}
+.btn-export:hover{border-color:var(--primary);color:var(--primary);background:rgba(139,92,246,0.04)}
+.btn-export.primary-export{background:var(--dark);color:var(--white);border-color:transparent}
+.btn-export.primary-export:hover{background:var(--primary);box-shadow:var(--shadow-glow)}
 
-/* ─── MODAL ─── */
-.modal-overlay { position: fixed; inset: 0; z-index: 500; background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
-.modal-overlay.open { opacity: 1; pointer-events: all; }
-.modal { background: var(--white); border-radius: var(--radius-xl); width: 100%; max-width: 720px; max-height: 90vh; overflow-y: auto; transform: translateY(20px) scale(.98); transition: transform 0.3s var(--ease); box-shadow: 0 32px 80px rgba(0,0,0,0.2); }
-.modal-overlay.open .modal { transform: translateY(0) scale(1); }
-.modal-header { padding: var(--sp-xl) var(--sp-xl) var(--sp-lg); border-bottom: 1px solid var(--gray-100); display: flex; align-items: flex-start; justify-content: space-between; position: sticky; top: 0; background: var(--white); z-index: 10; border-radius: var(--radius-xl) var(--radius-xl) 0 0; }
-.modal-title { font-size: var(--text-xl); font-weight: 800; color: var(--gray-900); letter-spacing: -0.02em; }
-.modal-subtitle { font-size: var(--text-sm); color: var(--gray-400); margin-top: 4px; }
-.modal-close { width: 32px; height: 32px; border-radius: var(--radius-sm); background: var(--gray-50); border: 1px solid var(--gray-100); cursor: pointer; font-size: 16px; color: var(--gray-400); display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; }
-.modal-close:hover { background: var(--gray-100); color: var(--gray-900); }
-.modal-body { padding: var(--sp-xl); }
-.modal-tabs { display: flex; gap: 4px; margin-bottom: var(--sp-lg); background: var(--gray-50); padding: 4px; border-radius: 10px; }
-.mtab { flex: 1; padding: 8px; border-radius: var(--radius-sm); font-size: var(--text-sm); font-weight: 600; cursor: pointer; border: none; background: none; color: var(--gray-400); transition: all 0.2s; }
-.mtab.active { background: var(--white); color: var(--gray-900); box-shadow: var(--shadow-sm); }
-.form-section { display: none; }
-.form-section.active { display: block; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-md); margin-bottom: var(--sp-md); }
-.form-row.full { grid-template-columns: 1fr; }
-.form-group { display: flex; flex-direction: column; gap: 6px; }
-.form-group label { font-size: 12px; font-weight: 600; color: var(--gray-600); text-transform: uppercase; letter-spacing: 0.06em; }
-.form-group input, .form-group select, .form-group textarea { padding: 10px 14px; border-radius: var(--radius-sm); border: 1.5px solid var(--gray-200); font-family: 'Inter', sans-serif; font-size: 14px; color: var(--gray-900); background: var(--white); transition: border-color 0.2s; outline: none; }
-.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(59,130,246,0.08); }
-.form-group textarea { resize: vertical; min-height: 80px; }
-.form-group select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239CA3AF' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; }
-.section-divider { font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--primary); padding: var(--sp-md) 0 var(--sp-sm); border-top: 1px solid var(--gray-100); margin: var(--sp-sm) 0; }
-.checkbox-group { display: flex; flex-direction: column; gap: 8px; }
-.cb-item { display: flex; align-items: center; gap: 10px; cursor: pointer; }
-.cb-item input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--primary); }
-.cb-item span { font-size: var(--text-sm); color: var(--gray-600); }
-.modal-footer { padding: var(--sp-md) var(--sp-xl); border-top: 1px solid var(--gray-100); display: flex; gap: 12px; align-items: center; justify-content: flex-end; background: var(--gray-50); border-radius: 0 0 var(--radius-xl) var(--radius-xl); position: sticky; bottom: 0; }
-.btn-modal-prev { padding: 10px 22px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 600; cursor: pointer; border: 1px solid var(--gray-200); background: var(--white); color: var(--gray-500); transition: all 0.2s; }
-.btn-modal-prev:hover { color: var(--gray-900); border-color: var(--gray-400); }
-.btn-modal-next { padding: 10px 22px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 600; cursor: pointer; border: none; background: var(--dark); color: var(--white); transition: all 0.2s var(--ease); }
-.btn-modal-next:hover { background: var(--primary); }
-.btn-modal-generate { padding: 10px 22px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 600; cursor: pointer; border: none; background: var(--green); color: var(--white); display: flex; align-items: center; gap: 8px; transition: all 0.2s; }
-.btn-modal-generate:hover { opacity: 0.9; }
-.step-indicator { display: flex; gap: 6px; margin-right: auto; }
-.step-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gray-200); transition: all 0.3s var(--ease); }
-.step-dot.active { background: var(--primary); width: 20px; border-radius: 4px; }
-.step-dot.done { background: var(--green); }
+#pdfRender{position:absolute;left:-9999px;top:0;width:816px;font-family:'Inter',sans-serif;color:#000;background:#fff;padding:72px;line-height:1.6}
+#pdfRender h1{color:#4C1D95;font-size:26px;font-weight:800;text-align:center;margin-bottom:4px}
+#pdfRender .pdf-subtitle{color:#4C1D95;font-size:13px;font-weight:700;text-align:center;margin-bottom:24px}
+#pdfRender h2{color:#7C3AED;font-size:15px;font-weight:700;margin:20px 0 8px;border-bottom:1px solid #ddd;padding-bottom:4px}
+#pdfRender p,#pdfRender .meta{font-size:11px;margin-bottom:6px}
+#pdfRender .meta strong{font-weight:700}
+#pdfRender .sig-line{border-bottom:1px solid #000;width:250px;margin:24px 0 4px}
+#pdfRender .pdf-footer{text-align:center;font-size:9px;color:#666;font-style:italic;margin-top:40px;border-top:1px solid #ccc;padding-top:12px}
+#pdfRender .draft-watermark{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-35deg);font-size:120px;font-weight:800;color:rgba(139,92,246,.06);pointer-events:none;z-index:0}
 
-.preview-pane { background: var(--gray-50); border-radius: var(--radius-md); padding: var(--sp-lg); font-size: 12px; color: var(--gray-600); line-height: 1.8; white-space: pre-wrap; font-family: 'Inter', monospace; border: 1px solid var(--gray-100); max-height: 360px; overflow-y: auto; }
-.export-actions { display: flex; gap: 10px; margin-top: var(--sp-md); flex-wrap: wrap; }
-.btn-export { display: inline-flex; align-items: center; gap: 6px; padding: 10px 18px; border-radius: var(--radius-sm); font-size: var(--text-sm); font-weight: 600; cursor: pointer; border: 1px solid var(--gray-200); background: var(--white); color: var(--gray-700); transition: all 0.3s var(--ease); }
-.btn-export:hover { border-color: var(--primary); color: var(--primary); background: rgba(59,130,246,0.04); }
-.btn-export.primary-export { background: var(--dark); color: var(--white); border-color: transparent; }
-.btn-export.primary-export:hover { background: var(--primary); box-shadow: var(--shadow-blue); }
+.toast{position:fixed;bottom:24px;right:24px;z-index:999;padding:14px 20px;border-radius:var(--radius-md);background:var(--gray-900);color:var(--white);font-size:14px;font-weight:500;display:flex;align-items:center;gap:10px;box-shadow:0 8px 32px rgba(0,0,0,0.2);transform:translateY(80px);opacity:0;transition:all 0.35s var(--ease)}
+.toast.show{transform:translateY(0);opacity:1}
 
-/* ─── PDF RENDER ─── */
-#pdfRender { position: absolute; left: -9999px; top: 0; width: 816px; font-family: 'Inter', sans-serif; color: #000; background: #fff; padding: 72px; line-height: 1.6; }
-#pdfRender h1 { color: #17365D; font-size: 26px; font-weight: 800; text-align: center; margin-bottom: 4px; }
-#pdfRender .pdf-subtitle { color: #17365D; font-size: 13px; font-weight: 700; text-align: center; margin-bottom: 24px; }
-#pdfRender h2 { color: #4F81BD; font-size: 15px; font-weight: 700; margin: 20px 0 8px; border-bottom: 1px solid #ddd; padding-bottom: 4px; }
-#pdfRender p, #pdfRender .meta { font-size: 11px; margin-bottom: 6px; }
-#pdfRender .meta strong { font-weight: 700; }
-#pdfRender .sig-block { margin-top: 32px; }
-#pdfRender .sig-line { border-bottom: 1px solid #000; width: 250px; margin: 24px 0 4px; }
-#pdfRender .pdf-footer { text-align: center; font-size: 9px; color: #666; font-style: italic; margin-top: 40px; border-top: 1px solid #ccc; padding-top: 12px; }
-#pdfRender .draft-watermark { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%) rotate(-35deg); font-size: 120px; font-weight: 800; color: rgba(59,130,246,.06); pointer-events: none; z-index: 0; }
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.6s var(--ease),transform 0.6s var(--ease)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-d1{transition-delay:0.08s}.reveal-d2{transition-delay:0.16s}.reveal-d3{transition-delay:0.24s}
+.reveal-d4{transition-delay:0.32s}.reveal-d5{transition-delay:0.40s}.reveal-d6{transition-delay:0.48s}
 
-.toast { position: fixed; bottom: 24px; right: 24px; z-index: 999; padding: 14px 20px; border-radius: var(--radius-md); background: var(--gray-900); color: var(--white); font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 10px; box-shadow: 0 8px 32px rgba(0,0,0,0.2); transform: translateY(80px); opacity: 0; transition: all 0.35s var(--ease); }
-.toast.show { transform: translateY(0); opacity: 1; }
-
-/* ─── SCROLL ANIMATIONS ─── */
-.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
-.reveal.visible { opacity: 1; transform: translateY(0); }
-.reveal-d1 { transition-delay: 0.08s; }
-.reveal-d2 { transition-delay: 0.16s; }
-.reveal-d3 { transition-delay: 0.24s; }
-.reveal-d4 { transition-delay: 0.32s; }
-.reveal-d5 { transition-delay: 0.40s; }
-.reveal-d6 { transition-delay: 0.48s; }
-
-/* ─── RESPONSIVE ─── */
-@media (max-width: 1024px) {
-  .grid-3, .pricing-grid, .trust-grid, .agreement-cards { grid-template-columns: 1fr 1fr; }
-  .grid-4, .how-grid, .stats-band { grid-template-columns: 1fr 1fr; }
-  .stats-band .stat-item:nth-child(2) { border-right: none; }
-}
-@media (max-width: 768px) {
-  .nav-links { display: none; }
-  .nav-hamburger { display: block; }
-  nav { padding: 0 var(--sp-md); }
-  .section { padding: 80px 0; }
-  .hero { padding: 120px var(--sp-md) 80px; }
-  .hero h1 { font-size: clamp(32px, 8vw, 44px); }
-  .grid-3, .grid-4, .grid-2, .pricing-grid, .trust-grid, .how-grid, .stats-band, .agreement-cards { grid-template-columns: 1fr; }
-  .how-grid::before { display: none; }
-  .stats-band .stat-item { border-right: none; border-bottom: 1px solid var(--gray-100); }
-  .stats-band .stat-item:last-child { border-bottom: none; }
-  .trust-band, .cta-section, .agreements-section { padding-left: var(--sp-md); padding-right: var(--sp-md); }
-  .form-row { grid-template-columns: 1fr; }
-  footer { flex-direction: column; text-align: center; padding: var(--sp-lg) var(--sp-md); }
-}
-@media (max-width: 480px) {
-  .hero h1 { font-size: 32px; }
-  .hero-sub { font-size: var(--text-base); }
-  .section-title { font-size: 28px; }
-  .pricing-head .amount { font-size: 36px; }
-}
-
-/* agreement grid fix */
-.agreement-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-lg); margin-top: var(--sp-2xl); }
+@media(max-width:1024px){.grid-3,.pricing-grid,.trust-grid,.agreement-cards{grid-template-columns:1fr 1fr}.grid-4,.how-grid,.stats-band,.sprint-visual{grid-template-columns:1fr 1fr}.sprint-callouts{grid-template-columns:1fr}.stats-band .stat-item:nth-child(2){border-right:none}}
+@media(max-width:768px){.nav-links{display:none}.nav-hamburger{display:block}nav{padding:0 var(--sp-md)}.section{padding:80px 0}.hero{padding:120px var(--sp-md) 80px}.hero h1{font-size:clamp(32px,8vw,44px)}.grid-3,.grid-4,.grid-2,.pricing-grid,.trust-grid,.how-grid,.stats-band,.agreement-cards,.sprint-visual{grid-template-columns:1fr}.how-grid::before{display:none}.stats-band .stat-item{border-right:none;border-bottom:1px solid var(--gray-100)}.stats-band .stat-item:last-child{border-bottom:none}.sprint-week{border-right:none;border-bottom:1px solid var(--gray-100)}.sprint-week:last-child{border-bottom:none}.trust-band,.cta-section,.agreements-section{padding-left:var(--sp-md);padding-right:var(--sp-md)}.form-row{grid-template-columns:1fr}footer{flex-direction:column;text-align:center;padding:var(--sp-lg) var(--sp-md)}}
+@media(max-width:480px){.hero h1{font-size:32px}.section-title{font-size:28px}.pricing-head .amount{font-size:36px}}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
+<canvas id="particles"></canvas>
+
 <nav>
-  <a class="nav-logo" href="https://aisymmetricsolutions.com" target="_blank">
-    <img src="./logo.png" alt="AISymmetric" onerror="this.style.display='none'">
-    <span>AISymmetric</span>
-  </a>
+  <a class="nav-logo" href="https://aisymmetricsolutions.com" target="_blank"><img src="./logo.png" alt="AISymmetric" onerror="this.style.display='none'"><span>AISymmetric</span></a>
   <div class="nav-links">
     <a class="nav-link" href="#why">Why Us</a>
     <a class="nav-link" href="#services">Services</a>
+    <a class="nav-link" href="#sprint">The Sprint</a>
     <a class="nav-link" href="#pricing">Pricing</a>
-    <a class="nav-link" href="#contracting">Contracting</a>
     <a class="nav-link" href="#agreements">Agreements</a>
   </div>
   <button class="nav-cta" onclick="openModal()">Get Started &rarr;</button>
-  <button class="nav-hamburger" onclick="document.querySelector('.nav-links').style.display=document.querySelector('.nav-links').style.display==='flex'?'none':'flex'" aria-label="Menu">
-    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-  </button>
+  <button class="nav-hamburger" onclick="document.querySelector('.nav-links').style.display=document.querySelector('.nav-links').style.display==='flex'?'none':'flex'" aria-label="Menu"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
-  <div class="hero-bg"><div class="hero-dots"></div><div class="hero-glow"></div><div class="hero-glow2"></div></div>
   <div class="hero-content reveal">
     <div class="hero-eyebrow"><span class="dot"></span>Month-to-Month &middot; No Lock-In &middot; Prove Value First</div>
     <h1>Your AI <span class="gradient-text">Strategy Partner</span><br>&mdash; On Retainer</h1>
@@ -511,10 +323,9 @@ footer a { color: rgba(255,255,255,0.2); text-decoration: none; }
   </div>
 </section>
 
-<!-- STATS -->
 <div class="container">
   <div class="stats-band reveal">
-    <div class="stat-item"><div class="stat-num gradient-text">$2K</div><div class="stat-label">Starting / month</div></div>
+    <div class="stat-item"><div class="stat-num gradient-text">$3K</div><div class="stat-label">Starting / month</div></div>
     <div class="stat-item"><div class="stat-num gradient-text">30</div><div class="stat-label">Min Weekly Calls</div></div>
     <div class="stat-item"><div class="stat-num gradient-text">5&ndash;10x</div><div class="stat-label">Target ROI</div></div>
     <div class="stat-item"><div class="stat-num gradient-text">0</div><div class="stat-label">Long-Term Locks</div></div>
@@ -524,18 +335,14 @@ footer a { color: rgba(255,255,255,0.2); text-decoration: none; }
 <!-- WHY -->
 <section class="section" id="why">
   <div class="container">
-    <div class="section-header-center reveal">
-      <div class="section-tag">Why AISymmetric</div>
-      <h2 class="section-title">Built different. <span class="gradient-text">Built to build.</span></h2>
-      <p class="section-subtitle">We're an AI-native firm at the intersection of strategy, engineering, and operations &mdash; purpose-built for small businesses ready to move fast.</p>
-    </div>
+    <div class="section-header-center reveal"><div class="section-tag">Why AISymmetric</div><h2 class="section-title">Built different. <span class="gradient-text">Built to build.</span></h2><p class="section-subtitle">An AI-native firm at the intersection of strategy, engineering, and operations &mdash; purpose-built for businesses ready to move fast.</p></div>
     <div class="grid-3">
-      <div class="card why-card reveal reveal-d1"><div class="card-icon" style="background:rgba(59,130,246,0.06)">&#x1F9E0;</div><h4>AI-Native Thinking</h4><p>Every engagement starts AI-first &mdash; what can be automated, augmented, or entirely reimagined.</p></div>
-      <div class="card why-card reveal reveal-d2"><div class="card-icon" style="background:rgba(16,185,129,0.06)">&#x1F3D7;&#xFE0F;</div><h4>We Build, Not Just Advise</h4><p>We hand you working systems. Automations, integrations, and tools that run in production &mdash; not in PowerPoint.</p></div>
-      <div class="card why-card reveal reveal-d3"><div class="card-icon" style="background:rgba(124,58,237,0.06)">&#x2601;&#xFE0F;</div><h4>Platform Agnostic</h4><p>HubSpot, Salesforce, custom APIs &mdash; we work across your entire stack. No vendor lock-in, no bias.</p></div>
-      <div class="card why-card reveal reveal-d4"><div class="card-icon" style="background:rgba(245,158,11,0.06)">&#x1F4CA;</div><h4>Outcomes Over Hours</h4><p>We bill by the month and measure by results. Revenue gained, hours saved, costs cut &mdash; that's our scorecard.</p></div>
-      <div class="card why-card reveal reveal-d5"><div class="card-icon" style="background:rgba(239,68,68,0.06)">&#x26A1;</div><h4>Speed to Value</h4><p>First sprint output in days, not weeks. Startup speed with enterprise rigor.</p></div>
-      <div class="card why-card reveal reveal-d6"><div class="card-icon" style="background:rgba(59,130,246,0.06)">&#x1F91D;</div><h4>True Partnership</h4><p>Weekly calls, unlimited async, full transparency. A partner embedded in your business.</p></div>
+      <div class="card reveal reveal-d1"><div class="card-icon" style="background:rgba(139,92,246,0.06)">&#x1F9E0;</div><h4>AI-Native Thinking</h4><p>Every engagement starts AI-first &mdash; what can be automated, augmented, or entirely reimagined.</p></div>
+      <div class="card reveal reveal-d2"><div class="card-icon" style="background:rgba(6,182,212,0.06)">&#x1F3D7;&#xFE0F;</div><h4>We Build, Not Just Advise</h4><p>Working systems in production &mdash; automations, integrations, and tools. Not PowerPoint.</p></div>
+      <div class="card reveal reveal-d3"><div class="card-icon" style="background:rgba(124,58,237,0.06)">&#x2601;&#xFE0F;</div><h4>Platform Agnostic</h4><p>HubSpot, Salesforce, custom APIs &mdash; we work across your entire stack. No vendor lock-in.</p></div>
+      <div class="card reveal reveal-d4"><div class="card-icon" style="background:rgba(245,158,11,0.06)">&#x1F4CA;</div><h4>Outcomes Over Hours</h4><p>Bill by the month, measure by results. Revenue gained, hours saved, costs cut.</p></div>
+      <div class="card reveal reveal-d5"><div class="card-icon" style="background:rgba(16,185,129,0.06)">&#x26A1;</div><h4>Speed to Value</h4><p>First sprint output in days, not weeks. Startup speed with enterprise rigor.</p></div>
+      <div class="card reveal reveal-d6"><div class="card-icon" style="background:rgba(139,92,246,0.06)">&#x1F91D;</div><h4>True Partnership</h4><p>Weekly calls, unlimited async, full transparency. Embedded in your business.</p></div>
     </div>
   </div>
 </section>
@@ -545,119 +352,130 @@ footer a { color: rgba(255,255,255,0.2); text-decoration: none; }
 <!-- SERVICES -->
 <section class="section" id="services">
   <div class="container">
-    <div class="section-header-center reveal">
-      <div class="section-tag">What's Included</div>
-      <h2 class="section-title">Everything a growing business <span class="gradient-text">needs.</span></h2>
-      <p class="section-subtitle">Each month is a sprint &mdash; prioritized collaboratively based on your highest-impact opportunities.</p>
-    </div>
+    <div class="section-header-center reveal"><div class="section-tag">What's Included</div><h2 class="section-title">Everything you <span class="gradient-text">need.</span></h2><p class="section-subtitle">Each month is a sprint &mdash; prioritized collaboratively based on your highest-impact opportunities.</p></div>
     <div class="grid-3">
-      <div class="card reveal reveal-d1"><div class="card-icon" style="background:rgba(59,130,246,0.06)">&#x1F9E0;</div><h3>Weekly Strategy Sessions</h3><p>30-minute focused advisory calls every week. Align on priorities, diagnose blockers, map your AI roadmap.</p><span class="card-tag" style="background:rgba(59,130,246,0.06);color:var(--primary)">4&times; / Month</span></div>
-      <div class="card reveal reveal-d2"><div class="card-icon" style="background:rgba(16,185,129,0.06)">&#x2699;&#xFE0F;</div><h3>Agile Build &amp; Delivery</h3><p>Hands-on AI tools, automations, and workflows for your stack. Sprint-based so you see results monthly.</p><span class="card-tag" style="background:rgba(16,185,129,0.06);color:var(--green)">Sprint-Based</span></div>
-      <div class="card reveal reveal-d3"><div class="card-icon" style="background:rgba(124,58,237,0.06)">&#x1F4CA;</div><h3>Business Assessment</h3><p>Structured audits of operations, funnel, tech stack, and workflows. Find where AI creates the most leverage.</p><span class="card-tag" style="background:rgba(124,58,237,0.06);color:var(--purple)">Live Audit</span></div>
-      <div class="card reveal reveal-d4"><div class="card-icon" style="background:rgba(245,158,11,0.06)">&#x1F517;</div><h3>Platform Orchestration</h3><p>CRM optimization, marketing automation, sales tooling, and integrations &mdash; connect your stack end to end.</p><span class="card-tag" style="background:rgba(245,158,11,0.06);color:var(--gold)">Any Platform</span></div>
-      <div class="card reveal reveal-d5"><div class="card-icon" style="background:rgba(34,211,238,0.06)">&#x1F916;</div><h3>AI Outreach &amp; Automation</h3><p>Outbound campaigns, follow-up sequences, AI-drafted replies, and lead scoring that fills your pipeline.</p><span class="card-tag" style="background:rgba(34,211,238,0.06);color:var(--secondary)">Outbound</span></div>
-      <div class="card reveal reveal-d6"><div class="card-icon" style="background:rgba(239,68,68,0.06)">&#x1F4AC;</div><h3>Async Collaboration</h3><p>Steady communication between sessions. Slack, email, or your channel &mdash; a partner, not a ticket queue.</p><span class="card-tag" style="background:rgba(239,68,68,0.06);color:var(--red)">Unlimited</span></div>
+      <div class="card reveal reveal-d1"><div class="card-icon" style="background:rgba(139,92,246,0.06)">&#x1F9E0;</div><h3>Weekly Strategy Sessions</h3><p>30-minute focused advisory calls every week. Priorities, blockers, roadmap.</p><span class="card-tag" style="background:rgba(139,92,246,0.06);color:var(--primary)">4&times; / Month</span></div>
+      <div class="card reveal reveal-d2"><div class="card-icon" style="background:rgba(6,182,212,0.06)">&#x2699;&#xFE0F;</div><h3>Agile Build &amp; Delivery</h3><p>AI tools, automations, and workflows for your stack. Results every month.</p><span class="card-tag" style="background:rgba(6,182,212,0.06);color:var(--secondary)">Sprint-Based</span></div>
+      <div class="card reveal reveal-d3"><div class="card-icon" style="background:rgba(124,58,237,0.06)">&#x1F4CA;</div><h3>Business Assessment</h3><p>Audits of operations, funnel, tech stack. Find where AI creates leverage.</p><span class="card-tag" style="background:rgba(124,58,237,0.06);color:#7C3AED">Live Audit</span></div>
+      <div class="card reveal reveal-d4"><div class="card-icon" style="background:rgba(245,158,11,0.06)">&#x1F517;</div><h3>Platform Orchestration</h3><p>CRM, marketing automation, sales tooling &mdash; connected end to end.</p><span class="card-tag" style="background:rgba(245,158,11,0.06);color:var(--gold)">Any Platform</span></div>
+      <div class="card reveal reveal-d5"><div class="card-icon" style="background:rgba(16,185,129,0.06)">&#x1F916;</div><h3>AI Outreach</h3><p>Outbound campaigns, follow-ups, lead scoring. Pipeline that fills itself.</p><span class="card-tag" style="background:rgba(16,185,129,0.06);color:var(--green)">Outbound</span></div>
+      <div class="card reveal reveal-d6"><div class="card-icon" style="background:rgba(239,68,68,0.06)">&#x1F4AC;</div><h3>Async Collaboration</h3><p>Slack, email, your channel. A partner, not a ticket queue.</p><span class="card-tag" style="background:rgba(239,68,68,0.06);color:var(--red)">Unlimited</span></div>
     </div>
   </div>
 </section>
 
 <div class="divider"></div>
+
+<!-- SPRINT DEFINITION -->
+<section class="section section-alt" id="sprint">
+  <div class="container">
+    <div class="section-header-center reveal"><div class="section-tag">Anatomy of a Sprint</div><h2 class="section-title">What a month <span class="gradient-text">looks like.</span></h2><p class="section-subtitle">Every engagement runs on 4-week agile sprints. Here's exactly how we spend each week driving results for your business.</p></div>
+    <div class="sprint-visual reveal">
+      <div class="sprint-week sw-1">
+        <div class="week-label">Week 1</div>
+        <h4>Discovery &amp; Planning</h4>
+        <ul><li>Sprint kickoff call (priorities, goals)</li><li>System audit &amp; data mapping</li><li>Identify quick wins vs. strategic builds</li><li>Sprint backlog finalized</li></ul>
+      </div>
+      <div class="sprint-week sw-2">
+        <div class="week-label">Week 2</div>
+        <h4>Build &amp; Configure</h4>
+        <ul><li>Core automations &amp; workflows built</li><li>CRM/platform configuration</li><li>AI model setup &amp; prompt engineering</li><li>Mid-sprint check-in call</li></ul>
+      </div>
+      <div class="sprint-week sw-3">
+        <div class="week-label">Week 3</div>
+        <h4>Integrate &amp; Test</h4>
+        <ul><li>Connect systems &amp; APIs</li><li>End-to-end testing</li><li>Outbound/campaign launch</li><li>Strategy session: iterate on data</li></ul>
+      </div>
+      <div class="sprint-week sw-4">
+        <div class="week-label">Week 4</div>
+        <h4>Review &amp; Optimize</h4>
+        <ul><li>Performance review &amp; metrics</li><li>Optimization passes on live systems</li><li>Sprint retrospective</li><li>Next sprint planning &amp; backlog</li></ul>
+      </div>
+    </div>
+    <div class="sprint-callouts reveal">
+      <div class="sprint-callout"><div class="sc-num gradient-text">4</div><div class="sc-label">Strategy Calls</div></div>
+      <div class="sprint-callout"><div class="sc-num gradient-text">1&ndash;5</div><div class="sc-label">Deliverables Shipped</div></div>
+      <div class="sprint-callout"><div class="sc-num gradient-text">&infin;</div><div class="sc-label">Async Support</div></div>
+    </div>
+  </div>
+</section>
 
 <!-- THREE BUCKETS -->
-<section class="section section-alt">
-  <div class="container">
-    <div class="section-header-center reveal">
-      <div class="section-tag">Our Approach</div>
-      <h2 class="section-title">Three buckets. One <span class="gradient-text">compounding result.</span></h2>
-      <p class="section-subtitle">Every sprint targets outcomes that compound month over month.</p>
-    </div>
-    <div class="grid-3">
-      <div class="bucket-card bucket-blue reveal reveal-d1"><div class="card-icon" style="background:rgba(59,130,246,0.06)">&#x1F4C8;</div><h3>Revenue Growth</h3><p>Build systems that generate new revenue and close more deals.</p><ul class="bucket-list bl-blue"><li>Improve lead &rarr; deal conversion</li><li>AI outbound &amp; follow-up systems</li><li>Launch new revenue streams</li><li>Custom tools &amp; dashboards</li></ul></div>
-      <div class="bucket-card bucket-green reveal reveal-d2"><div class="card-icon" style="background:rgba(16,185,129,0.06)">&#x23F1;&#xFE0F;</div><h3>Efficiency Gains</h3><p>Reclaim 10&ndash;20+ hours/week by automating repetitive work.</p><ul class="bucket-list bl-green"><li>Automate CRM &amp; ops workflows</li><li>Clean up pipelines &amp; reporting</li><li>Reduce manual task time</li><li>Streamline handoffs</li></ul></div>
-      <div class="bucket-card bucket-gold reveal reveal-d3"><div class="card-icon" style="background:rgba(245,158,11,0.06)">&#x1F4B0;</div><h3>Cost Optimization</h3><p>Stop paying for tools you don't use and processes that should be automated.</p><ul class="bucket-list bl-gold"><li>Eliminate redundant subscriptions</li><li>Fully leverage existing tools</li><li>Replace manual roles with AI</li><li>Avoid unnecessary purchases</li></ul></div>
-    </div>
-  </div>
-</section>
-
-<!-- ROI -->
 <section class="section">
   <div class="container">
-    <div class="section-header-center reveal">
-      <div class="section-tag">Return on Investment</div>
-      <h2 class="section-title">Why this clears the <span class="gradient-text">investment &mdash; fast.</span></h2>
-      <p class="section-subtitle">We target a minimum 5&ndash;10x return. Here's what that looks like.</p>
-    </div>
-    <div class="grid-4">
-      <div class="roi-card reveal reveal-d1"><div class="roi-label">Close 1&ndash;2 Extra Deals</div><div class="roi-value gradient-text">$5K&ndash;$20K+</div><div class="roi-desc">One deal/month can cover the retainer entirely.</div></div>
-      <div class="roi-card reveal reveal-d2"><div class="roi-label">Save 10&ndash;20 hrs/Week</div><div class="roi-value gradient-text">$2K&ndash;$4K</div><div class="roi-desc">Real cost recovery &mdash; time back on high-value work.</div></div>
-      <div class="roi-card reveal reveal-d3"><div class="roi-label">Replace Unused Tools</div><div class="roi-value gradient-text">$500&ndash;$2K</div><div class="roi-desc">Consolidate overlapping tools into fewer, smarter ones.</div></div>
-      <div class="roi-card reveal reveal-d4"><div class="roi-label">New Revenue Channels</div><div class="roi-value gradient-text">&infin;</div><div class="roi-desc">Custom apps and automations that generate new income.</div></div>
+    <div class="section-header-center reveal"><div class="section-tag">Our Approach</div><h2 class="section-title">Three buckets. One <span class="gradient-text">compounding result.</span></h2></div>
+    <div class="grid-3">
+      <div class="bucket-card bucket-violet reveal reveal-d1"><div class="card-icon" style="background:rgba(139,92,246,0.06)">&#x1F4C8;</div><h3>Revenue Growth</h3><p>Systems that generate new revenue and close more deals.</p><ul class="bucket-list bl-violet"><li>Improve lead &rarr; deal conversion</li><li>AI outbound &amp; follow-up systems</li><li>Launch new revenue streams</li><li>Custom tools &amp; dashboards</li></ul></div>
+      <div class="bucket-card bucket-green reveal reveal-d2"><div class="card-icon" style="background:rgba(16,185,129,0.06)">&#x23F1;&#xFE0F;</div><h3>Efficiency Gains</h3><p>Reclaim 10&ndash;20+ hours/week automating repetitive work.</p><ul class="bucket-list bl-green"><li>Automate CRM &amp; ops workflows</li><li>Clean up pipelines &amp; reporting</li><li>Reduce manual task time</li><li>Streamline handoffs</li></ul></div>
+      <div class="bucket-card bucket-gold reveal reveal-d3"><div class="card-icon" style="background:rgba(245,158,11,0.06)">&#x1F4B0;</div><h3>Cost Optimization</h3><p>Stop paying for unused tools and processes that should be automated.</p><ul class="bucket-list bl-gold"><li>Eliminate redundant subscriptions</li><li>Fully leverage existing tools</li><li>Replace manual roles with AI</li><li>Avoid unnecessary purchases</li></ul></div>
     </div>
   </div>
 </section>
 
 <div class="divider"></div>
 
-<!-- HOW IT WORKS -->
+<!-- ROI -->
 <section class="section section-alt">
   <div class="container">
-    <div class="section-header-center reveal">
-      <div class="section-tag">How It Works</div>
-      <h2 class="section-title">From signed to <span class="gradient-text">shipping.</span></h2>
-    </div>
-    <div class="how-grid reveal">
-      <div class="how-step"><div class="how-num">01</div><h4>Review &amp; Sign</h4><p>Download agreements, review, sign digitally. Month-to-month.</p></div>
-      <div class="how-step"><div class="how-num">02</div><h4>Kickoff</h4><p>60-min deep dive into goals, tech stack, and Sprint 1 priorities.</p></div>
-      <div class="how-step"><div class="how-num">03</div><h4>Build &amp; Deliver</h4><p>Monthly sprints. Real output every cycle.</p></div>
-      <div class="how-step"><div class="how-num">04</div><h4>Scale</h4><p>Results compound, scope expands. No surprise costs.</p></div>
+    <div class="section-header-center reveal"><div class="section-tag">Return on Investment</div><h2 class="section-title">Why this clears the <span class="gradient-text">investment &mdash; fast.</span></h2><p class="section-subtitle">We target a minimum 5&ndash;10x return.</p></div>
+    <div class="grid-4">
+      <div class="roi-card reveal reveal-d1"><div class="roi-label">Close 1&ndash;2 Extra Deals</div><div class="roi-value gradient-text">$5K&ndash;$20K+</div><div class="roi-desc">One deal/month can cover the retainer.</div></div>
+      <div class="roi-card reveal reveal-d2"><div class="roi-label">Save 10&ndash;20 hrs/Week</div><div class="roi-value gradient-text">$2K&ndash;$4K</div><div class="roi-desc">Time back on high-value work.</div></div>
+      <div class="roi-card reveal reveal-d3"><div class="roi-label">Replace Unused Tools</div><div class="roi-value gradient-text">$500&ndash;$2K</div><div class="roi-desc">Consolidate overlapping tools.</div></div>
+      <div class="roi-card reveal reveal-d4"><div class="roi-label">New Revenue Channels</div><div class="roi-value gradient-text">&infin;</div><div class="roi-desc">AI products that generate income.</div></div>
     </div>
   </div>
 </section>
 
-<!-- PRICING -->
-<section class="section" id="pricing">
+<!-- HOW IT WORKS -->
+<section class="section">
   <div class="container">
-    <div class="section-header-center reveal">
-      <div class="section-tag">Investment</div>
-      <h2 class="section-title">Three tiers. One standard of <span class="gradient-text">excellence.</span></h2>
-      <p class="section-subtitle">Every tier includes weekly calls, async support, and sprint-based delivery.</p>
+    <div class="section-header-center reveal"><div class="section-tag">How It Works</div><h2 class="section-title">From signed to <span class="gradient-text">shipping.</span></h2></div>
+    <div class="how-grid reveal">
+      <div class="how-step"><div class="how-num">01</div><h4>Review &amp; Sign</h4><p>Download agreements, review, sign. Month-to-month.</p></div>
+      <div class="how-step"><div class="how-num">02</div><h4>Kickoff</h4><p>60-min deep dive. Goals, stack, Sprint 1.</p></div>
+      <div class="how-step"><div class="how-num">03</div><h4>Build &amp; Deliver</h4><p>Monthly sprints. Real output every cycle.</p></div>
+      <div class="how-step"><div class="how-num">04</div><h4>Scale</h4><p>Results compound, scope expands.</p></div>
     </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PRICING -->
+<section class="section section-alt" id="pricing">
+  <div class="container">
+    <div class="section-header-center reveal"><div class="section-tag">Investment</div><h2 class="section-title">Three tiers. One standard of <span class="gradient-text">excellence.</span></h2><p class="section-subtitle">Every tier includes weekly calls, async support, and sprint-based delivery.</p></div>
     <div class="pricing-grid">
       <div class="pricing-card reveal reveal-d1">
-        <div class="pricing-head"><div class="tier">Starter</div><div class="amount">$2,000 <span class="period">/ mo</span></div><div class="note">Perfect for getting started with AI</div></div>
-        <div class="pricing-body"><h4>Includes</h4><div class="pi"><div class="pi-check">&#x2713;</div><span>4&times; weekly 30-min strategy sessions</span></div><div class="pi"><div class="pi-check">&#x2713;</div><span>Unlimited async Slack / email</span></div><div class="pi"><div class="pi-check">&#x2713;</div><span>Monthly sprint planning</span></div><div class="pi"><div class="pi-check">&#x2713;</div><span>1 AI workflow or automation build</span></div><div class="pi"><div class="pi-check">&#x2713;</div><span>Business &amp; tech stack assessment</span></div><div class="pi"><div class="pi-check">&#x2713;</div><span>CRM optimization support</span></div><div class="pi"><div class="pi-check">&#x2713;</div><span>Monthly performance review</span></div></div>
+        <div class="pricing-head"><div class="tier">Starter</div><div class="amount">$3,000 <span class="period">/ mo</span></div><div class="note">AI strategy &amp; first builds</div></div>
+        <div class="pricing-body"><h4>Includes</h4><div class="pi"><div class="pi-check">&#x2713;</div><span>4&times; weekly 30-min strategy sessions</span></div><div class="pi"><div class="pi-check">&#x2713;</div><span>Unlimited async Slack / email</span></div><div class="pi"><div class="pi-check">&#x2713;</div><span>Monthly sprint planning &amp; retro</span></div><div class="pi"><div class="pi-check">&#x2713;</div><span>1&ndash;2 AI workflow or automation builds</span></div><div class="pi"><div class="pi-check">&#x2713;</div><span>Business &amp; tech stack assessment</span></div><div class="pi"><div class="pi-check">&#x2713;</div><span>CRM optimization &amp; hygiene</span></div><div class="pi"><div class="pi-check">&#x2713;</div><span>Monthly performance review</span></div></div>
         <div class="pricing-foot"><button class="btn-primary" onclick="openModal()">Get Started &rarr;</button></div>
       </div>
       <div class="pricing-card featured reveal reveal-d2">
         <div class="popular-tag">Most Popular</div>
-        <div class="pricing-head"><div class="tier">Growth</div><div class="amount">$3,000 <span class="period">/ mo</span></div><div class="note">For businesses ready to scale AI</div></div>
-        <div class="pricing-body"><h4>Everything in Starter, plus</h4><div class="pi"><div class="pi-check">&#x2713;</div><span>2&ndash;3 AI builds per sprint</span></div><div class="pi"><div class="pi-check">&#x2713;</div><span>AI outbound campaign build</span></div><div class="pi"><div class="pi-check">&#x2713;</div><span>Platform orchestration &amp; APIs</span></div><div class="pi"><div class="pi-check">&#x2713;</div><span>Marketing automation setup</span></div><div class="pi"><div class="pi-check">&#x2713;</div><span>AI ideation &amp; roadmap</span></div><div class="pi"><div class="pi-check">&#x2713;</div><span>Priority async (&lt;4hr response)</span></div><div class="pi"><div class="pi-check">&#x2713;</div><span>Quarterly business review</span></div></div>
+        <div class="pricing-head"><div class="tier">Growth</div><div class="amount">$5,000 <span class="period">/ mo</span></div><div class="note">Scale AI across your business</div></div>
+        <div class="pricing-body"><h4>Everything in Starter, plus</h4><div class="pi"><div class="pi-check">&#x2713;</div><span>3&ndash;5 AI builds per sprint</span></div><div class="pi"><div class="pi-check">&#x2713;</div><span>AI outbound campaign build &amp; management</span></div><div class="pi"><div class="pi-check">&#x2713;</div><span>Platform orchestration &amp; API integrations</span></div><div class="pi"><div class="pi-check">&#x2713;</div><span>Marketing automation setup</span></div><div class="pi"><div class="pi-check">&#x2713;</div><span>AI ideation &amp; roadmap development</span></div><div class="pi"><div class="pi-check">&#x2713;</div><span>Priority async (&lt;4hr response)</span></div><div class="pi"><div class="pi-check">&#x2713;</div><span>Quarterly business review</span></div></div>
         <div class="pricing-foot"><button class="btn-primary" onclick="openModal()">Get Started &rarr;</button></div>
       </div>
       <div class="pricing-card reveal reveal-d3">
-        <div class="pricing-head"><div class="tier">Scale</div><div class="amount">$5,000 <span class="period">/ mo</span></div><div class="note">Full-stack AI transformation</div></div>
-        <div class="pricing-body"><h4>Everything in Growth, plus</h4><div class="pi"><div class="pi-check">&#x2713;</div><span>Unlimited AI builds per sprint</span></div><div class="pi"><div class="pi-check">&#x2713;</div><span>Custom AI application development</span></div><div class="pi"><div class="pi-check">&#x2713;</div><span>Dedicated Slack channel</span></div><div class="pi"><div class="pi-check">&#x2713;</div><span>2&times; weekly 60-min sessions</span></div><div class="pi"><div class="pi-check">&#x2713;</div><span>Revenue share / performance options</span></div><div class="pi"><div class="pi-check">&#x2713;</div><span>Multi-platform orchestration</span></div><div class="pi"><div class="pi-check">&#x2713;</div><span>Team training &amp; enablement</span></div></div>
+        <div class="pricing-head"><div class="tier">Scale</div><div class="amount">$8,000 <span class="period">/ mo</span></div><div class="note">Full-stack AI transformation</div></div>
+        <div class="pricing-body"><h4>Everything in Growth, plus</h4><div class="pi"><div class="pi-check">&#x2713;</div><span>Unlimited AI builds per sprint</span></div><div class="pi"><div class="pi-check">&#x2713;</div><span>Custom AI application development</span></div><div class="pi"><div class="pi-check">&#x2713;</div><span>Dedicated Slack channel</span></div><div class="pi"><div class="pi-check">&#x2713;</div><span>2&times; weekly 60-min strategy sessions</span></div><div class="pi"><div class="pi-check">&#x2713;</div><span>Revenue share / performance options</span></div><div class="pi"><div class="pi-check">&#x2713;</div><span>Multi-platform orchestration</span></div><div class="pi"><div class="pi-check">&#x2713;</div><span>Team training &amp; enablement</span></div></div>
         <div class="pricing-foot"><button class="btn-primary" onclick="openModal()">Get Started &rarr;</button></div>
       </div>
     </div>
   </div>
 </section>
 
-<div class="divider"></div>
-
 <!-- CONTRACTING -->
-<section class="section section-alt" id="contracting">
+<section class="section" id="contracting">
   <div class="container">
-    <div class="section-header-center reveal">
-      <div class="section-tag">Flexible Contracting</div>
-      <h2 class="section-title">Multiple ways to <span class="gradient-text">work together.</span></h2>
-      <p class="section-subtitle">Beyond monthly retainers, we offer engagement models that fit how your business operates.</p>
-    </div>
+    <div class="section-header-center reveal"><div class="section-tag">Flexible Contracting</div><h2 class="section-title">Multiple ways to <span class="gradient-text">work together.</span></h2></div>
     <div class="grid-2">
-      <div class="contract-card reveal reveal-d1"><h4>&#x1F4C5; Monthly Retainer <span class="badge badge-green">Recommended</span></h4><p>Flat monthly fee, 30-day cancellation, no setup costs. Sprint-based delivery with weekly calls and unlimited async. Start at $2K/mo and scale as results compound.</p></div>
-      <div class="contract-card reveal reveal-d2"><h4>&#x1F3AF; Project-Based</h4><p>Fixed scope, fixed price. Ideal for a specific automation, integration, or AI tool. Scoped with a detailed SOW, delivered in 2&ndash;8 weeks. Starts at $5K.</p></div>
-      <div class="contract-card reveal reveal-d3"><h4>&#x1F4B0; Performance / Revenue Share</h4><p>We tie compensation to your outcomes. Lower base retainer + percentage of revenue generated or costs saved. Available after 90 days of proven results.</p></div>
-      <div class="contract-card reveal reveal-d4"><h4>&#x23F0; Hourly Advisory</h4><p>Strategic guidance without a full retainer. $250/hr for AI strategy, architecture reviews, vendor evaluation, or technical due diligence.</p></div>
+      <div class="contract-card reveal reveal-d1"><h4>&#x1F4C5; Monthly Retainer <span class="badge badge-green">Recommended</span></h4><p>Flat monthly fee, 30-day cancellation. Sprint-based delivery with weekly calls and unlimited async. Start at $3K/mo.</p></div>
+      <div class="contract-card reveal reveal-d2"><h4>&#x1F3AF; Project-Based</h4><p>Fixed scope, fixed price. A specific automation, integration, or AI tool. 2&ndash;8 weeks. Starts at $8K.</p></div>
+      <div class="contract-card reveal reveal-d3"><h4>&#x1F4B0; Performance / Revenue Share</h4><p>Lower base + percentage of revenue generated or costs saved. Available after 90 days of results.</p></div>
+      <div class="contract-card reveal reveal-d4"><h4>&#x23F0; Hourly Advisory</h4><p>$300/hr for AI strategy, architecture reviews, vendor evaluation, or technical due diligence.</p></div>
     </div>
   </div>
 </section>
@@ -665,14 +483,11 @@ footer a { color: rgba(255,255,255,0.2); text-decoration: none; }
 <!-- TRUST -->
 <section class="trust-band">
   <div class="container">
-    <div class="section-header-center reveal">
-      <div class="section-tag">What Clients Experience</div>
-      <h2 class="section-title" style="color:white">Built for owners ready to <span class="gradient-text">move fast.</span></h2>
-    </div>
+    <div class="section-header-center reveal"><div class="section-tag">What Clients Experience</div><h2 class="section-title" style="color:white">Built for owners ready to <span class="gradient-text">move fast.</span></h2></div>
     <div class="trust-grid">
-      <div class="trust-card reveal reveal-d1"><p class="quote">"Having a weekly session to think about where AI fits &mdash; and then see it built &mdash; is unlike anything we've had. Like having a CTO on speed dial."</p><div class="trust-author"><div class="trust-avatar" style="background:linear-gradient(135deg,#3B82F6,#22D3EE)">JR</div><div><div class="trust-name">J. Rivera</div><div class="trust-role">Owner, Insurance Agency</div></div></div></div>
-      <div class="trust-card reveal reveal-d2"><p class="quote">"We went from manually chasing leads to a full outbound system in 30 days. The ROI was obvious before the second invoice."</p><div class="trust-author"><div class="trust-avatar" style="background:linear-gradient(135deg,#10B981,#22D3EE)">MS</div><div><div class="trust-name">M. Sullivan</div><div class="trust-role">Founder, B2B Services</div></div></div></div>
-      <div class="trust-card reveal reveal-d3"><p class="quote">"The async communication alone is worth it. I just send a message and we figure it out. It moves at the pace of business."</p><div class="trust-author"><div class="trust-avatar" style="background:linear-gradient(135deg,#7C3AED,#3B82F6)">TW</div><div><div class="trust-name">T. Wallace</div><div class="trust-role">CEO, Regional Retail</div></div></div></div>
+      <div class="trust-card reveal reveal-d1"><p class="quote">"Having a weekly session to think about where AI fits &mdash; and then see it built &mdash; is like having a CTO on speed dial."</p><div class="trust-author"><div class="trust-avatar" style="background:var(--gradient)">JR</div><div><div class="trust-name">J. Rivera</div><div class="trust-role">Owner, Insurance Agency</div></div></div></div>
+      <div class="trust-card reveal reveal-d2"><p class="quote">"Full outbound system in 30 days. ROI was obvious before the second invoice."</p><div class="trust-author"><div class="trust-avatar" style="background:linear-gradient(135deg,#10B981,#06B6D4)">MS</div><div><div class="trust-name">M. Sullivan</div><div class="trust-role">Founder, B2B Services</div></div></div></div>
+      <div class="trust-card reveal reveal-d3"><p class="quote">"The async alone is worth it. I send a message and we figure it out. Moves at the pace of business."</p><div class="trust-author"><div class="trust-avatar" style="background:linear-gradient(135deg,#7C3AED,#8B5CF6)">TW</div><div><div class="trust-name">T. Wallace</div><div class="trust-role">CEO, Regional Retail</div></div></div></div>
     </div>
   </div>
 </section>
@@ -680,15 +495,11 @@ footer a { color: rgba(255,255,255,0.2); text-decoration: none; }
 <!-- AGREEMENTS -->
 <section class="agreements-section" id="agreements">
   <div class="container">
-    <div class="section-header-center reveal">
-      <div class="section-tag">Transparency First</div>
-      <h2 class="section-title">Review agreements <span class="gradient-text">before we meet.</span></h2>
-      <p class="section-subtitle">Download branded PDF drafts right now &mdash; review on your time, or with your attorney.</p>
-    </div>
+    <div class="section-header-center reveal"><div class="section-tag">Transparency First</div><h2 class="section-title">Review agreements <span class="gradient-text">before we meet.</span></h2><p class="section-subtitle">Download branded PDF drafts right now &mdash; review on your time.</p></div>
     <div class="agreement-cards">
-      <div class="agreement-card reveal reveal-d1"><div class="agreement-icon" style="background:rgba(59,130,246,0.06)">&#x1F4DC;</div><h4>Master Services Agreement</h4><p>Terms, IP, liability, confidentiality, and the working relationship.</p><button class="btn-doc" onclick="downloadPDF('msa')">&#x2B07; Download MSA (PDF)</button></div>
-      <div class="agreement-card reveal reveal-d2"><div class="agreement-icon" style="background:rgba(124,58,237,0.06)">&#x1F512;</div><h4>Non-Disclosure Agreement</h4><p>Protects all proprietary information for 3 years (indefinitely for trade secrets).</p><button class="btn-doc" onclick="downloadPDF('nda')">&#x2B07; Download NDA (PDF)</button></div>
-      <div class="agreement-card reveal reveal-d3"><div class="agreement-icon" style="background:rgba(16,185,129,0.06)">&#x1F4CB;</div><h4>Statement of Work</h4><p>Generate a custom SOW for your business via our form.</p><button class="btn-doc" onclick="openModal()">&#x2726; Generate Custom SOW</button></div>
+      <div class="agreement-card reveal reveal-d1"><div class="agreement-icon" style="background:rgba(139,92,246,0.06)">&#x1F4DC;</div><h4>Master Services Agreement</h4><p>Terms, IP, liability, confidentiality.</p><button class="btn-doc" onclick="downloadPDF('msa')">&#x2B07; MSA (PDF)</button></div>
+      <div class="agreement-card reveal reveal-d2"><div class="agreement-icon" style="background:rgba(124,58,237,0.06)">&#x1F512;</div><h4>Non-Disclosure Agreement</h4><p>Mutual NDA. 3 years (indefinitely for trade secrets).</p><button class="btn-doc" onclick="downloadPDF('nda')">&#x2B07; NDA (PDF)</button></div>
+      <div class="agreement-card reveal reveal-d3"><div class="agreement-icon" style="background:rgba(6,182,212,0.06)">&#x1F4CB;</div><h4>Statement of Work</h4><p>Generate a custom SOW via our form.</p><button class="btn-doc" onclick="openModal()">&#x2726; Generate SOW</button></div>
     </div>
   </div>
 </section>
@@ -696,53 +507,28 @@ footer a { color: rgba(255,255,255,0.2); text-decoration: none; }
 <!-- CTA -->
 <section class="cta-section">
   <div class="cta-glow"></div>
-  <div class="container" style="position:relative">
-    <div class="section-tag">Ready to Start?</div>
-    <h2>Let's prove the value<br>in <span class="gradient-text">60 days.</span></h2>
-    <p>Start month-to-month. Real results every sprint. Scale when ready &mdash; or walk away.</p>
-    <div class="cta-actions">
-      <button class="btn-white" onclick="openModal()">Draft My Documents</button>
-      <button class="btn-ghost" onclick="openCalModal()">Talk to an AI Advisor</button>
-    </div>
+  <div class="container" style="position:relative"><div class="section-tag">Ready to Start?</div><h2>Let's prove the value in <span class="gradient-text">60 days.</span></h2><p>Start month-to-month. Real results every sprint. Scale when ready.</p>
+    <div class="cta-actions"><button class="btn-white" onclick="openModal()">Draft My Documents</button><button class="btn-ghost" onclick="openCalModal()">Talk to an AI Advisor</button></div>
   </div>
 </section>
 
 <!-- CALENDAR MODAL -->
 <div class="modal-overlay" id="calModalOverlay" onclick="if(event.target===this)closeCalModal()" style="z-index:300">
   <div class="modal" style="max-width:800px">
-    <div class="modal-header">
-      <div><div class="modal-title">Book a Discovery Call</div><div class="modal-subtitle">30 minutes &middot; No commitment &middot; AISymmetric AI Advisory</div></div>
-      <button class="modal-close" onclick="closeCalModal()">&#x2715;</button>
-    </div>
-    <div style="padding:20px 24px 0;display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
-      <div class="form-group"><label>Your Name</label><input type="text" id="cal_name" placeholder="Jane Smith"></div>
-      <div class="form-group"><label>Your Email</label><input type="email" id="cal_email" placeholder="jane@company.com"></div>
-      <div class="form-group"><label>Company</label><input type="text" id="cal_company" placeholder="Acme Co."></div>
-    </div>
-    <div style="padding:8px 24px 14px"><p style="font-size:12px;color:var(--gray-400)">Fill in your details above, then pick a time below.</p></div>
-    <div id="calConfirmBanner" style="display:none;padding:14px 24px;background:rgba(16,185,129,0.06);border-top:1px solid rgba(16,185,129,0.2);border-bottom:1px solid rgba(16,185,129,0.2)">
-      <div style="font-size:14px;font-weight:700;color:var(--green)">&#x2713; You're booked! Check your email for confirmation.</div>
-      <div style="font-size:12px;color:var(--green);margin-top:2px">Your AI advisor has been notified.</div>
-    </div>
-    <div style="border-top:1px solid var(--gray-100)">
-      <iframe src="https://calendar.app.google/UBYKESuX8bRKRXio8" style="width:100%;height:510px;border:none;display:block" title="Book a Discovery Call"></iframe>
-    </div>
-    <div style="padding:16px 24px;background:var(--gray-50);border-top:1px solid var(--gray-100);border-radius:0 0 20px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
-      <div style="font-size:12px;color:var(--gray-400)">Minnesota-based &middot; Serving SMBs Nationwide &middot; Remote-friendly</div>
-      <button class="btn-primary" onclick="notifyBooking()" style="font-size:13px;padding:10px 20px">&#x2713; I've Selected a Time</button>
-    </div>
+    <div class="modal-header"><div><div class="modal-title">Book a Discovery Call</div><div class="modal-subtitle">30 minutes &middot; No commitment &middot; AI Advisory</div></div><button class="modal-close" onclick="closeCalModal()">&#x2715;</button></div>
+    <div style="padding:20px 24px 0;display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px"><div class="form-group"><label>Name</label><input type="text" id="cal_name" placeholder="Jane Smith"></div><div class="form-group"><label>Email</label><input type="email" id="cal_email" placeholder="jane@company.com"></div><div class="form-group"><label>Company</label><input type="text" id="cal_company" placeholder="Acme Co."></div></div>
+    <div style="padding:8px 24px 14px"><p style="font-size:12px;color:var(--gray-400)">Fill in details above, then pick a time below.</p></div>
+    <div id="calConfirmBanner" style="display:none;padding:14px 24px;background:rgba(16,185,129,0.06);border-top:1px solid rgba(16,185,129,0.2);border-bottom:1px solid rgba(16,185,129,0.2)"><div style="font-size:14px;font-weight:700;color:var(--green)">&#x2713; Booked! Check your email.</div></div>
+    <div style="border-top:1px solid var(--gray-100)"><iframe src="https://calendar.app.google/UBYKESuX8bRKRXio8" style="width:100%;height:510px;border:none;display:block" title="Book a Call"></iframe></div>
+    <div style="padding:16px 24px;background:var(--gray-50);border-top:1px solid var(--gray-100);border-radius:0 0 20px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px"><div style="font-size:12px;color:var(--gray-400)">Minnesota &middot; Nationwide &middot; Remote</div><button class="btn-primary" onclick="notifyBooking()" style="font-size:13px;padding:10px 20px">&#x2713; I've Selected a Time</button></div>
   </div>
 </div>
 
-<footer>
-  <div class="foot-brand">&copy; 2026 AISymmetric, LLC</div>
-  <div class="foot-note">Minnesota-based &middot; Serving SMBs Nationwide &middot; <a href="https://aisymmetricsolutions.com" target="_blank">aisymmetricsolutions.com</a></div>
-</footer>
+<footer><div class="foot-brand">&copy; 2026 AISymmetric, LLC</div><div class="foot-note">Minnesota &middot; Nationwide &middot; <a href="https://aisymmetricsolutions.com" target="_blank">aisymmetricsolutions.com</a></div></footer>
 
-<!-- PDF RENDER -->
 <div id="pdfRender"></div>
 
-<!-- MODAL -->
+<!-- DOCUMENT MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
   <div class="modal">
     <div class="modal-header"><div><div class="modal-title">Draft Your MSA + SOW</div><div class="modal-subtitle">Generate custom agreement documents.</div></div><button class="modal-close" onclick="closeModal()">&#x2715;</button></div>
@@ -757,7 +543,7 @@ footer a { color: rgba(255,255,255,0.2); text-decoration: none; }
       </div>
       <div class="form-section" id="fsec1">
         <div class="form-row full"><div class="form-group"><label>Primary Goal</label><textarea id="f_goal" placeholder="e.g. Build AI outbound, automate CRM..."></textarea></div></div>
-        <div class="form-row"><div class="form-group"><label>Tier</label><select id="f_fee"><option value="$2,000">Starter ($2K/mo)</option><option value="$3,000" selected>Growth ($3K/mo)</option><option value="$5,000">Scale ($5K/mo)</option><option value="Custom">Custom</option></select></div><div class="form-group"><label>Billing</label><select id="f_billing"><option>1st of each month</option><option>15th of each month</option><option>Upon execution</option></select></div></div>
+        <div class="form-row"><div class="form-group"><label>Tier</label><select id="f_fee"><option value="$3,000">Starter ($3K/mo)</option><option value="$5,000" selected>Growth ($5K/mo)</option><option value="$8,000">Scale ($8K/mo)</option><option value="Custom">Custom</option></select></div><div class="form-group"><label>Billing</label><select id="f_billing"><option>1st of each month</option><option>15th of each month</option><option>Upon execution</option></select></div></div>
         <div class="section-divider">Focus Areas</div>
         <div class="checkbox-group">
           <label class="cb-item"><input type="checkbox" id="cb1" checked><span>AI Outbound &amp; Lead Gen</span></label>
@@ -773,90 +559,85 @@ footer a { color: rgba(255,255,255,0.2); text-decoration: none; }
         <div class="form-row full"><div class="form-group"><label>Notes</label><textarea id="f_notes" placeholder="Additional context..."></textarea></div></div>
       </div>
       <div class="form-section" id="fsec2">
-        <p style="font-size:13px;color:var(--gray-400);margin-bottom:16px">Review documents below. Download as branded PDFs or save to Google Drive.</p>
+        <p style="font-size:13px;color:var(--gray-400);margin-bottom:16px">Review documents. Download as branded PDFs or save to Google Drive.</p>
         <div class="modal-tabs" style="margin-bottom:16px"><button class="mtab active" onclick="switchDocTab(0)" id="doctab0">MSA</button><button class="mtab" onclick="switchDocTab(1)" id="doctab1">SOW</button></div>
-        <div id="msaPreview" class="preview-pane"></div>
-        <div id="sowPreview" class="preview-pane" style="display:none"></div>
-        <div id="gdriveStatus" style="display:none;margin-top:14px;padding:10px 14px;border-radius:8px;font-size:13px;align-items:center;gap:8px;"></div>
+        <div id="msaPreview" class="preview-pane"></div><div id="sowPreview" class="preview-pane" style="display:none"></div>
+        <div id="gdriveStatus" style="display:none;margin-top:14px;padding:10px 14px;border-radius:8px;font-size:13px"></div>
         <div class="export-actions">
           <button class="btn-export" id="btnGoogleAuth" onclick="handleGoogleAuth()" style="border:1.5px solid #dadce0;color:#3c4043"><svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z"/></svg>Google Drive</button>
-          <button class="btn-export" id="btnSaveDrive" onclick="saveBothToDrive()" style="display:none;background:linear-gradient(135deg,#1a73e8,#22D3EE);color:white;border-color:transparent">Save to Drive</button>
+          <button class="btn-export" id="btnSaveDrive" onclick="saveBothToDrive()" style="display:none;background:var(--gradient);color:white;border-color:transparent">Save to Drive</button>
           <button class="btn-export primary-export" onclick="downloadCustomPDF('msa')">&#x2B07; MSA (PDF)</button>
           <button class="btn-export primary-export" onclick="downloadCustomPDF('sow')">&#x2B07; SOW (PDF)</button>
           <button class="btn-export" onclick="copyDoc('msa')">Copy MSA</button>
           <button class="btn-export" onclick="copyDoc('sow')">Copy SOW</button>
         </div>
-        <div id="driveLinks" style="display:none;margin-top:16px;padding:16px;background:var(--gray-50);border-radius:10px;border:1px solid var(--gray-100)">
-          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--primary);margin-bottom:12px">Saved to Google Drive</div>
-          <div id="driveLinkMSA" style="margin-bottom:8px"></div><div id="driveLinkSOW"></div>
-        </div>
+        <div id="driveLinks" style="display:none;margin-top:16px;padding:16px;background:var(--gray-50);border-radius:10px;border:1px solid var(--gray-100)"><div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--primary);margin-bottom:12px">Saved to Google Drive</div><div id="driveLinkMSA" style="margin-bottom:8px"></div><div id="driveLinkSOW"></div></div>
       </div>
     </div>
-    <div class="modal-footer">
-      <div class="step-indicator"><div class="step-dot active" id="sd0"></div><div class="step-dot" id="sd1"></div><div class="step-dot" id="sd2"></div></div>
-      <button class="btn-modal-prev" id="btnPrev" onclick="prevStep()" style="display:none">&larr; Back</button>
-      <button class="btn-modal-next" id="btnNext" onclick="nextStep()">Continue &rarr;</button>
-      <button class="btn-modal-generate" id="btnGenerate" onclick="generateDocs()" style="display:none">&#x26A1; Generate</button>
-    </div>
+    <div class="modal-footer"><div class="step-indicator"><div class="step-dot active" id="sd0"></div><div class="step-dot" id="sd1"></div><div class="step-dot" id="sd2"></div></div><button class="btn-modal-prev" id="btnPrev" onclick="prevStep()" style="display:none">&larr; Back</button><button class="btn-modal-next" id="btnNext" onclick="nextStep()">Continue &rarr;</button><button class="btn-modal-generate" id="btnGenerate" onclick="generateDocs()" style="display:none">&#x26A1; Generate</button></div>
   </div>
 </div>
 
 <div class="toast" id="toast"><span style="font-size:18px">&#x2713;</span><span id="toastMsg"></span></div>
 
 <script>
+/* ═══ PARTICLES ═══ */
+(function(){const c=document.getElementById('particles'),ctx=c.getContext('2d');let w,h,pts=[];function resize(){w=c.width=window.innerWidth;h=c.height=window.innerHeight}
+function init(){pts=[];for(let i=0;i<60;i++)pts.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2.5+0.5,dx:(Math.random()-0.5)*0.4,dy:(Math.random()-0.5)*0.4,o:Math.random()*0.5+0.2,color:Math.random()>0.5?'139,92,246':'6,182,212'})}
+function draw(){ctx.clearRect(0,0,w,h);pts.forEach(p=>{p.x+=p.dx;p.y+=p.dy;if(p.x<0)p.x=w;if(p.x>w)p.x=0;if(p.y<0)p.y=h;if(p.y>h)p.y=0;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(${p.color},${p.o})`;ctx.fill()});requestAnimationFrame(draw)}
+resize();init();draw();window.addEventListener('resize',()=>{resize();init()})})();
+
 /* ═══ MODAL ═══ */
 let currentStep=0,msaText='',sowText='';
-function openModal(){document.getElementById('modalOverlay').classList.add('open');document.body.style.overflow='hidden';document.getElementById('f_date').value=new Date().toISOString().split('T')[0];}
-function closeModal(){document.getElementById('modalOverlay').classList.remove('open');document.body.style.overflow='';}
-function switchTab(n){if(n>currentStep)return;currentStep=n;updateStepUI();}
-function nextStep(){if(!validateStep(currentStep))return;if(currentStep<2){currentStep++;updateStepUI();}}
-function prevStep(){if(currentStep>0){currentStep--;updateStepUI();}}
-function validateStep(s){if(s===0){const f=document.getElementById('f_first').value.trim(),l=document.getElementById('f_last').value.trim(),c=document.getElementById('f_company').value.trim(),t=document.getElementById('f_title').value.trim();if(!f||!l||!c||!t){showToast('Please fill required fields');return false;}}return true;}
-function updateStepUI(){document.querySelectorAll('.form-section').forEach((s,i)=>s.classList.toggle('active',i===currentStep));['tab0','tab1','tab2'].forEach((id,i)=>document.getElementById(id).classList.toggle('active',i===currentStep));for(let i=0;i<3;i++){const d=document.getElementById('sd'+i);d.classList.remove('active','done');if(i<currentStep)d.classList.add('done');if(i===currentStep)d.classList.add('active');}document.getElementById('btnPrev').style.display=currentStep>0?'':'none';document.getElementById('btnNext').style.display=currentStep<2?'':'none';document.getElementById('btnGenerate').style.display=currentStep===2?'':'none';if(currentStep===2)buildPreviews();}
-function switchDocTab(n){document.getElementById('msaPreview').style.display=n===0?'':'none';document.getElementById('sowPreview').style.display=n===1?'':'none';document.getElementById('doctab0').classList.toggle('active',n===0);document.getElementById('doctab1').classList.toggle('active',n===1);}
+function openModal(){document.getElementById('modalOverlay').classList.add('open');document.body.style.overflow='hidden';document.getElementById('f_date').value=new Date().toISOString().split('T')[0]}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('open');document.body.style.overflow=''}
+function switchTab(n){if(n>currentStep)return;currentStep=n;updateStepUI()}
+function nextStep(){if(!validateStep(currentStep))return;if(currentStep<2){currentStep++;updateStepUI()}}
+function prevStep(){if(currentStep>0){currentStep--;updateStepUI()}}
+function validateStep(s){if(s===0){const f=document.getElementById('f_first').value.trim(),l=document.getElementById('f_last').value.trim(),c=document.getElementById('f_company').value.trim(),t=document.getElementById('f_title').value.trim();if(!f||!l||!c||!t){showToast('Please fill required fields');return false}}return true}
+function updateStepUI(){document.querySelectorAll('.form-section').forEach((s,i)=>s.classList.toggle('active',i===currentStep));['tab0','tab1','tab2'].forEach((id,i)=>document.getElementById(id).classList.toggle('active',i===currentStep));for(let i=0;i<3;i++){const d=document.getElementById('sd'+i);d.classList.remove('active','done');if(i<currentStep)d.classList.add('done');if(i===currentStep)d.classList.add('active')}document.getElementById('btnPrev').style.display=currentStep>0?'':'none';document.getElementById('btnNext').style.display=currentStep<2?'':'none';document.getElementById('btnGenerate').style.display=currentStep===2?'':'none';if(currentStep===2)buildPreviews()}
+function switchDocTab(n){document.getElementById('msaPreview').style.display=n===0?'':'none';document.getElementById('sowPreview').style.display=n===1?'':'none';document.getElementById('doctab0').classList.toggle('active',n===0);document.getElementById('doctab1').classList.toggle('active',n===1)}
+
+/* ═══ CALENDAR ═══ */
+function openCalModal(){document.getElementById('calModalOverlay').classList.add('open');document.body.style.overflow='hidden'}
+function closeCalModal(){document.getElementById('calModalOverlay').classList.remove('open');document.body.style.overflow=''}
+function notifyBooking(){const name=document.getElementById('cal_name').value.trim(),email=document.getElementById('cal_email').value.trim(),company=document.getElementById('cal_company').value.trim();if(!name||!email){showToast('Enter name and email first');return}document.getElementById('calConfirmBanner').style.display='block';const s=encodeURIComponent(`Discovery Call \u2014 ${name}${company?' / '+company:''}`),b=encodeURIComponent(`New call booked.\n\nName: ${name}\nEmail: ${email}\nCompany: ${company||'N/A'}`);window.open(`mailto:tyler.perleberg@aisymmetricsolutions.com?subject=${s}&body=${b}`,'_blank');showToast('Booking confirmed!');setTimeout(()=>{closeCalModal();document.getElementById('calConfirmBanner').style.display='none'},4000)}
 
 /* ═══ FORM ═══ */
-function getFormData(){const g=id=>document.getElementById(id).value.trim();return{first:g('f_first')||'[First Name]',last:g('f_last')||'[Last Name]',company:g('f_company')||'[Company Name]',title:g('f_title')||'[Title]',email:g('f_email')||'[Email]',phone:g('f_phone'),address:g('f_address')||'[Address]',industry:document.getElementById('f_industry').value||'[Industry]',date:(()=>{const v=document.getElementById('f_date').value;return v?new Date(v+'T12:00:00').toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}):'[Effective Date]';})(),goal:g('f_goal')||'Deploy AI-powered systems that drive revenue and operational leverage.',fee:document.getElementById('f_fee').value||'$3,000',billing:document.getElementById('f_billing').value||'1st of each month',stack:g('f_stack'),notes:g('f_notes'),focusAreas:(()=>{const m={cb1:'AI Outbound & Lead Gen',cb2:'CRM Automation & Hygiene',cb3:'Weekly Strategy & Advisory',cb4:'Workflow Automation',cb5:'Platform Orchestration',cb6:'Custom AI Apps',cb7:'Marketing Automation',cb8:'AI Assessments'};return Object.keys(m).filter(k=>document.getElementById(k).checked).map(k=>m[k]);})()};}
-function buildPreviews(){const d=getFormData();msaText=buildMSA(d);sowText=buildSOW(d);document.getElementById('msaPreview').innerText=msaText;document.getElementById('sowPreview').innerText=sowText;}
-function generateDocs(){buildPreviews();showToast('Documents generated!');}
-function buildMSA(d){return`MASTER SERVICES AGREEMENT (MSA)\n\nClient: ${d.company}\nService Provider: AISymmetric, LLC (Minnesota)\nEffective Date: ${d.date}\n\n1. PURPOSE\nGoverns advisory, technology, and AI services under applicable SOWs.\n\n2. SERVICES\nEach SOW details scope, deliverables, timelines, and compensation.\n\n3. TERM\n30 days written notice. Immediate termination for material breach.\n\n4. PAYMENT\nMonthly invoicing. Net 15. 1.5% monthly late fee.\n\n5. INDEPENDENT CONTRACTOR\nAISymmetric is an independent contractor of ${d.company}.\n\n6. CONFIDENTIALITY\nMutual. Survives 3 years (indefinitely for trade secrets).\n\n7. INTELLECTUAL PROPERTY\nClient owns deliverables. AISymmetric retains pre-existing IP with license.\n\n8. INDEMNIFICATION\nMutual for gross negligence or material breach.\n\n9. LIABILITY\nNo indirect damages. Cap: 3 months fees.\n\n10. NON-SOLICITATION\n12 months post-termination.\n\n11. GOVERNING LAW\nState of Minnesota.\n\n12. DISPUTES\n30-day negotiation, then binding arbitration (Hennepin County).\n\n13. ENTIRE AGREEMENT\nThis Agreement + SOWs = entire agreement.\n\nSIGNATURES\n\nClient (${d.company}):\nName: ${d.first} ${d.last} | ${d.title}\nSignature: ________________________________  Date: ___________\n\nService Provider (AISymmetric, LLC):\nName: Tyler Perleberg | Founder & CEO\nSignature: ________________________________  Date: ___________\n\nEXHIBIT A - NDA (see separate download)\n\n\u00A9 2026 AISymmetric, LLC. Proprietary & Confidential.`;}
-function buildSOW(d){const fl=d.focusAreas.length>0?d.focusAreas.map(a=>`  \u2022 ${a}`).join('\n'):'  \u2022 To be defined';return`STATEMENT OF WORK\nAI Strategy & Delivery Retainer\n\nClient: ${d.company}\nContact: ${d.first} ${d.last}, ${d.title}\nEmail: ${d.email}\nRetainer: ${d.fee}/month\nEffective: ${d.date}\nBilling: ${d.billing}\n\n1. PURPOSE\n${d.goal}\n${d.stack?'Tech Stack: '+d.stack:''}\n\n2. SCOPE\n${fl}\n\n3. DELIVERABLES\n  \u2022 4\u00d7 weekly strategy sessions\n  \u2022 1-3 AI builds/sprint\n  \u2022 Unlimited async support\n  \u2022 Monthly progress report\n\n4. PRICING\nRetainer: ${d.fee} | Billing: ${d.billing} | Net 15\n\n5. EXCLUSIONS\n  \u2022 Large migrations (>40hrs)\n  \u2022 Third-party licenses\n  \u2022 Out-of-scope (change order)\n\n${d.notes?'NOTES\n'+d.notes+'\n\n':''}SIGNATURES\n\nService Provider (AISymmetric, LLC):\nTyler Perleberg | Founder & CEO\nSignature: ________________________________  Date: ___________\n\nClient (${d.company}):\n${d.first} ${d.last} | ${d.title}\nSignature: ________________________________  Date: ___________\n\n\u00A9 2026 AISymmetric, LLC. Proprietary & Confidential.`;}
+function getFormData(){const g=id=>document.getElementById(id).value.trim();return{first:g('f_first')||'[First Name]',last:g('f_last')||'[Last Name]',company:g('f_company')||'[Company Name]',title:g('f_title')||'[Title]',email:g('f_email')||'[Email]',phone:g('f_phone'),address:g('f_address')||'[Address]',industry:document.getElementById('f_industry').value||'[Industry]',date:(()=>{const v=document.getElementById('f_date').value;return v?new Date(v+'T12:00:00').toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}):'[Effective Date]'})(),goal:g('f_goal')||'Deploy AI-powered systems that drive revenue and operational leverage.',fee:document.getElementById('f_fee').value||'$5,000',billing:document.getElementById('f_billing').value||'1st of each month',stack:g('f_stack'),notes:g('f_notes'),focusAreas:(()=>{const m={cb1:'AI Outbound & Lead Gen',cb2:'CRM Automation & Hygiene',cb3:'Weekly Strategy & Advisory',cb4:'Workflow Automation',cb5:'Platform Orchestration',cb6:'Custom AI Apps',cb7:'Marketing Automation',cb8:'AI Assessments'};return Object.keys(m).filter(k=>document.getElementById(k).checked).map(k=>m[k])})()}}
+function buildPreviews(){const d=getFormData();msaText=buildMSA(d);sowText=buildSOW(d);document.getElementById('msaPreview').innerText=msaText;document.getElementById('sowPreview').innerText=sowText}
+function generateDocs(){buildPreviews();showToast('Documents generated!')}
+function buildMSA(d){return`MASTER SERVICES AGREEMENT (MSA)\n\nClient: ${d.company}\nService Provider: AISymmetric, LLC (Minnesota)\nEffective Date: ${d.date}\n\n1. PURPOSE\nGoverns advisory, technology, and AI services under applicable SOWs.\n\n2. SERVICES\nEach SOW details scope, deliverables, timelines, and compensation.\n\n3. TERM\n30 days written notice. Immediate termination for material breach.\n\n4. PAYMENT\nMonthly invoicing. Net 15. 1.5% monthly late fee.\n\n5. INDEPENDENT CONTRACTOR\nAISymmetric is an independent contractor of ${d.company}.\n\n6. CONFIDENTIALITY\nMutual. Survives 3 years (indefinitely for trade secrets).\n\n7. INTELLECTUAL PROPERTY\nClient owns deliverables. AISymmetric retains pre-existing IP with license.\n\n8. INDEMNIFICATION\nMutual for gross negligence or material breach.\n\n9. LIABILITY\nNo indirect damages. Cap: 3 months fees.\n\n10. NON-SOLICITATION\n12 months post-termination.\n\n11. GOVERNING LAW\nState of Minnesota.\n\n12. DISPUTES\n30-day negotiation, then binding arbitration (Hennepin County).\n\n13. ENTIRE AGREEMENT\nThis Agreement + SOWs = entire agreement.\n\nSIGNATURES\n\nClient (${d.company}):\nName: ${d.first} ${d.last} | ${d.title}\nSignature: ________________________________  Date: ___________\n\nService Provider (AISymmetric, LLC):\nName: Tyler Perleberg | Founder & CEO\nSignature: ________________________________  Date: ___________\n\nEXHIBIT A - NDA (see separate download)\n\n\u00A9 2026 AISymmetric, LLC. Proprietary & Confidential.`}
+function buildSOW(d){const fl=d.focusAreas.length>0?d.focusAreas.map(a=>`  \u2022 ${a}`).join('\n'):'  \u2022 To be defined';return`STATEMENT OF WORK\nAI Strategy & Delivery Retainer\n\nClient: ${d.company}\nContact: ${d.first} ${d.last}, ${d.title}\nEmail: ${d.email}\nRetainer: ${d.fee}/month\nEffective: ${d.date}\nBilling: ${d.billing}\n\n1. PURPOSE\n${d.goal}\n${d.stack?'Tech Stack: '+d.stack:''}\n\n2. SCOPE\n${fl}\n\n3. DELIVERABLES\n  \u2022 4\u00d7 weekly strategy sessions\n  \u2022 1-5 AI builds/sprint (tier dependent)\n  \u2022 Unlimited async support\n  \u2022 Monthly progress report\n\n4. SPRINT STRUCTURE\n  Week 1: Discovery & planning\n  Week 2: Build & configure\n  Week 3: Integrate & test\n  Week 4: Review & optimize\n\n5. PRICING\nRetainer: ${d.fee} | Billing: ${d.billing} | Net 15\n\n6. EXCLUSIONS\n  \u2022 Large migrations (>40hrs)\n  \u2022 Third-party licenses\n  \u2022 Out-of-scope (change order)\n\n${d.notes?'NOTES\n'+d.notes+'\n\n':''}SIGNATURES\n\nService Provider (AISymmetric, LLC):\nTyler Perleberg | Founder & CEO\nSignature: ________________________________  Date: ___________\n\nClient (${d.company}):\n${d.first} ${d.last} | ${d.title}\nSignature: ________________________________  Date: ___________\n\n\u00A9 2026 AISymmetric, LLC. Proprietary & Confidential.`}
 
 /* ═══ PDF ═══ */
-function buildPDFHTML(type,d){d=d||{first:'[Client First Name]',last:'[Client Last Name]',company:'[Company Name]',title:'[Title]',email:'[Email]',date:'[Effective Date]',fee:'$3,000',billing:'1st of each month',goal:'[To be defined]',focusAreas:[],stack:'',notes:''};const sig=`<div class="sig-block"><p style="margin-top:28px"><strong>Client (${d.company}):</strong></p><p>Name: ${d.first} ${d.last}</p><p>Title: ${d.title}</p><div class="sig-line"></div><p style="font-size:10px;color:#666">Signature / Date</p><p style="margin-top:20px"><strong>Service Provider (AISymmetric, LLC):</strong></p><p>Name: Tyler Perleberg | Founder & CEO</p><div class="sig-line"></div><p style="font-size:10px;color:#666">Signature / Date</p></div>`;const footer=`<div class="pdf-footer">\u00A9 2026 AISymmetric, LLC. All rights reserved.<br>DRAFT \u2014 Not binding until executed by both parties.</div>`;
-if(type==='msa')return`<div class="draft-watermark">DRAFT</div><h1>Master Services Agreement</h1><div class="pdf-subtitle">AISymmetric, LLC</div><div class="meta"><strong>Client:</strong> ${d.company}</div><div class="meta"><strong>Provider:</strong> AISymmetric, LLC</div><div class="meta"><strong>Effective:</strong> ${d.date}</div><h2>1. Purpose</h2><p>Governs advisory, technology, and AI services under applicable SOWs.</p><h2>2. Services</h2><p>Each SOW details scope, deliverables, timelines, and compensation.</p><h2>3. Term</h2><p>30 days' written notice. Immediate termination for material breach.</p><h2>4. Payment</h2><p>Monthly invoicing. Net 15. 1.5% monthly late fee. Suspension after 30 days unpaid.</p><h2>5. Independent Contractor</h2><p>AISymmetric is an independent contractor.</p><h2>6. Confidentiality</h2><p>Mutual. Survives 3 years (indefinitely for trade secrets).</p><h2>7. Intellectual Property</h2><p>Client owns deliverables. AISymmetric retains pre-existing IP with non-exclusive license.</p><h2>8. Indemnification</h2><p>Mutual for gross negligence, willful misconduct, or material breach.</p><h2>9. Liability</h2><p>No indirect damages. Cap: 3 months' fees.</p><h2>10. Non-Solicitation</h2><p>12 months post-termination.</p><h2>11. Governing Law</h2><p>State of Minnesota.</p><h2>12. Disputes</h2><p>30-day negotiation, then binding arbitration (Hennepin County).</p><h2>13. Entire Agreement</h2><p>This Agreement + SOWs = entire agreement.</p>${sig}${footer}`;
-if(type==='nda')return`<div class="draft-watermark">DRAFT</div><h1>Non-Disclosure Agreement</h1><div class="pdf-subtitle">AISymmetric, LLC &mdash; Mutual NDA</div><div class="meta"><strong>Between:</strong> ${d.company} and AISymmetric, LLC</div><div class="meta"><strong>Effective:</strong> ${d.date}</div><h2>1. Confidential Information</h2><p>All non-public business, technical, or financial information.</p><h2>2. Obligations</h2><p>Maintain confidentiality, use only for engagement purposes, limit disclosure.</p><h2>3. Exclusions</h2><p>Public info, independently developed, rightfully received from third parties.</p><h2>4. Term</h2><p>3 years (indefinitely for trade secrets).</p><h2>5. Return</h2><p>Return or destroy within 10 business days.</p><h2>6. Law</h2><p>State of Minnesota.</p>${sig}${footer}`;
+function buildPDFHTML(type,d){d=d||{first:'[Client First Name]',last:'[Client Last Name]',company:'[Company Name]',title:'[Title]',email:'[Email]',date:'[Effective Date]',fee:'$5,000',billing:'1st of each month',goal:'[To be defined]',focusAreas:[],stack:'',notes:''};const sig=`<div class="sig-block"><p style="margin-top:28px"><strong>Client (${d.company}):</strong></p><p>Name: ${d.first} ${d.last} | ${d.title}</p><div class="sig-line"></div><p style="font-size:10px;color:#666">Signature / Date</p><p style="margin-top:20px"><strong>AISymmetric, LLC:</strong></p><p>Tyler Perleberg | Founder & CEO</p><div class="sig-line"></div><p style="font-size:10px;color:#666">Signature / Date</p></div>`;const footer=`<div class="pdf-footer">\u00A9 2026 AISymmetric, LLC. All rights reserved.<br>DRAFT \u2014 Not binding until executed.</div>`;
+if(type==='msa')return`<div class="draft-watermark">DRAFT</div><h1>Master Services Agreement</h1><div class="pdf-subtitle">AISymmetric, LLC</div><div class="meta"><strong>Client:</strong> ${d.company}</div><div class="meta"><strong>Provider:</strong> AISymmetric, LLC</div><div class="meta"><strong>Effective:</strong> ${d.date}</div><h2>1. Purpose</h2><p>Governs advisory and AI services under SOWs.</p><h2>2. Services</h2><p>Each SOW details scope, deliverables, and compensation.</p><h2>3. Term</h2><p>30 days' notice. Immediate for breach.</p><h2>4. Payment</h2><p>Monthly. Net 15. 1.5% late fee.</p><h2>5. Confidentiality</h2><p>Mutual. 3 years (indefinitely for trade secrets).</p><h2>6. IP</h2><p>Client owns deliverables. AISymmetric retains pre-existing IP.</p><h2>7. Liability</h2><p>No indirect damages. Cap: 3 months' fees.</p><h2>8. Law</h2><p>Minnesota. Hennepin County arbitration.</p>${sig}${footer}`;
+if(type==='nda')return`<div class="draft-watermark">DRAFT</div><h1>Non-Disclosure Agreement</h1><div class="pdf-subtitle">Mutual NDA</div><div class="meta"><strong>Between:</strong> ${d.company} and AISymmetric, LLC</div><div class="meta"><strong>Effective:</strong> ${d.date}</div><h2>1. Confidential Information</h2><p>All non-public business, technical, or financial information.</p><h2>2. Obligations</h2><p>Maintain confidentiality, use only for engagement purposes.</p><h2>3. Exclusions</h2><p>Public info, independently developed, rightfully received.</p><h2>4. Term</h2><p>3 years (indefinitely for trade secrets).</p><h2>5. Return</h2><p>Return or destroy within 10 business days.</p>${sig}${footer}`;
 const fl=d.focusAreas.length>0?d.focusAreas.map(a=>`<br>&nbsp;&nbsp;\u2022 ${a}`).join(''):'<br>&nbsp;&nbsp;\u2022 To be defined';
-return`<div class="draft-watermark">DRAFT</div><h1>Statement of Work</h1><div class="pdf-subtitle">AI Strategy & Delivery Retainer</div><div class="meta"><strong>Client:</strong> ${d.company}</div><div class="meta"><strong>Contact:</strong> ${d.first} ${d.last}, ${d.title}</div><div class="meta"><strong>Retainer:</strong> ${d.fee}/month</div><div class="meta"><strong>Effective:</strong> ${d.date}</div><h2>1. Purpose</h2><p>${d.goal}</p>${d.stack?'<p><strong>Stack:</strong> '+d.stack+'</p>':''}<h2>2. Scope</h2><p>Focus areas:${fl}</p><h2>3. Deliverables</h2><p>\u2022 4\u00d7 weekly sessions<br>\u2022 1-3 AI builds/sprint<br>\u2022 Unlimited async<br>\u2022 Monthly report</p><h2>4. Pricing</h2><p>${d.fee} | ${d.billing} | Net 15</p><h2>5. Exclusions</h2><p>\u2022 Large migrations<br>\u2022 Third-party costs<br>\u2022 Out-of-scope (change order)</p>${d.notes?'<h2>Notes</h2><p>'+d.notes+'</p>':''}${sig}${footer}`;}
-function downloadPDF(type){const el=document.getElementById('pdfRender');el.innerHTML=buildPDFHTML(type);const n={msa:'AISymmetric_MSA_DRAFT',nda:'AISymmetric_NDA_DRAFT',sow:'AISymmetric_SOW_DRAFT'};html2pdf().set({margin:[20,20,20,20],filename:n[type]+'.pdf',image:{type:'jpeg',quality:0.98},html2canvas:{scale:2,backgroundColor:'#fff'},jsPDF:{orientation:'portrait',unit:'mm',format:'letter'}}).from(el).save().then(()=>showToast(type.toUpperCase()+' downloaded!'));}
-function downloadCustomPDF(type){buildPreviews();const d=getFormData(),el=document.getElementById('pdfRender');el.innerHTML=buildPDFHTML(type,d);html2pdf().set({margin:[20,20,20,20],filename:`AISymmetric_${type.toUpperCase()}_${d.company.replace(/\s+/g,'_')}_DRAFT.pdf`,image:{type:'jpeg',quality:0.98},html2canvas:{scale:2,backgroundColor:'#fff'},jsPDF:{orientation:'portrait',unit:'mm',format:'letter'}}).from(el).save().then(()=>showToast(type.toUpperCase()+' PDF downloaded!'));}
-function copyDoc(type){buildPreviews();navigator.clipboard.writeText(type==='msa'?msaText:sowText).then(()=>showToast(type.toUpperCase()+' copied!'));}
-function showToast(msg){const t=document.getElementById('toast');document.getElementById('toastMsg').innerText=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
+return`<div class="draft-watermark">DRAFT</div><h1>Statement of Work</h1><div class="pdf-subtitle">AI Strategy & Delivery Retainer</div><div class="meta"><strong>Client:</strong> ${d.company}</div><div class="meta"><strong>Contact:</strong> ${d.first} ${d.last}, ${d.title}</div><div class="meta"><strong>Retainer:</strong> ${d.fee}/month</div><div class="meta"><strong>Effective:</strong> ${d.date}</div><h2>1. Purpose</h2><p>${d.goal}</p>${d.stack?'<p><strong>Stack:</strong> '+d.stack+'</p>':''}<h2>2. Scope</h2><p>Focus areas:${fl}</p><h2>3. Sprint Structure</h2><p>Week 1: Discovery & planning<br>Week 2: Build & configure<br>Week 3: Integrate & test<br>Week 4: Review & optimize</p><h2>4. Deliverables</h2><p>\u2022 4\u00d7 weekly sessions<br>\u2022 1-5 AI builds/sprint<br>\u2022 Unlimited async<br>\u2022 Monthly report</p><h2>5. Pricing</h2><p>${d.fee} | ${d.billing} | Net 15</p>${d.notes?'<h2>Notes</h2><p>'+d.notes+'</p>':''}${sig}${footer}`}
+function downloadPDF(type){const el=document.getElementById('pdfRender');el.innerHTML=buildPDFHTML(type);html2pdf().set({margin:[20,20,20,20],filename:`AISymmetric_${type.toUpperCase()}_DRAFT.pdf`,image:{type:'jpeg',quality:0.98},html2canvas:{scale:2,backgroundColor:'#fff'},jsPDF:{orientation:'portrait',unit:'mm',format:'letter'}}).from(el).save().then(()=>showToast(type.toUpperCase()+' downloaded!'))}
+function downloadCustomPDF(type){buildPreviews();const d=getFormData(),el=document.getElementById('pdfRender');el.innerHTML=buildPDFHTML(type,d);html2pdf().set({margin:[20,20,20,20],filename:`AISymmetric_${type.toUpperCase()}_${d.company.replace(/\s+/g,'_')}_DRAFT.pdf`,image:{type:'jpeg',quality:0.98},html2canvas:{scale:2,backgroundColor:'#fff'},jsPDF:{orientation:'portrait',unit:'mm',format:'letter'}}).from(el).save().then(()=>showToast(type.toUpperCase()+' PDF downloaded!'))}
+function copyDoc(type){buildPreviews();navigator.clipboard.writeText(type==='msa'?msaText:sowText).then(()=>showToast(type.toUpperCase()+' copied!'))}
+function showToast(msg){const t=document.getElementById('toast');document.getElementById('toastMsg').innerText=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000)}
 
 /* ═══ SCROLL ═══ */
-const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:0.1});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-document.querySelectorAll('.nav-link').forEach(link=>{link.addEventListener('click',e=>{const h=link.getAttribute('href');if(h&&h.startsWith('#')){e.preventDefault();document.querySelector(h)?.scrollIntoView({behavior:'smooth'});}});});
-
-/* ═══ CALENDAR MODAL ═══ */
-function openCalModal(){document.getElementById('calModalOverlay').classList.add('open');document.body.style.overflow='hidden';}
-function closeCalModal(){document.getElementById('calModalOverlay').classList.remove('open');document.body.style.overflow='';}
-function notifyBooking(){const name=document.getElementById('cal_name').value.trim(),email=document.getElementById('cal_email').value.trim(),company=document.getElementById('cal_company').value.trim();if(!name||!email){showToast('Please enter your name and email');return;}document.getElementById('calConfirmBanner').style.display='block';const subject=encodeURIComponent(`Discovery Call Booked — ${name}${company?' / '+company:''}`);const body=encodeURIComponent(`Hi Tyler,\n\nNew discovery call booked via AISymmetric SMB page.\n\nName: ${name}\nEmail: ${email}\nCompany: ${company||'Not provided'}\nTime: Selected via Google Calendar\n\nAutomated notification.`);window.open(`mailto:tyler.perleberg@aisymmetricsolutions.com?subject=${subject}&body=${body}`,'_blank');showToast('Booking confirmed!');setTimeout(()=>{closeCalModal();document.getElementById('calConfirmBanner').style.display='none';},4000);}
+document.querySelectorAll('.nav-link').forEach(link=>{link.addEventListener('click',e=>{const h=link.getAttribute('href');if(h&&h.startsWith('#')){e.preventDefault();document.querySelector(h)?.scrollIntoView({behavior:'smooth'})}})});
 
 /* ═══ GOOGLE DRIVE ═══ */
-const GOOGLE_CLIENT_ID='144394253191-k4986h9nna4u55a1ng04gp6m75nat6hj.apps.googleusercontent.com';
-const GDRIVE_FOLDER_ID='1Cn23lRaOcTitls2v1aHmHU-v2mGkOx-c';
-const GDRIVE_SCOPES='https://www.googleapis.com/auth/documents https://www.googleapis.com/auth/drive.file';
+const GOOGLE_CLIENT_ID='144394253191-k4986h9nna4u55a1ng04gp6m75nat6hj.apps.googleusercontent.com',GDRIVE_FOLDER_ID='1Cn23lRaOcTitls2v1aHmHU-v2mGkOx-c',GDRIVE_SCOPES='https://www.googleapis.com/auth/documents https://www.googleapis.com/auth/drive.file';
 let googleAccessToken=null,tokenClient=null;
-function initGoogleClient(){if(!window.google||!window.google.accounts){setTimeout(initGoogleClient,500);return;}tokenClient=google.accounts.oauth2.initTokenClient({client_id:GOOGLE_CLIENT_ID,scope:GDRIVE_SCOPES,hint:'tyler.perleberg@aisymmetricsolutions.com',callback:(r)=>{if(r.error)return;googleAccessToken=r.access_token;document.getElementById('gdriveStatus').style.display='flex';document.getElementById('gdriveStatus').innerHTML='\u2713 Connected';document.getElementById('gdriveStatus').style.cssText='display:flex;background:rgba(16,185,129,0.06);color:#10B981;border:1px solid rgba(16,185,129,0.2);border-radius:8px;padding:10px 14px;font-size:13px;margin-top:14px;margin-bottom:14px';document.getElementById('btnGoogleAuth').style.display='none';document.getElementById('btnSaveDrive').style.display='';}});}
+function initGoogleClient(){if(!window.google||!window.google.accounts){setTimeout(initGoogleClient,500);return}tokenClient=google.accounts.oauth2.initTokenClient({client_id:GOOGLE_CLIENT_ID,scope:GDRIVE_SCOPES,hint:'tyler.perleberg@aisymmetricsolutions.com',callback:(r)=>{if(r.error)return;googleAccessToken=r.access_token;const el=document.getElementById('gdriveStatus');el.style.display='flex';el.innerHTML='\u2713 Connected';el.style.cssText='display:flex;background:rgba(16,185,129,0.06);color:#10B981;border:1px solid rgba(16,185,129,0.2);border-radius:8px;padding:10px 14px;font-size:13px;margin-top:14px';document.getElementById('btnGoogleAuth').style.display='none';document.getElementById('btnSaveDrive').style.display=''}})}
 window.addEventListener('load',initGoogleClient);
-function handleGoogleAuth(){if(!tokenClient){showToast('Loading...');return;}tokenClient.requestAccessToken({prompt:'consent'});}
-function rgb(hex){return{red:parseInt(hex.slice(0,2),16)/255,green:parseInt(hex.slice(2,4),16)/255,blue:parseInt(hex.slice(4,6),16)/255};}
-function buildStructuredContent(type,d){const sig=[{type:'spacer'},{type:'meta',label:`Client (${d.company}):`,value:''},{type:'meta',label:'Name:',value:` ${d.first} ${d.last}`},{type:'meta',label:'Signature:',value:' ________________________________  Date: ___________'},{type:'spacer'},{type:'meta',label:'AISymmetric, LLC:',value:''},{type:'meta',label:'Name:',value:' Tyler Perleberg'},{type:'meta',label:'Signature:',value:' ________________________________  Date: ___________'},{type:'footer_line'}];if(type==='msa')return[{type:'title',text:'Master Services Agreement'},{type:'spacer'},{type:'meta',label:'Client:',value:` ${d.company}`},{type:'meta',label:'Provider:',value:' AISymmetric, LLC'},{type:'meta',label:'Effective:',value:` ${d.date}`},{type:'spacer'},{type:'h2',text:'1. Purpose'},{type:'body',text:`Governs advisory and AI services provided to ${d.company} under SOWs.`},{type:'h2',text:'2. Term'},{type:'body',text:"30 days' notice. Immediate for breach."},{type:'h2',text:'3. Payment'},{type:'body',text:'Monthly. Net 15. 1.5% late fee.'},{type:'h2',text:'4. Confidentiality'},{type:'body',text:'Mutual. 3 years (indefinitely for trade secrets).'},{type:'h2',text:'5. IP'},{type:'body',text:'Client owns deliverables. AISymmetric retains pre-existing IP.'},{type:'h2',text:'6. Liability'},{type:'body',text:'No indirect damages. Cap: 3 months fees.'},{type:'h2',text:'7. Law'},{type:'body',text:'State of Minnesota. Hennepin County arbitration.'},...sig];
-const fl=d.focusAreas.length>0?d.focusAreas.map(a=>`   \u2022 ${a}`).join('\n'):'   \u2022 To be defined';return[{type:'title',text:'Statement of Work'},{type:'subtitle',text:'AI Strategy & Delivery Retainer'},{type:'spacer'},{type:'meta',label:'Client:',value:` ${d.company}`},{type:'meta',label:'Retainer:',value:` ${d.fee}/month`},{type:'meta',label:'Effective:',value:` ${d.date}`},{type:'spacer'},{type:'h2',text:'1. Purpose'},{type:'body',text:d.goal},{type:'h2',text:'2. Scope'},{type:'body',text:fl},{type:'h2',text:'3. Deliverables'},{type:'body',text:'   \u2022 4\u00d7 weekly sessions\n   \u2022 1-3 AI builds\n   \u2022 Async support\n   \u2022 Monthly report'},{type:'h2',text:'4. Pricing'},{type:'meta',label:'Fee:',value:` ${d.fee}`},{type:'meta',label:'Billing:',value:` ${d.billing}`},...sig];}
-function buildDocRequests(items){let text='';const segs=[];for(const item of items){const s=text.length+1;if(item.type==='spacer')text+='\n';else if(item.type==='footer_line')text+='\n\u00A9 2026 AISymmetric, LLC.\n';else if(item.type==='meta')text+=item.label+item.value+'\n';else text+=item.text+'\n';segs.push({...item,start:s,end:text.length+1});}const reqs=[{insertText:{location:{index:1},text}}];[...segs].reverse().forEach(seg=>{const s=seg.start,e=seg.end-1;if(seg.type==='title')reqs.push({updateTextStyle:{range:{startIndex:s,endIndex:e},textStyle:{bold:true,fontSize:{magnitude:24,unit:'PT'},foregroundColor:{color:{rgbColor:rgb('17365D')}}},fields:'bold,fontSize,foregroundColor'}},{updateParagraphStyle:{range:{startIndex:s,endIndex:e},paragraphStyle:{alignment:'CENTER'},fields:'alignment'}});else if(seg.type==='subtitle')reqs.push({updateTextStyle:{range:{startIndex:s,endIndex:e},textStyle:{bold:true,fontSize:{magnitude:12,unit:'PT'},foregroundColor:{color:{rgbColor:rgb('17365D')}}},fields:'bold,fontSize,foregroundColor'}},{updateParagraphStyle:{range:{startIndex:s,endIndex:e},paragraphStyle:{alignment:'CENTER'},fields:'alignment'}});else if(seg.type==='h2')reqs.push({updateTextStyle:{range:{startIndex:s,endIndex:e},textStyle:{bold:true,fontSize:{magnitude:13,unit:'PT'},foregroundColor:{color:{rgbColor:rgb('4F81BD')}}},fields:'bold,fontSize,foregroundColor'}});else if(seg.type==='meta'){const le=s+seg.label.length;reqs.push({updateTextStyle:{range:{startIndex:s,endIndex:le},textStyle:{bold:true,fontSize:{magnitude:11,unit:'PT'}},fields:'bold,fontSize'}});}else if(seg.type==='body')reqs.push({updateTextStyle:{range:{startIndex:s,endIndex:e},textStyle:{fontSize:{magnitude:11,unit:'PT'}},fields:'fontSize'}});else if(seg.type==='footer_line')reqs.push({updateTextStyle:{range:{startIndex:s,endIndex:e},textStyle:{italic:true,fontSize:{magnitude:9,unit:'PT'},foregroundColor:{color:{rgbColor:rgb('666666')}}},fields:'italic,fontSize,foregroundColor'}},{updateParagraphStyle:{range:{startIndex:s,endIndex:e},paragraphStyle:{alignment:'CENTER'},fields:'alignment'}});});reqs.push({updateDocumentStyle:{documentStyle:{marginTop:{magnitude:72,unit:'PT'},marginBottom:{magnitude:72,unit:'PT'},marginLeft:{magnitude:72,unit:'PT'},marginRight:{magnitude:72,unit:'PT'}},fields:'marginTop,marginBottom,marginLeft,marginRight'}});return reqs;}
-async function createGoogleDoc(title,items){const cr=await fetch('https://docs.googleapis.com/v1/documents',{method:'POST',headers:{'Authorization':'Bearer '+googleAccessToken,'Content-Type':'application/json'},body:JSON.stringify({title})});if(!cr.ok)throw new Error('Create failed');const doc=await cr.json(),id=doc.documentId;await fetch(`https://docs.googleapis.com/v1/documents/${id}:batchUpdate`,{method:'POST',headers:{'Authorization':'Bearer '+googleAccessToken,'Content-Type':'application/json'},body:JSON.stringify({requests:buildDocRequests(items)})});await fetch(`https://www.googleapis.com/drive/v3/files/${id}?addParents=${GDRIVE_FOLDER_ID}&removeParents=root&fields=id`,{method:'PATCH',headers:{'Authorization':'Bearer '+googleAccessToken}});return{docUrl:'https://docs.google.com/document/d/'+id+'/edit'};}
-async function saveBothToDrive(){buildPreviews();if(!googleAccessToken){showToast('Connect Google Drive first');return;}const d=getFormData(),ds=new Date().toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'}),btn=document.getElementById('btnSaveDrive');btn.disabled=true;btn.innerHTML='Building...';try{const msa=await createGoogleDoc(`AISymmetric MSA \u2014 ${d.company} (${ds})`,buildStructuredContent('msa',d));const sow=await createGoogleDoc(`AISymmetric SOW \u2014 ${d.company} (${ds})`,buildStructuredContent('sow',d));document.getElementById('driveLinks').style.display='block';document.getElementById('driveLinkMSA').innerHTML=`<a href="${msa.docUrl}" target="_blank" style="font-size:13px;font-weight:600;color:var(--primary)">Open MSA \u2197</a>`;document.getElementById('driveLinkSOW').innerHTML=`<a href="${sow.docUrl}" target="_blank" style="font-size:13px;font-weight:600;color:var(--primary)">Open SOW \u2197</a>`;btn.innerHTML='\u2713 Saved';showToast('Saved to Drive!');}catch(err){showToast('Error: '+err.message);btn.disabled=false;btn.innerHTML='Save to Drive';}}
+function handleGoogleAuth(){if(!tokenClient){showToast('Loading...');return}tokenClient.requestAccessToken({prompt:'consent'})}
+function rgb(hex){return{red:parseInt(hex.slice(0,2),16)/255,green:parseInt(hex.slice(2,4),16)/255,blue:parseInt(hex.slice(4,6),16)/255}}
+function buildStructuredContent(type,d){const sig=[{type:'spacer'},{type:'meta',label:`Client (${d.company}):`,value:''},{type:'meta',label:'Name:',value:` ${d.first} ${d.last}`},{type:'meta',label:'Signature:',value:' ________________________________  Date: ___________'},{type:'spacer'},{type:'meta',label:'AISymmetric, LLC:',value:''},{type:'meta',label:'Name:',value:' Tyler Perleberg'},{type:'meta',label:'Signature:',value:' ________________________________  Date: ___________'},{type:'footer_line'}];if(type==='msa')return[{type:'title',text:'Master Services Agreement'},{type:'spacer'},{type:'meta',label:'Client:',value:` ${d.company}`},{type:'meta',label:'Provider:',value:' AISymmetric, LLC'},{type:'meta',label:'Effective:',value:` ${d.date}`},{type:'spacer'},{type:'h2',text:'1. Purpose'},{type:'body',text:`Governs advisory and AI services provided to ${d.company}.`},{type:'h2',text:'2. Term'},{type:'body',text:"30 days' notice."},{type:'h2',text:'3. Payment'},{type:'body',text:'Monthly. Net 15. 1.5% late fee.'},{type:'h2',text:'4. Confidentiality'},{type:'body',text:'Mutual. 3 years.'},{type:'h2',text:'5. IP'},{type:'body',text:'Client owns deliverables. AISymmetric retains pre-existing IP.'},{type:'h2',text:'6. Liability'},{type:'body',text:'Cap: 3 months fees.'},{type:'h2',text:'7. Law'},{type:'body',text:'Minnesota.'},...sig];
+const fl=d.focusAreas.length>0?d.focusAreas.map(a=>`   \u2022 ${a}`).join('\n'):'   \u2022 To be defined';return[{type:'title',text:'Statement of Work'},{type:'subtitle',text:'AI Strategy & Delivery Retainer'},{type:'spacer'},{type:'meta',label:'Client:',value:` ${d.company}`},{type:'meta',label:'Retainer:',value:` ${d.fee}/month`},{type:'meta',label:'Effective:',value:` ${d.date}`},{type:'spacer'},{type:'h2',text:'1. Purpose'},{type:'body',text:d.goal},{type:'h2',text:'2. Scope'},{type:'body',text:fl},{type:'h2',text:'3. Sprint Structure'},{type:'body',text:'Week 1: Discovery & planning\nWeek 2: Build & configure\nWeek 3: Integrate & test\nWeek 4: Review & optimize'},{type:'h2',text:'4. Deliverables'},{type:'body',text:'   \u2022 4\u00d7 weekly sessions\n   \u2022 1-5 AI builds\n   \u2022 Async support\n   \u2022 Monthly report'},{type:'h2',text:'5. Pricing'},{type:'meta',label:'Fee:',value:` ${d.fee}`},{type:'meta',label:'Billing:',value:` ${d.billing}`},...sig]}
+function buildDocRequests(items){let text='';const segs=[];for(const item of items){const s=text.length+1;if(item.type==='spacer')text+='\n';else if(item.type==='footer_line')text+='\n\u00A9 2026 AISymmetric, LLC.\n';else if(item.type==='meta')text+=item.label+item.value+'\n';else text+=item.text+'\n';segs.push({...item,start:s,end:text.length+1})}const reqs=[{insertText:{location:{index:1},text}}];[...segs].reverse().forEach(seg=>{const s=seg.start,e=seg.end-1;if(seg.type==='title')reqs.push({updateTextStyle:{range:{startIndex:s,endIndex:e},textStyle:{bold:true,fontSize:{magnitude:24,unit:'PT'},foregroundColor:{color:{rgbColor:rgb('4C1D95')}}},fields:'bold,fontSize,foregroundColor'}},{updateParagraphStyle:{range:{startIndex:s,endIndex:e},paragraphStyle:{alignment:'CENTER'},fields:'alignment'}});else if(seg.type==='subtitle')reqs.push({updateTextStyle:{range:{startIndex:s,endIndex:e},textStyle:{bold:true,fontSize:{magnitude:12,unit:'PT'},foregroundColor:{color:{rgbColor:rgb('4C1D95')}}},fields:'bold,fontSize,foregroundColor'}},{updateParagraphStyle:{range:{startIndex:s,endIndex:e},paragraphStyle:{alignment:'CENTER'},fields:'alignment'}});else if(seg.type==='h2')reqs.push({updateTextStyle:{range:{startIndex:s,endIndex:e},textStyle:{bold:true,fontSize:{magnitude:13,unit:'PT'},foregroundColor:{color:{rgbColor:rgb('7C3AED')}}},fields:'bold,fontSize,foregroundColor'}});else if(seg.type==='meta'){const le=s+seg.label.length;reqs.push({updateTextStyle:{range:{startIndex:s,endIndex:le},textStyle:{bold:true,fontSize:{magnitude:11,unit:'PT'}},fields:'bold,fontSize'}})}else if(seg.type==='body')reqs.push({updateTextStyle:{range:{startIndex:s,endIndex:e},textStyle:{fontSize:{magnitude:11,unit:'PT'}},fields:'fontSize'}});else if(seg.type==='footer_line')reqs.push({updateTextStyle:{range:{startIndex:s,endIndex:e},textStyle:{italic:true,fontSize:{magnitude:9,unit:'PT'},foregroundColor:{color:{rgbColor:rgb('666666')}}},fields:'italic,fontSize,foregroundColor'}},{updateParagraphStyle:{range:{startIndex:s,endIndex:e},paragraphStyle:{alignment:'CENTER'},fields:'alignment'}})});reqs.push({updateDocumentStyle:{documentStyle:{marginTop:{magnitude:72,unit:'PT'},marginBottom:{magnitude:72,unit:'PT'},marginLeft:{magnitude:72,unit:'PT'},marginRight:{magnitude:72,unit:'PT'}},fields:'marginTop,marginBottom,marginLeft,marginRight'}});return reqs}
+async function createGoogleDoc(title,items){const cr=await fetch('https://docs.googleapis.com/v1/documents',{method:'POST',headers:{'Authorization':'Bearer '+googleAccessToken,'Content-Type':'application/json'},body:JSON.stringify({title})});if(!cr.ok)throw new Error('Create failed');const doc=await cr.json(),id=doc.documentId;await fetch(`https://docs.googleapis.com/v1/documents/${id}:batchUpdate`,{method:'POST',headers:{'Authorization':'Bearer '+googleAccessToken,'Content-Type':'application/json'},body:JSON.stringify({requests:buildDocRequests(items)})});await fetch(`https://www.googleapis.com/drive/v3/files/${id}?addParents=${GDRIVE_FOLDER_ID}&removeParents=root&fields=id`,{method:'PATCH',headers:{'Authorization':'Bearer '+googleAccessToken}});return{docUrl:'https://docs.google.com/document/d/'+id+'/edit'}}
+async function saveBothToDrive(){buildPreviews();if(!googleAccessToken){showToast('Connect Google Drive first');return}const d=getFormData(),ds=new Date().toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'}),btn=document.getElementById('btnSaveDrive');btn.disabled=true;btn.innerHTML='Building...';try{const msa=await createGoogleDoc(`AISymmetric MSA \u2014 ${d.company} (${ds})`,buildStructuredContent('msa',d));const sow=await createGoogleDoc(`AISymmetric SOW \u2014 ${d.company} (${ds})`,buildStructuredContent('sow',d));document.getElementById('driveLinks').style.display='block';document.getElementById('driveLinkMSA').innerHTML=`<a href="${msa.docUrl}" target="_blank" style="font-size:13px;font-weight:600;color:var(--primary)">Open MSA \u2197</a>`;document.getElementById('driveLinkSOW').innerHTML=`<a href="${sow.docUrl}" target="_blank" style="font-size:13px;font-weight:600;color:var(--primary)">Open SOW \u2197</a>`;btn.innerHTML='\u2713 Saved';showToast('Saved to Drive!')}catch(err){showToast('Error: '+err.message);btn.disabled=false;btn.innerHTML='Save to Drive'}}
 </script>
 </body>
 </html>
