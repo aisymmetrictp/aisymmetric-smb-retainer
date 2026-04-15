@@ -794,9 +794,121 @@ function initGoogleClient(){if(!window.google||!window.google.accounts){setTimeo
 window.addEventListener('load',initGoogleClient);
 function handleGoogleAuth(){if(!tokenClient){showToast('Loading...');return}tokenClient.requestAccessToken({prompt:'consent'})}
 function rgb(hex){return{red:parseInt(hex.slice(0,2),16)/255,green:parseInt(hex.slice(2,4),16)/255,blue:parseInt(hex.slice(4,6),16)/255}}
-function buildStructuredContent(type,d){const sig=[{type:'spacer'},{type:'meta',label:`Client (${d.company}):`,value:''},{type:'meta',label:'Name:',value:` ${d.first} ${d.last}`},{type:'meta',label:'Signature:',value:' ________________________________  Date: ___________'},{type:'spacer'},{type:'meta',label:'AISymmetric, LLC:',value:''},{type:'meta',label:'Name:',value:' Tyler Perleberg'},{type:'meta',label:'Signature:',value:' ________________________________  Date: ___________'},{type:'footer_line'}];if(type==='msa')return[{type:'title',text:'Master Services Agreement'},{type:'spacer'},{type:'meta',label:'Client:',value:` ${d.company}`},{type:'meta',label:'Provider:',value:' AISymmetric, LLC'},{type:'meta',label:'Effective:',value:` ${d.date}`},{type:'spacer'},{type:'h2',text:'1. Purpose'},{type:'body',text:`Governs advisory and AI services provided to ${d.company}.`},{type:'h2',text:'2. Term'},{type:'body',text:"30 days' notice."},{type:'h2',text:'3. Payment'},{type:'body',text:'Monthly. Net 15. 1.5% late fee.'},{type:'h2',text:'4. Confidentiality'},{type:'body',text:'Mutual. 3 years.'},{type:'h2',text:'5. IP'},{type:'body',text:'Client owns deliverables. AISymmetric retains pre-existing IP.'},{type:'h2',text:'6. Liability'},{type:'body',text:'Cap: 3 months fees.'},{type:'h2',text:'7. Law'},{type:'body',text:'Minnesota.'},...sig];
-const fl=d.focusAreas.length>0?d.focusAreas.map(a=>`   \u2022 ${a}`).join('\n'):'   \u2022 To be defined';return[{type:'title',text:'Statement of Work'},{type:'subtitle',text:'AI Strategy & Delivery Retainer'},{type:'spacer'},{type:'meta',label:'Client:',value:` ${d.company}`},{type:'meta',label:'Retainer:',value:` ${d.fee}/month`},{type:'meta',label:'Effective:',value:` ${d.date}`},{type:'spacer'},{type:'h2',text:'1. Purpose'},{type:'body',text:d.goal},{type:'h2',text:'2. Scope'},{type:'body',text:fl},{type:'h2',text:'3. Sprint Structure'},{type:'body',text:'Week 1: Discovery & planning\nWeek 2: Build & configure\nWeek 3: Integrate & test\nWeek 4: Review & optimize'},{type:'h2',text:'4. Deliverables'},{type:'body',text:'   \u2022 4\u00d7 weekly sessions\n   \u2022 1-5 AI builds\n   \u2022 Async support\n   \u2022 Monthly report'},{type:'h2',text:'5. Pricing'},{type:'meta',label:'Fee:',value:` ${d.fee}`},{type:'meta',label:'Billing:',value:` ${d.billing}`},...sig]}
-function buildDocRequests(items){let text='';const segs=[];for(const item of items){const s=text.length+1;if(item.type==='spacer')text+='\n';else if(item.type==='footer_line')text+='\n\u00A9 2026 AISymmetric, LLC.\n';else if(item.type==='meta')text+=item.label+item.value+'\n';else text+=item.text+'\n';segs.push({...item,start:s,end:text.length+1})}const reqs=[{insertText:{location:{index:1},text}}];[...segs].reverse().forEach(seg=>{const s=seg.start,e=seg.end-1;if(seg.type==='title')reqs.push({updateTextStyle:{range:{startIndex:s,endIndex:e},textStyle:{bold:true,fontSize:{magnitude:24,unit:'PT'},foregroundColor:{color:{rgbColor:rgb('17365D')}}},fields:'bold,fontSize,foregroundColor'}},{updateParagraphStyle:{range:{startIndex:s,endIndex:e},paragraphStyle:{alignment:'CENTER'},fields:'alignment'}});else if(seg.type==='subtitle')reqs.push({updateTextStyle:{range:{startIndex:s,endIndex:e},textStyle:{bold:true,fontSize:{magnitude:12,unit:'PT'},foregroundColor:{color:{rgbColor:rgb('17365D')}}},fields:'bold,fontSize,foregroundColor'}},{updateParagraphStyle:{range:{startIndex:s,endIndex:e},paragraphStyle:{alignment:'CENTER'},fields:'alignment'}});else if(seg.type==='h2')reqs.push({updateTextStyle:{range:{startIndex:s,endIndex:e},textStyle:{bold:true,fontSize:{magnitude:13,unit:'PT'},foregroundColor:{color:{rgbColor:rgb('4F81BD')}}},fields:'bold,fontSize,foregroundColor'}});else if(seg.type==='meta'){const le=s+seg.label.length;reqs.push({updateTextStyle:{range:{startIndex:s,endIndex:le},textStyle:{bold:true,fontSize:{magnitude:11,unit:'PT'}},fields:'bold,fontSize'}})}else if(seg.type==='body')reqs.push({updateTextStyle:{range:{startIndex:s,endIndex:e},textStyle:{fontSize:{magnitude:11,unit:'PT'}},fields:'fontSize'}});else if(seg.type==='footer_line')reqs.push({updateTextStyle:{range:{startIndex:s,endIndex:e},textStyle:{italic:true,fontSize:{magnitude:9,unit:'PT'},foregroundColor:{color:{rgbColor:rgb('666666')}}},fields:'italic,fontSize,foregroundColor'}},{updateParagraphStyle:{range:{startIndex:s,endIndex:e},paragraphStyle:{alignment:'CENTER'},fields:'alignment'}})});reqs.push({updateDocumentStyle:{documentStyle:{marginTop:{magnitude:72,unit:'PT'},marginBottom:{magnitude:72,unit:'PT'},marginLeft:{magnitude:72,unit:'PT'},marginRight:{magnitude:72,unit:'PT'}},fields:'marginTop,marginBottom,marginLeft,marginRight'}});return reqs}
+function buildStructuredContent(type,d){
+const provSig=[{type:'spacer'},{type:'meta',label:'Service Provider',value:''},{type:'meta',label:'Name:',value:' Tyler Perleberg'},{type:'meta',label:'Title:',value:' Founder & CEO'},{type:'meta',label:'Company:',value:' AISymmetric, LLC'},{type:'meta',label:'Signature:',value:' __________________________'},{type:'meta',label:'Date:',value:' _______________'}];
+const clientSig=[{type:'spacer'},{type:'meta',label:'Client',value:''},{type:'meta',label:'Name:',value:` ${d.first} ${d.last}`},{type:'meta',label:'Title:',value:` ${d.title}`},{type:'meta',label:'Company:',value:` ${d.company}`},{type:'meta',label:'Signature:',value:' __________________________'},{type:'meta',label:'Date:',value:' _______________'}];
+const ftLine=[{type:'footer_line'}];
+
+if(type==='msa') return [
+{type:'title',text:'Master Services Agreement'},
+{type:'subtitle',text:'AISymmetric, LLC \u2022 AI Advisory & Delivery'},
+{type:'spacer'},
+{type:'meta',label:'Client:',value:` ${d.company}`},
+{type:'meta',label:'Contact:',value:` ${d.first} ${d.last}, ${d.title}`},
+{type:'meta',label:'Service Provider:',value:' AISymmetric, LLC, a Minnesota limited liability company'},
+{type:'meta',label:'Effective Date:',value:` ${d.date}`},
+{type:'spacer'},
+{type:'h2',text:'1. Purpose'},
+{type:'body',text:`This Agreement sets forth the general terms and conditions under which AISymmetric, LLC (\u201cService Provider\u201d) will provide advisory, technology, and AI-related professional services to ${d.company} (\u201cClient\u201d), as set forth in one or more Statements of Work (\u201cSOWs\u201d) governed by this Agreement.`},
+{type:'h2',text:'2. Services & Statements of Work'},
+{type:'body',text:'Each SOW shall detail the scope of services, deliverables, timelines, and compensation. SOWs will be incorporated into this Agreement by reference and shall be subject to the terms herein.'},
+{type:'h2',text:'3. Term and Termination'},
+{type:'body',text:'This Agreement shall remain in effect until terminated by either party with 30 days\u2019 written notice. Either party may terminate immediately for cause in the event of a material breach.'},
+{type:'h2',text:'4. Payment Terms'},
+{type:'body',text:'AISymmetric, LLC shall invoice monthly. Invoices are due within fifteen (15) days of receipt. Late payments are subject to a 1.5% monthly interest charge. AISymmetric, LLC reserves the right to suspend services upon ten (10) days\u2019 written notice if any invoice remains unpaid past thirty (30) days from due date, without waiving any other remedies.'},
+{type:'h2',text:'5. Independent Contractor Relationship'},
+{type:'body',text:`AISymmetric, LLC is an independent contractor and not an employee, partner, or joint venture of ${d.company}. The Service Provider shall be solely responsible for all taxes, insurance, and employment-related obligations.`},
+{type:'h2',text:'6. Confidentiality'},
+{type:'body',text:'Both parties agree to maintain the confidentiality of all proprietary and confidential information disclosed during the term of this Agreement. This obligation shall survive termination for three (3) years, or indefinitely with respect to trade secrets. Upon termination, each party shall promptly return or certifiably destroy all Confidential Information upon written request.'},
+{type:'h2',text:'7. Intellectual Property'},
+{type:'body',text:'Subject to full payment of applicable fees, Client shall own all final deliverables expressly identified as such in an applicable Statement of Work.\n\nNotwithstanding the foregoing, AISymmetric, LLC retains all right, title, and interest in and to:\n   \u2022 Pre-existing materials, methodologies, frameworks, tools, templates, models, and know-how\n   \u2022 All AI models, machine learning models, prompt architectures, automation workflows, and system configurations\n   \u2022 Any enhancements or reusable components developed in connection with, but not exclusively for, Client deliverables\n\nAISymmetric, LLC grants Client a non-exclusive, royalty-free license to use retained materials solely as incorporated into Deliverables for Client\u2019s internal business purposes.'},
+{type:'h2',text:'8. Indemnification'},
+{type:'body',text:'Each party agrees to indemnify, defend, and hold harmless the other party from any third-party claims arising out of that party\u2019s gross negligence, willful misconduct, or material breach of this Agreement.'},
+{type:'h2',text:'9. Limitation of Liability'},
+{type:'body',text:'Except for liability arising from breach of confidentiality or indemnification obligations, neither party shall be liable for indirect, incidental, or consequential damages. Total liability shall not exceed fees paid under the relevant SOW in the preceding three (3) months.'},
+{type:'h2',text:'10. Non-Solicitation'},
+{type:'body',text:'During the term and for 12 months following termination, each party agrees not to directly solicit or hire employees or contractors of the other party without prior written consent.'},
+{type:'h2',text:'11. Governing Law'},
+{type:'body',text:'This Agreement shall be governed by the laws of the State of Minnesota, without regard to its conflict of law principles.'},
+{type:'h2',text:'12. Non-Circumvention & Customer Protection'},
+{type:'body',text:'Introductions to AISymmetric, LLC\u2019s clients, prospects, partners, or vendors are confidential and proprietary to AISymmetric, LLC. This provision applies only to parties first introduced by AISymmetric, LLC.'},
+{type:'h2',text:'13. Dispute Resolution'},
+{type:'body',text:'The parties agree to attempt good-faith negotiation for thirty (30) days before proceeding to binding arbitration in Hennepin County, Minnesota, under AAA rules. The prevailing party shall recover reasonable attorneys\u2019 fees and costs.'},
+{type:'h2',text:'14. Force Majeure'},
+{type:'body',text:'Neither party shall be liable for delays caused by events beyond its reasonable control. If a Force Majeure Event continues beyond thirty (30) days, either party may terminate the affected SOW upon written notice.'},
+{type:'h2',text:'15. Assignment'},
+{type:'body',text:'Neither party may assign this Agreement without prior written consent. Either party may assign in connection with a merger, acquisition, or sale of substantially all assets, provided the assignee agrees to be bound by this Agreement.'},
+{type:'h2',text:'16. Entire Agreement'},
+{type:'body',text:'This Agreement, along with all applicable SOWs, constitutes the entire agreement between the parties. Amendments must be in writing and signed by both parties.'},
+{type:'spacer'},
+{type:'h2',text:'17. Signatures'},
+{type:'body',text:'IN WITNESS WHEREOF, the parties have executed this Agreement as of the Effective Date.'},
+...provSig,...clientSig,{type:'spacer'},
+{type:'exhibit',text:'Exhibit A \u2014 Non-Disclosure Agreement (NDA)'},
+{type:'body',text:`This Non-Disclosure Agreement is made and entered into as of the Effective Date by and between ${d.company} and AISymmetric, LLC. Each party may act as a Disclosing Party or Receiving Party.`},
+{type:'spacer'},
+{type:'meta',label:'Confidential Information:',value:' Includes all non-public business, technical, or financial information disclosed by Disclosing Party to Receiving Party.'},
+{type:'meta',label:'Obligations:',value:' Receiving Party agrees to (a) maintain confidentiality, (b) use information solely to fulfill obligations under the MSA, and (c) not disclose without prior written consent.'},
+{type:'meta',label:'Exclusions:',value:' Information that is publicly known, independently developed, or rightfully received from a third party is excluded.'},
+{type:'meta',label:'Term:',value:' Obligations survive three (3) years following termination of the MSA, or indefinitely for trade secrets.'},
+{type:'meta',label:'Return or Destruction:',value:' Upon request or termination, all Confidential Information shall be returned or certifiably destroyed within ten (10) business days.'},
+{type:'spacer'},
+{type:'body',text:'IN WITNESS WHEREOF, the parties have executed this NDA as of the Effective Date.'},
+...provSig,...clientSig,...ftLine];
+
+/* SOW */
+const fl=d.focusAreas.length>0?d.focusAreas.map(a=>`   \u2022 ${a}`).join('\n'):'   \u2022 [To be defined during kickoff]';
+const sowItems=[
+{type:'title',text:'Statement of Work'},
+{type:'subtitle',text:'AI Strategy & Delivery Retainer'},
+{type:'spacer'},
+{type:'meta',label:'Client:',value:` ${d.company}`},
+{type:'meta',label:'Contact:',value:` ${d.first} ${d.last}, ${d.title}`},
+{type:'meta',label:'Service Provider:',value:' Tyler Perleberg / AISymmetric, LLC'},
+{type:'meta',label:'Retainer Fee:',value:` ${d.fee} / month`},
+{type:'meta',label:'Effective Date:',value:` ${d.date}`},
+{type:'meta',label:'Billing:',value:` ${d.billing}`},
+{type:'meta',label:'Governing Agreements:',value:' Master Services Agreement and Non-Disclosure Agreement (both executed)'},
+{type:'spacer'},
+{type:'h2',text:'1. Purpose'},
+{type:'body',text:`This Statement of Work defines the scope, deliverables, and terms of the AI Strategy & Delivery Retainer between AISymmetric, LLC (\u201cService Provider\u201d) and ${d.company} (\u201cClient\u201d). The purpose of this engagement is to:\n\n${d.goal}`},
+];
+if(d.stack) sowItems.push({type:'body',text:`Current Tech Stack: ${d.stack}`});
+sowItems.push(
+{type:'h2',text:'2. Scope of Services'},
+{type:'body',text:`The engagement is structured as monthly agile sprints, prioritized collaboratively at the start of each billing cycle. Service focus areas for this engagement:\n\n${fl}`},
+{type:'h2',text:'3. Sprint Structure'},
+{type:'body',text:'Each month follows a 4-week agile sprint cycle:\n\n   Week 1 \u2014 Discovery & Planning: Sprint kickoff, system audit, quick win identification, backlog finalization.\n   Week 2 \u2014 Build & Configure: Core automations built, CRM/platform configuration, AI model setup.\n   Week 3 \u2014 Integrate & Test: Connect systems & APIs, end-to-end testing, campaign launch.\n   Week 4 \u2014 Review & Optimize: Performance review, optimization passes, sprint retrospective, next sprint planning.'},
+{type:'h2',text:'4. Monthly Deliverables'},
+{type:'body',text:'Each month, the Service Provider will deliver:\n   \u2022 4 \u00d7 weekly 30-minute strategy & advisory sessions (or equivalent async coverage)\n   \u2022 1\u20135 AI workflow, automation, or campaign builds per sprint (tier dependent)\n   \u2022 Continuous async support via Slack or email\n   \u2022 Sprint planning & retrospective documentation\n   \u2022 Monthly progress summary with key metrics and next-cycle recommendations\n\nSpecific priorities are confirmed collaboratively at sprint kickoff and may vary based on evolving business needs.'},
+{type:'h2',text:'5. Success Metrics'},
+{type:'body',text:'Performance will be evaluated against the following business outcomes:\n   \u2022 Volume and quality of AI-driven outputs (leads generated, automations built, campaigns deployed)\n   \u2022 Hours of manual operational work eliminated per month\n   \u2022 Conversion rate improvements in targeted workflows\n   \u2022 Platform adoption and integration health\n\nBaseline metrics will be established during the kickoff session in Sprint 1.'},
+{type:'h2',text:'6. Pricing & Payment Terms'},
+{type:'meta',label:'Monthly Retainer:',value:` ${d.fee} USD`},
+{type:'meta',label:'Billing Cycle:',value:` ${d.billing}`},
+{type:'meta',label:'Payment Due:',value:' Within 15 days of invoice receipt'},
+{type:'meta',label:'Late Fee:',value:' 1.5% per month on outstanding balances'},
+{type:'body',text:'Additional engagement models (performance-based, revenue share, or project-based hourly) are available upon mutual written agreement and amendment to this SOW.'},
+{type:'h2',text:'7. Scope Exclusions'},
+{type:'body',text:'The following are outside the scope of this retainer unless separately agreed in writing:\n   \u2022 Full platform migrations or large-scale CRM rebuilds (>40 hours in a single sprint)\n   \u2022 Third-party software licensing or paid media/advertising costs\n   \u2022 Work outside agreed sprint scope (requires written change order)\n   \u2022 Dedicated developer or designer resources beyond AISymmetric, LLC principals'},
+{type:'h2',text:'8. Immediate Next Steps'},
+{type:'meta',label:`${d.first} ${d.last} (${d.company}):`,value:''},
+{type:'body',text:'   \u2610 Execute MSA and this SOW\n   \u2610 Share access credentials for relevant platforms\n   \u2610 Confirm kickoff session availability\n   \u2610 Provide any existing data, prospect lists, or assets'},
+{type:'spacer'},
+{type:'meta',label:'AISymmetric, LLC:',value:''},
+{type:'body',text:'   \u2610 Schedule 60-minute kickoff session\n   \u2610 Conduct initial tech stack & process assessment\n   \u2610 Deliver Sprint 1 plan within 5 business days of kickoff'},
+{type:'h2',text:'9. Engagement Evolution'},
+{type:'body',text:`This SOW is designed to start focused and expand as the engagement matures. Scope, pricing, and service areas will be reviewed quarterly by mutual agreement to reflect ${d.company}\u2019s evolving needs and demonstrated results.`},
+);
+if(d.notes) sowItems.push({type:'h2',text:'Additional Notes'},{type:'body',text:d.notes});
+sowItems.push(
+{type:'spacer'},
+{type:'h2',text:'10. Signatures'},
+{type:'body',text:'By signing below, both parties agree to the terms of this Statement of Work, governed by the executed Master Services Agreement and Non-Disclosure Agreement.'},
+...provSig,...clientSig,...ftLine);
+return sowItems;
+}
+function buildDocRequests(items){let text='';const segs=[];for(const item of items){const s=text.length+1;if(item.type==='spacer')text+='\n';else if(item.type==='footer_line')text+='\n\u00A9 2026 AISymmetric, LLC.\n';else if(item.type==='meta')text+=item.label+item.value+'\n';else text+=item.text+'\n';segs.push({...item,start:s,end:text.length+1})}const reqs=[{insertText:{location:{index:1},text}}];[...segs].reverse().forEach(seg=>{const s=seg.start,e=seg.end-1;if(seg.type==='title')reqs.push({updateTextStyle:{range:{startIndex:s,endIndex:e},textStyle:{bold:true,fontSize:{magnitude:24,unit:'PT'},foregroundColor:{color:{rgbColor:rgb('17365D')}}},fields:'bold,fontSize,foregroundColor'}},{updateParagraphStyle:{range:{startIndex:s,endIndex:e},paragraphStyle:{alignment:'CENTER'},fields:'alignment'}});else if(seg.type==='subtitle')reqs.push({updateTextStyle:{range:{startIndex:s,endIndex:e},textStyle:{bold:true,fontSize:{magnitude:12,unit:'PT'},foregroundColor:{color:{rgbColor:rgb('17365D')}}},fields:'bold,fontSize,foregroundColor'}},{updateParagraphStyle:{range:{startIndex:s,endIndex:e},paragraphStyle:{alignment:'CENTER'},fields:'alignment'}});else if(seg.type==='exhibit')reqs.push({updateTextStyle:{range:{startIndex:s,endIndex:e},textStyle:{bold:true,fontSize:{magnitude:16,unit:'PT'},foregroundColor:{color:{rgbColor:rgb('17365D')}}},fields:'bold,fontSize,foregroundColor'}},{updateParagraphStyle:{range:{startIndex:s,endIndex:e},paragraphStyle:{spaceAbove:{magnitude:18,unit:'PT'},spaceBelow:{magnitude:8,unit:'PT'}},fields:'spaceAbove,spaceBelow'}});else if(seg.type==='h2')reqs.push({updateTextStyle:{range:{startIndex:s,endIndex:e},textStyle:{bold:true,fontSize:{magnitude:13,unit:'PT'},foregroundColor:{color:{rgbColor:rgb('4F81BD')}}},fields:'bold,fontSize,foregroundColor'}});else if(seg.type==='meta'){const le=s+seg.label.length;reqs.push({updateTextStyle:{range:{startIndex:s,endIndex:le},textStyle:{bold:true,fontSize:{magnitude:11,unit:'PT'}},fields:'bold,fontSize'}})}else if(seg.type==='body')reqs.push({updateTextStyle:{range:{startIndex:s,endIndex:e},textStyle:{fontSize:{magnitude:11,unit:'PT'}},fields:'fontSize'}});else if(seg.type==='footer_line')reqs.push({updateTextStyle:{range:{startIndex:s,endIndex:e},textStyle:{italic:true,fontSize:{magnitude:9,unit:'PT'},foregroundColor:{color:{rgbColor:rgb('666666')}}},fields:'italic,fontSize,foregroundColor'}},{updateParagraphStyle:{range:{startIndex:s,endIndex:e},paragraphStyle:{alignment:'CENTER'},fields:'alignment'}})});reqs.push({updateDocumentStyle:{documentStyle:{marginTop:{magnitude:72,unit:'PT'},marginBottom:{magnitude:72,unit:'PT'},marginLeft:{magnitude:72,unit:'PT'},marginRight:{magnitude:72,unit:'PT'}},fields:'marginTop,marginBottom,marginLeft,marginRight'}});return reqs}
 async function createGoogleDoc(title,items){const cr=await fetch('https://docs.googleapis.com/v1/documents',{method:'POST',headers:{'Authorization':'Bearer '+googleAccessToken,'Content-Type':'application/json'},body:JSON.stringify({title})});if(!cr.ok)throw new Error('Create failed');const doc=await cr.json(),id=doc.documentId;await fetch(`https://docs.googleapis.com/v1/documents/${id}:batchUpdate`,{method:'POST',headers:{'Authorization':'Bearer '+googleAccessToken,'Content-Type':'application/json'},body:JSON.stringify({requests:buildDocRequests(items)})});await fetch(`https://www.googleapis.com/drive/v3/files/${id}?addParents=${GDRIVE_FOLDER_ID}&removeParents=root&fields=id`,{method:'PATCH',headers:{'Authorization':'Bearer '+googleAccessToken}});return{docUrl:'https://docs.google.com/document/d/'+id+'/edit'}}
 async function saveBothToDrive(){buildPreviews();if(!googleAccessToken){showToast('Connect Google Drive first');return}const d=getFormData(),ds=new Date().toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'}),btn=document.getElementById('btnSaveDrive');btn.disabled=true;btn.innerHTML='Building...';try{const msa=await createGoogleDoc(`AISymmetric MSA \u2014 ${d.company} (${ds})`,buildStructuredContent('msa',d));const sow=await createGoogleDoc(`AISymmetric SOW \u2014 ${d.company} (${ds})`,buildStructuredContent('sow',d));document.getElementById('driveLinks').style.display='block';document.getElementById('driveLinkMSA').innerHTML=`<a href="${msa.docUrl}" target="_blank" style="font-size:13px;font-weight:600;color:var(--primary)">Open MSA \u2197</a>`;document.getElementById('driveLinkSOW').innerHTML=`<a href="${sow.docUrl}" target="_blank" style="font-size:13px;font-weight:600;color:var(--primary)">Open SOW \u2197</a>`;btn.innerHTML='\u2713 Saved';showToast('Saved to Drive!')}catch(err){showToast('Error: '+err.message);btn.disabled=false;btn.innerHTML='Save to Drive'}}
 </script>
