@@ -856,8 +856,7 @@ if(type==='msa') return [
 {type:'body',text:'IN WITNESS WHEREOF, the parties have executed this NDA as of the Effective Date.'},
 ...provSig,...clientSig,...ftLine];
 
-/* SOW */
-const fl=d.focusAreas.length>0?d.focusAreas.map(a=>`   \u2022 ${a}`).join('\n'):'   \u2022 [To be defined during kickoff]';
+/* SOW — matches AISymmetric_SOW_Template.docx exactly */
 const sowItems=[
 {type:'title',text:'Statement of Work'},
 {type:'subtitle',text:'AI Strategy & Delivery Retainer'},
@@ -871,18 +870,35 @@ const sowItems=[
 {type:'meta',label:'Governing Agreements:',value:' Master Services Agreement and Non-Disclosure Agreement (both executed)'},
 {type:'spacer'},
 {type:'h2',text:'1. Purpose'},
-{type:'body',text:`This Statement of Work defines the scope, deliverables, and terms of the AI Strategy & Delivery Retainer between AISymmetric, LLC (\u201cService Provider\u201d) and ${d.company} (\u201cClient\u201d). The purpose of this engagement is to:\n\n${d.goal}`},
+{type:'body',text:`This Statement of Work defines the scope, deliverables, and terms of the AI Strategy & Delivery Retainer between AISymmetric, LLC (\u201cService Provider\u201d) and ${d.company} (\u201cClient\u201d). The purpose of this engagement is to:`},
+{type:'body',text:d.goal},
 ];
-if(d.stack) sowItems.push({type:'body',text:`Current Tech Stack: ${d.stack}`});
+if(d.stack) sowItems.push({type:'spacer'},{type:'meta',label:'Current Tech Stack:',value:` ${d.stack}`});
 sowItems.push(
-{type:'h2',text:'2. Scope of Services'},
-{type:'body',text:`The engagement is structured as monthly agile sprints, prioritized collaboratively at the start of each billing cycle. Service focus areas for this engagement:\n\n${fl}`},
-{type:'h2',text:'3. Sprint Structure'},
-{type:'body',text:'Each month follows a 4-week agile sprint cycle:\n\n   Week 1 \u2014 Discovery & Planning: Sprint kickoff, system audit, quick win identification, backlog finalization.\n   Week 2 \u2014 Build & Configure: Core automations built, CRM/platform configuration, AI model setup.\n   Week 3 \u2014 Integrate & Test: Connect systems & APIs, end-to-end testing, campaign launch.\n   Week 4 \u2014 Review & Optimize: Performance review, optimization passes, sprint retrospective, next sprint planning.'},
+{type:'h2',text:'2. Background'},
+{type:'body',text:`${d.company} is engaging AISymmetric, LLC to deploy AI-powered systems across its operations. This engagement will leverage the client\u2019s existing technology stack and business processes to identify and implement high-impact AI solutions.`},
+{type:'h2',text:'3. Scope of Services'},
+{type:'body',text:'The engagement is structured as monthly agile sprints, prioritized collaboratively at the start of each billing cycle. Service focus areas for this engagement:'},
+{type:'spacer'},
+{type:'body',text:'AI-Powered Outbound & Lead Generation. Personalized outreach campaigns, lead prioritization, multi-touch sequencing, and AI-assisted messaging.\nExample: Weekly AI-generated email refresh pulling from advisor-specific data signals; automated multi-touch sequences.'},
+{type:'spacer'},
+{type:'body',text:'CRM Setup, Automation & Data Hygiene. Pipeline management, contact cleanup, lead routing, and workflow automation within your CRM.\nExample: Automated lead routing and tagging; clean data migration from legacy sources.'},
+{type:'spacer'},
+{type:'body',text:'Weekly Strategy & Advisory Sessions. 30-minute focused working sessions covering priorities, blockers, and AI roadmap development.\nExample: Weekly working sessions on messaging, conversion diagnostics, and sprint planning.'},
+{type:'spacer'},
+{type:'body',text:'Workflow Automation & Internal Tooling. Internal automations targeting operational efficiency, data hygiene, and time savings.\nExample: Automated follow-up logic, form-fill triggers, and internal notification workflows.'},
+{type:'spacer'},
+{type:'body',text:'Platform Orchestration & API Integrations. Connecting your tech stack via APIs so data flows where it needs to automatically.'},
+{type:'spacer'},
+{type:'body',text:'AI Assessments & Strategic Roadmapping. Structured audits of your operations, funnel, and tech stack to surface highest-leverage AI opportunities.'},
 {type:'h2',text:'4. Monthly Deliverables'},
-{type:'body',text:'Each month, the Service Provider will deliver:\n   \u2022 4 \u00d7 weekly 30-minute strategy & advisory sessions (or equivalent async coverage)\n   \u2022 1\u20135 AI workflow, automation, or campaign builds per sprint (tier dependent)\n   \u2022 Continuous async support via Slack or email\n   \u2022 Sprint planning & retrospective documentation\n   \u2022 Monthly progress summary with key metrics and next-cycle recommendations\n\nSpecific priorities are confirmed collaboratively at sprint kickoff and may vary based on evolving business needs.'},
+{type:'body',text:'Each month, the Service Provider will deliver:'},
+{type:'body',text:'   \u2022 4 \u00d7 weekly 30-minute strategy & advisory sessions (or equivalent async coverage)\n   \u2022 1\u20132 AI workflow, automation, or campaign builds per sprint\n   \u2022 Continuous async support via Slack or email\n   \u2022 Sprint planning & retrospective documentation\n   \u2022 Monthly progress summary with key metrics and next-cycle recommendations'},
+{type:'body',text:'Specific priorities are confirmed collaboratively at sprint kickoff and may vary based on evolving business needs.'},
 {type:'h2',text:'5. Success Metrics'},
-{type:'body',text:'Performance will be evaluated against the following business outcomes:\n   \u2022 Volume and quality of AI-driven outputs (leads generated, automations built, campaigns deployed)\n   \u2022 Hours of manual operational work eliminated per month\n   \u2022 Conversion rate improvements in targeted workflows\n   \u2022 Platform adoption and integration health\n\nBaseline metrics will be established during the kickoff session in Sprint 1.'},
+{type:'body',text:'Performance will be evaluated against the following business outcomes:'},
+{type:'body',text:'   \u2022 Volume and quality of AI-driven outputs (leads generated, automations built, campaigns deployed)\n   \u2022 Hours of manual operational work eliminated per month\n   \u2022 Conversion rate improvements in targeted workflows\n   \u2022 Platform adoption and integration health'},
+{type:'body',text:'Baseline metrics will be established during the kickoff session in Sprint 1.'},
 {type:'h2',text:'6. Pricing & Payment Terms'},
 {type:'meta',label:'Monthly Retainer:',value:` ${d.fee} USD`},
 {type:'meta',label:'Billing Cycle:',value:` ${d.billing}`},
@@ -890,13 +906,14 @@ sowItems.push(
 {type:'meta',label:'Late Fee:',value:' 1.5% per month on outstanding balances'},
 {type:'body',text:'Additional engagement models (performance-based, revenue share, or project-based hourly) are available upon mutual written agreement and amendment to this SOW.'},
 {type:'h2',text:'7. Scope Exclusions'},
-{type:'body',text:'The following are outside the scope of this retainer unless separately agreed in writing:\n   \u2022 Full platform migrations or large-scale CRM rebuilds (>40 hours in a single sprint)\n   \u2022 Third-party software licensing or paid media/advertising costs\n   \u2022 Work outside agreed sprint scope (requires written change order)\n   \u2022 Dedicated developer or designer resources beyond AISymmetric, LLC principals'},
+{type:'body',text:'The following are outside the scope of this retainer unless separately agreed in writing:'},
+{type:'body',text:'   \u2022 Full platform migrations or large-scale CRM rebuilds (>40 hours in a single sprint)\n   \u2022 Third-party software licensing or paid media/advertising costs\n   \u2022 Work outside agreed sprint scope (requires written change order)\n   \u2022 Dedicated developer or designer resources beyond AISymmetric, LLC principals'},
 {type:'h2',text:'8. Immediate Next Steps'},
 {type:'meta',label:`${d.first} ${d.last} (${d.company}):`,value:''},
-{type:'body',text:'   \u2610 Execute MSA and this SOW\n   \u2610 Share access credentials for relevant platforms\n   \u2610 Confirm kickoff session availability\n   \u2610 Provide any existing data, prospect lists, or assets'},
+{type:'body',text:'   \u2022 Execute MSA and this SOW\n   \u2022 Share access credentials for relevant platforms\n   \u2022 Confirm kickoff session availability\n   \u2022 Provide any existing data, prospect lists, or assets'},
 {type:'spacer'},
 {type:'meta',label:'AISymmetric, LLC:',value:''},
-{type:'body',text:'   \u2610 Schedule 60-minute kickoff session\n   \u2610 Conduct initial tech stack & process assessment\n   \u2610 Deliver Sprint 1 plan within 5 business days of kickoff'},
+{type:'body',text:'   \u2022 Schedule 60-minute kickoff session\n   \u2022 Conduct initial tech stack & process assessment\n   \u2022 Deliver Sprint 1 plan within 5 business days of kickoff'},
 {type:'h2',text:'9. Engagement Evolution'},
 {type:'body',text:`This SOW is designed to start focused and expand as the engagement matures. Scope, pricing, and service areas will be reviewed quarterly by mutual agreement to reflect ${d.company}\u2019s evolving needs and demonstrated results.`},
 );
