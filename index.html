@@ -909,23 +909,23 @@ const reqs=[{insertText:{location:{index:1},text}}];
 [...segs].reverse().forEach(seg=>{const s=seg.start,e=seg.end-1;if(e<=s)return;
 if(seg.type==='title')reqs.push(
 {updateTextStyle:{range:{startIndex:s,endIndex:e},textStyle:{bold:true,fontSize:{magnitude:26,unit:'PT'},foregroundColor:{color:{rgbColor:rgb('17365D')}},weightedFontFamily:{fontFamily:'Calibri'}},fields:'bold,fontSize,foregroundColor,weightedFontFamily'}},
-{updateParagraphStyle:{range:{startIndex:s,endIndex:e},paragraphStyle:{alignment:'CENTER',spaceAfter:{magnitude:5,unit:'PT'}},fields:'alignment,spaceAfter'}});
+{updateParagraphStyle:{range:{startIndex:s,endIndex:e},paragraphStyle:{alignment:'CENTER',spaceBelow:{magnitude:5,unit:'PT'}},fields:'alignment,spaceBelow'}});
 else if(seg.type==='subtitle')reqs.push(
 {updateTextStyle:{range:{startIndex:s,endIndex:e},textStyle:{bold:true,fontSize:{magnitude:11,unit:'PT'},foregroundColor:{color:{rgbColor:rgb('17365D')}},weightedFontFamily:{fontFamily:'Calibri'}},fields:'bold,fontSize,foregroundColor,weightedFontFamily'}},
-{updateParagraphStyle:{range:{startIndex:s,endIndex:e},paragraphStyle:{alignment:'CENTER',spaceAfter:{magnitude:14,unit:'PT'}},fields:'alignment,spaceAfter'}});
+{updateParagraphStyle:{range:{startIndex:s,endIndex:e},paragraphStyle:{alignment:'CENTER',spaceBelow:{magnitude:14,unit:'PT'}},fields:'alignment,spaceBelow'}});
 else if(seg.type==='exhibit')reqs.push(
 {updateTextStyle:{range:{startIndex:s,endIndex:e},textStyle:{bold:true,fontSize:{magnitude:16,unit:'PT'},foregroundColor:{color:{rgbColor:rgb('366091')}},weightedFontFamily:{fontFamily:'Calibri'}},fields:'bold,fontSize,foregroundColor,weightedFontFamily'}},
-{updateParagraphStyle:{range:{startIndex:s,endIndex:e},paragraphStyle:{spaceBefore:{magnitude:24,unit:'PT'},spaceAfter:{magnitude:8,unit:'PT'}},fields:'spaceBefore,spaceAfter'}});
+{updateParagraphStyle:{range:{startIndex:s,endIndex:e},paragraphStyle:{spaceAbove:{magnitude:24,unit:'PT'},spaceBelow:{magnitude:8,unit:'PT'}},fields:'spaceAbove,spaceBelow'}});
 else if(seg.type==='h2')reqs.push(
 {updateTextStyle:{range:{startIndex:s,endIndex:e},textStyle:{bold:true,fontSize:{magnitude:13,unit:'PT'},foregroundColor:{color:{rgbColor:rgb('4F81BD')}},weightedFontFamily:{fontFamily:'Calibri'}},fields:'bold,fontSize,foregroundColor,weightedFontFamily'}},
-{updateParagraphStyle:{range:{startIndex:s,endIndex:e},paragraphStyle:{spaceBefore:{magnitude:18,unit:'PT'},spaceAfter:{magnitude:6,unit:'PT'}},fields:'spaceBefore,spaceAfter'}});
+{updateParagraphStyle:{range:{startIndex:s,endIndex:e},paragraphStyle:{spaceAbove:{magnitude:18,unit:'PT'},spaceBelow:{magnitude:6,unit:'PT'}},fields:'spaceAbove,spaceBelow'}});
 else if(seg.type==='meta'){const le=Math.min(s+seg.label.length,e);reqs.push(
 {updateTextStyle:{range:{startIndex:s,endIndex:le},textStyle:{bold:true,fontSize:{magnitude:11,unit:'PT'},weightedFontFamily:{fontFamily:'Calibri'}},fields:'bold,fontSize,weightedFontFamily'}});
 if(seg.value&&le<e)reqs.push({updateTextStyle:{range:{startIndex:le,endIndex:e},textStyle:{bold:false,fontSize:{magnitude:11,unit:'PT'},weightedFontFamily:{fontFamily:'Calibri'}},fields:'bold,fontSize,weightedFontFamily'}});
-reqs.push({updateParagraphStyle:{range:{startIndex:s,endIndex:e},paragraphStyle:{spaceAfter:{magnitude:2,unit:'PT'}},fields:'spaceAfter'}});}
+reqs.push({updateParagraphStyle:{range:{startIndex:s,endIndex:e},paragraphStyle:{spaceBelow:{magnitude:2,unit:'PT'}},fields:'spaceBelow'}});}
 else if(seg.type==='body')reqs.push(
 {updateTextStyle:{range:{startIndex:s,endIndex:e},textStyle:{fontSize:{magnitude:11,unit:'PT'},weightedFontFamily:{fontFamily:'Calibri'}},fields:'fontSize,weightedFontFamily'}},
-{updateParagraphStyle:{range:{startIndex:s,endIndex:e},paragraphStyle:{lineSpacing:115,spaceAfter:{magnitude:8,unit:'PT'}},fields:'lineSpacing,spaceAfter'}});
+{updateParagraphStyle:{range:{startIndex:s,endIndex:e},paragraphStyle:{lineSpacing:115,spaceBelow:{magnitude:8,unit:'PT'}},fields:'lineSpacing,spaceBelow'}});
 });
 reqs.push({updateDocumentStyle:{documentStyle:{marginTop:{magnitude:72,unit:'PT'},marginBottom:{magnitude:72,unit:'PT'},marginLeft:{magnitude:72,unit:'PT'},marginRight:{magnitude:72,unit:'PT'}},fields:'marginTop,marginBottom,marginLeft,marginRight'}});
 return reqs;}
