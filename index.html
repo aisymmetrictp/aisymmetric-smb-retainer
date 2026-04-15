@@ -926,9 +926,90 @@ sowItems.push(
 ...provSig,...clientSig,...ftLine);
 return sowItems;
 }
-function buildDocRequests(items){let text='';const segs=[];for(const item of items){const s=text.length+1;if(item.type==='spacer')text+='\n';else if(item.type==='footer_line')text+='\n\u00A9 2026 AISymmetric, LLC.\n';else if(item.type==='meta')text+=item.label+item.value+'\n';else text+=item.text+'\n';segs.push({...item,start:s,end:text.length+1})}const reqs=[{insertText:{location:{index:1},text}}];[...segs].reverse().forEach(seg=>{const s=seg.start,e=seg.end-1;if(seg.type==='title')reqs.push({updateTextStyle:{range:{startIndex:s,endIndex:e},textStyle:{bold:true,fontSize:{magnitude:24,unit:'PT'},foregroundColor:{color:{rgbColor:rgb('17365D')}}},fields:'bold,fontSize,foregroundColor'}},{updateParagraphStyle:{range:{startIndex:s,endIndex:e},paragraphStyle:{alignment:'CENTER'},fields:'alignment'}});else if(seg.type==='subtitle')reqs.push({updateTextStyle:{range:{startIndex:s,endIndex:e},textStyle:{bold:true,fontSize:{magnitude:12,unit:'PT'},foregroundColor:{color:{rgbColor:rgb('17365D')}}},fields:'bold,fontSize,foregroundColor'}},{updateParagraphStyle:{range:{startIndex:s,endIndex:e},paragraphStyle:{alignment:'CENTER'},fields:'alignment'}});else if(seg.type==='exhibit')reqs.push({updateTextStyle:{range:{startIndex:s,endIndex:e},textStyle:{bold:true,fontSize:{magnitude:16,unit:'PT'},foregroundColor:{color:{rgbColor:rgb('17365D')}}},fields:'bold,fontSize,foregroundColor'}},{updateParagraphStyle:{range:{startIndex:s,endIndex:e},paragraphStyle:{spaceAbove:{magnitude:18,unit:'PT'},spaceBelow:{magnitude:8,unit:'PT'}},fields:'spaceAbove,spaceBelow'}});else if(seg.type==='h2')reqs.push({updateTextStyle:{range:{startIndex:s,endIndex:e},textStyle:{bold:true,fontSize:{magnitude:13,unit:'PT'},foregroundColor:{color:{rgbColor:rgb('4F81BD')}}},fields:'bold,fontSize,foregroundColor'}});else if(seg.type==='meta'){const le=s+seg.label.length;reqs.push({updateTextStyle:{range:{startIndex:s,endIndex:le},textStyle:{bold:true,fontSize:{magnitude:11,unit:'PT'}},fields:'bold,fontSize'}})}else if(seg.type==='body')reqs.push({updateTextStyle:{range:{startIndex:s,endIndex:e},textStyle:{fontSize:{magnitude:11,unit:'PT'}},fields:'fontSize'}});else if(seg.type==='footer_line')reqs.push({updateTextStyle:{range:{startIndex:s,endIndex:e},textStyle:{italic:true,fontSize:{magnitude:9,unit:'PT'},foregroundColor:{color:{rgbColor:rgb('666666')}}},fields:'italic,fontSize,foregroundColor'}},{updateParagraphStyle:{range:{startIndex:s,endIndex:e},paragraphStyle:{alignment:'CENTER'},fields:'alignment'}})});reqs.push({updateDocumentStyle:{documentStyle:{marginTop:{magnitude:72,unit:'PT'},marginBottom:{magnitude:72,unit:'PT'},marginLeft:{magnitude:72,unit:'PT'},marginRight:{magnitude:72,unit:'PT'}},fields:'marginTop,marginBottom,marginLeft,marginRight'}});return reqs}
-async function createGoogleDoc(title,items){const cr=await fetch('https://docs.googleapis.com/v1/documents',{method:'POST',headers:{'Authorization':'Bearer '+googleAccessToken,'Content-Type':'application/json'},body:JSON.stringify({title})});if(!cr.ok)throw new Error('Create failed');const doc=await cr.json(),id=doc.documentId;await fetch(`https://docs.googleapis.com/v1/documents/${id}:batchUpdate`,{method:'POST',headers:{'Authorization':'Bearer '+googleAccessToken,'Content-Type':'application/json'},body:JSON.stringify({requests:buildDocRequests(items)})});await fetch(`https://www.googleapis.com/drive/v3/files/${id}?addParents=${GDRIVE_FOLDER_ID}&removeParents=root&fields=id`,{method:'PATCH',headers:{'Authorization':'Bearer '+googleAccessToken}});return{docUrl:'https://docs.google.com/document/d/'+id+'/edit'}}
-async function saveBothToDrive(){buildPreviews();if(!googleAccessToken){showToast('Connect Google Drive first');return}const d=getFormData(),ds=new Date().toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'}),btn=document.getElementById('btnSaveDrive');btn.disabled=true;btn.innerHTML='Building...';try{const msa=await createGoogleDoc(`AISymmetric MSA \u2014 ${d.company} (${ds})`,buildStructuredContent('msa',d));const sow=await createGoogleDoc(`AISymmetric SOW \u2014 ${d.company} (${ds})`,buildStructuredContent('sow',d));document.getElementById('driveLinks').style.display='block';document.getElementById('driveLinkMSA').innerHTML=`<a href="${msa.docUrl}" target="_blank" style="font-size:13px;font-weight:600;color:var(--primary)">Open MSA \u2197</a>`;document.getElementById('driveLinkSOW').innerHTML=`<a href="${sow.docUrl}" target="_blank" style="font-size:13px;font-weight:600;color:var(--primary)">Open SOW \u2197</a>`;btn.innerHTML='\u2713 Saved';showToast('Saved to Drive!')}catch(err){showToast('Error: '+err.message);btn.disabled=false;btn.innerHTML='Save to Drive'}}
+function buildDocRequests(items){
+let text='';const segs=[];
+for(const item of items){const s=text.length+1;
+if(item.type==='spacer')text+='\n';
+else if(item.type==='footer_line'){/* handled in header/footer */}
+else if(item.type==='meta')text+=item.label+item.value+'\n';
+else text+=item.text+'\n';
+segs.push({...item,start:s,end:text.length+1});}
+const reqs=[{insertText:{location:{index:1},text}}];
+[...segs].reverse().forEach(seg=>{const s=seg.start,e=seg.end-1;if(e<=s)return;
+if(seg.type==='title')reqs.push(
+{updateTextStyle:{range:{startIndex:s,endIndex:e},textStyle:{bold:true,fontSize:{magnitude:26,unit:'PT'},foregroundColor:{color:{rgbColor:rgb('17365D')}},weightedFontFamily:{fontFamily:'Calibri'}},fields:'bold,fontSize,foregroundColor,weightedFontFamily'}},
+{updateParagraphStyle:{range:{startIndex:s,endIndex:e},paragraphStyle:{alignment:'CENTER',spaceAfter:{magnitude:5,unit:'PT'}},fields:'alignment,spaceAfter'}});
+else if(seg.type==='subtitle')reqs.push(
+{updateTextStyle:{range:{startIndex:s,endIndex:e},textStyle:{bold:true,fontSize:{magnitude:11,unit:'PT'},foregroundColor:{color:{rgbColor:rgb('17365D')}},weightedFontFamily:{fontFamily:'Calibri'}},fields:'bold,fontSize,foregroundColor,weightedFontFamily'}},
+{updateParagraphStyle:{range:{startIndex:s,endIndex:e},paragraphStyle:{alignment:'CENTER',spaceAfter:{magnitude:14,unit:'PT'}},fields:'alignment,spaceAfter'}});
+else if(seg.type==='exhibit')reqs.push(
+{updateTextStyle:{range:{startIndex:s,endIndex:e},textStyle:{bold:true,fontSize:{magnitude:16,unit:'PT'},foregroundColor:{color:{rgbColor:rgb('366091')}},weightedFontFamily:{fontFamily:'Calibri'}},fields:'bold,fontSize,foregroundColor,weightedFontFamily'}},
+{updateParagraphStyle:{range:{startIndex:s,endIndex:e},paragraphStyle:{spaceBefore:{magnitude:24,unit:'PT'},spaceAfter:{magnitude:8,unit:'PT'}},fields:'spaceBefore,spaceAfter'}});
+else if(seg.type==='h2')reqs.push(
+{updateTextStyle:{range:{startIndex:s,endIndex:e},textStyle:{bold:true,fontSize:{magnitude:13,unit:'PT'},foregroundColor:{color:{rgbColor:rgb('4F81BD')}},weightedFontFamily:{fontFamily:'Calibri'}},fields:'bold,fontSize,foregroundColor,weightedFontFamily'}},
+{updateParagraphStyle:{range:{startIndex:s,endIndex:e},paragraphStyle:{spaceBefore:{magnitude:18,unit:'PT'},spaceAfter:{magnitude:6,unit:'PT'}},fields:'spaceBefore,spaceAfter'}});
+else if(seg.type==='meta'){const le=Math.min(s+seg.label.length,e);reqs.push(
+{updateTextStyle:{range:{startIndex:s,endIndex:le},textStyle:{bold:true,fontSize:{magnitude:11,unit:'PT'},weightedFontFamily:{fontFamily:'Calibri'}},fields:'bold,fontSize,weightedFontFamily'}});
+if(seg.value&&le<e)reqs.push({updateTextStyle:{range:{startIndex:le,endIndex:e},textStyle:{bold:false,fontSize:{magnitude:11,unit:'PT'},weightedFontFamily:{fontFamily:'Calibri'}},fields:'bold,fontSize,weightedFontFamily'}});
+reqs.push({updateParagraphStyle:{range:{startIndex:s,endIndex:e},paragraphStyle:{spaceAfter:{magnitude:2,unit:'PT'}},fields:'spaceAfter'}});}
+else if(seg.type==='body')reqs.push(
+{updateTextStyle:{range:{startIndex:s,endIndex:e},textStyle:{fontSize:{magnitude:11,unit:'PT'},weightedFontFamily:{fontFamily:'Calibri'}},fields:'fontSize,weightedFontFamily'}},
+{updateParagraphStyle:{range:{startIndex:s,endIndex:e},paragraphStyle:{lineSpacing:115,spaceAfter:{magnitude:8,unit:'PT'}},fields:'lineSpacing,spaceAfter'}});
+});
+reqs.push({updateDocumentStyle:{documentStyle:{marginTop:{magnitude:72,unit:'PT'},marginBottom:{magnitude:72,unit:'PT'},marginLeft:{magnitude:72,unit:'PT'},marginRight:{magnitude:72,unit:'PT'}},fields:'marginTop,marginBottom,marginLeft,marginRight'}});
+return reqs;}
+
+const LOGO_URL='https://aismb.netlify.app/logo-doc.png';
+async function addHeaderFooter(docId,docType){
+const auth={'Authorization':'Bearer '+googleAccessToken,'Content-Type':'application/json'};
+const docTypeLabel=docType==='msa'?'Master Services Agreement':docType==='sow'?'Statement of Work':'Non-Disclosure Agreement';
+/* Create header & footer */
+const hfReqs=[
+{createHeader:{type:'DEFAULT',sectionBreakLocation:{index:0}}},
+{createFooter:{type:'DEFAULT',sectionBreakLocation:{index:0}}}
+];
+const hfResp=await fetch(`https://docs.googleapis.com/v1/documents/${docId}:batchUpdate`,{method:'POST',headers:auth,body:JSON.stringify({requests:hfReqs})});
+if(!hfResp.ok)return;
+const hfData=await hfResp.json();
+let headerId='',footerId='';
+for(const r of hfData.replies||[]){if(r.createHeader)headerId=r.createHeader.headerId;if(r.createFooter)footerId=r.createFooter.footerId;}
+/* Get header/footer segment indexes */
+const docResp=await fetch(`https://docs.googleapis.com/v1/documents/${docId}`,{headers:auth});
+const docData=await docResp.json();
+const headerSeg=docData.headers?.[headerId];
+const footerSeg=docData.footers?.[footerId];
+if(!headerSeg||!footerSeg)return;
+const hIdx=headerSeg.content[0]?.startIndex||0;
+const fIdx=footerSeg.content[0]?.startIndex||0;
+/* Build header & footer content */
+const headerText=`  AISymmetric, LLC   |   ${docTypeLabel}`;
+const footerText=`\u00A9 2026 AISymmetric, LLC. All rights reserved.\nThis document and the information contained herein are proprietary and confidential. No part of this document may be reproduced, distributed, reused, or disclosed to any third party without the express written consent of AISymmetric, LLC.`;
+const hfFmt=[];
+/* Insert footer text */
+hfFmt.push({insertText:{location:{segmentId:footerId,index:fIdx},text:footerText}});
+hfFmt.push({updateTextStyle:{range:{segmentId:footerId,startIndex:fIdx,endIndex:fIdx+footerText.length},textStyle:{italic:true,fontSize:{magnitude:8,unit:'PT'},foregroundColor:{color:{rgbColor:rgb('666666')}},weightedFontFamily:{fontFamily:'Calibri'}},fields:'italic,fontSize,foregroundColor,weightedFontFamily'}});
+hfFmt.push({updateParagraphStyle:{range:{segmentId:footerId,startIndex:fIdx,endIndex:fIdx+footerText.length},paragraphStyle:{alignment:'CENTER'},fields:'alignment'}});
+/* Insert header text */
+hfFmt.push({insertText:{location:{segmentId:headerId,index:hIdx},text:headerText}});
+hfFmt.push({updateTextStyle:{range:{segmentId:headerId,startIndex:hIdx,endIndex:hIdx+headerText.length},textStyle:{fontSize:{magnitude:9,unit:'PT'},foregroundColor:{color:{rgbColor:rgb('17365D')}},weightedFontFamily:{fontFamily:'Calibri'}},fields:'fontSize,foregroundColor,weightedFontFamily'}});
+/* Insert logo in header */
+hfFmt.push({insertInlineImage:{location:{segmentId:headerId,index:hIdx},uri:LOGO_URL,objectSize:{height:{magnitude:24,unit:'PT'},width:{magnitude:24,unit:'PT'}}}});
+await fetch(`https://docs.googleapis.com/v1/documents/${docId}:batchUpdate`,{method:'POST',headers:auth,body:JSON.stringify({requests:hfFmt})});
+}
+
+async function createGoogleDoc(title,items,docType){
+const auth={'Authorization':'Bearer '+googleAccessToken,'Content-Type':'application/json'};
+const cr=await fetch('https://docs.googleapis.com/v1/documents',{method:'POST',headers:auth,body:JSON.stringify({title})});
+if(!cr.ok)throw new Error('Create failed');
+const doc=await cr.json(),id=doc.documentId;
+/* Apply body content + formatting */
+await fetch(`https://docs.googleapis.com/v1/documents/${id}:batchUpdate`,{method:'POST',headers:auth,body:JSON.stringify({requests:buildDocRequests(items)})});
+/* Add branded header with logo + footer */
+await addHeaderFooter(id,docType).catch(()=>{});
+/* Move to folder */
+await fetch(`https://www.googleapis.com/drive/v3/files/${id}?addParents=${GDRIVE_FOLDER_ID}&removeParents=root&fields=id`,{method:'PATCH',headers:{'Authorization':'Bearer '+googleAccessToken}});
+return{docUrl:'https://docs.google.com/document/d/'+id+'/edit'};}
+async function saveBothToDrive(){buildPreviews();if(!googleAccessToken){showToast('Connect Google Drive first');return}const d=getFormData(),ds=new Date().toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'}),btn=document.getElementById('btnSaveDrive');btn.disabled=true;btn.innerHTML='Building...';try{const msa=await createGoogleDoc(`AISymmetric MSA \u2014 ${d.company} (${ds})`,buildStructuredContent('msa',d),'msa');const sow=await createGoogleDoc(`AISymmetric SOW \u2014 ${d.company} (${ds})`,buildStructuredContent('sow',d),'sow');document.getElementById('driveLinks').style.display='block';document.getElementById('driveLinkMSA').innerHTML=`<a href="${msa.docUrl}" target="_blank" style="font-size:13px;font-weight:600;color:var(--primary)">Open MSA \u2197</a>`;document.getElementById('driveLinkSOW').innerHTML=`<a href="${sow.docUrl}" target="_blank" style="font-size:13px;font-weight:600;color:var(--primary)">Open SOW \u2197</a>`;btn.innerHTML='\u2713 Saved';showToast('Saved to Drive!')}catch(err){showToast('Error: '+err.message);btn.disabled=false;btn.innerHTML='Save to Drive'}}
 </script>
 </body>
 </html>
