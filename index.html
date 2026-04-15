@@ -702,10 +702,37 @@ footer a { color: rgba(255,255,255,0.2); text-decoration: none; }
     <p>Start month-to-month. Real results every sprint. Scale when ready &mdash; or walk away.</p>
     <div class="cta-actions">
       <button class="btn-white" onclick="openModal()">Draft My Documents</button>
-      <a class="btn-ghost" href="mailto:tyler.perleberg@aisymmetricsolutions.com">Talk to Tyler First</a>
+      <button class="btn-ghost" onclick="openCalModal()">Talk to an AI Advisor</button>
     </div>
   </div>
 </section>
+
+<!-- CALENDAR MODAL -->
+<div class="modal-overlay" id="calModalOverlay" onclick="if(event.target===this)closeCalModal()" style="z-index:300">
+  <div class="modal" style="max-width:800px">
+    <div class="modal-header">
+      <div><div class="modal-title">Book a Discovery Call</div><div class="modal-subtitle">30 minutes &middot; No commitment &middot; AISymmetric AI Advisory</div></div>
+      <button class="modal-close" onclick="closeCalModal()">&#x2715;</button>
+    </div>
+    <div style="padding:20px 24px 0;display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
+      <div class="form-group"><label>Your Name</label><input type="text" id="cal_name" placeholder="Jane Smith"></div>
+      <div class="form-group"><label>Your Email</label><input type="email" id="cal_email" placeholder="jane@company.com"></div>
+      <div class="form-group"><label>Company</label><input type="text" id="cal_company" placeholder="Acme Co."></div>
+    </div>
+    <div style="padding:8px 24px 14px"><p style="font-size:12px;color:var(--gray-400)">Fill in your details above, then pick a time below.</p></div>
+    <div id="calConfirmBanner" style="display:none;padding:14px 24px;background:rgba(16,185,129,0.06);border-top:1px solid rgba(16,185,129,0.2);border-bottom:1px solid rgba(16,185,129,0.2)">
+      <div style="font-size:14px;font-weight:700;color:var(--green)">&#x2713; You're booked! Check your email for confirmation.</div>
+      <div style="font-size:12px;color:var(--green);margin-top:2px">Your AI advisor has been notified.</div>
+    </div>
+    <div style="border-top:1px solid var(--gray-100)">
+      <iframe src="https://calendar.app.google/UBYKESuX8bRKRXio8" style="width:100%;height:510px;border:none;display:block" title="Book a Discovery Call"></iframe>
+    </div>
+    <div style="padding:16px 24px;background:var(--gray-50);border-top:1px solid var(--gray-100);border-radius:0 0 20px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+      <div style="font-size:12px;color:var(--gray-400)">Minnesota-based &middot; Serving SMBs Nationwide &middot; Remote-friendly</div>
+      <button class="btn-primary" onclick="notifyBooking()" style="font-size:13px;padding:10px 20px">&#x2713; I've Selected a Time</button>
+    </div>
+  </div>
+</div>
 
 <footer>
   <div class="foot-brand">&copy; 2026 AISymmetric, LLC</div>
@@ -810,6 +837,11 @@ function showToast(msg){const t=document.getElementById('toast');document.getEle
 const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 document.querySelectorAll('.nav-link').forEach(link=>{link.addEventListener('click',e=>{const h=link.getAttribute('href');if(h&&h.startsWith('#')){e.preventDefault();document.querySelector(h)?.scrollIntoView({behavior:'smooth'});}});});
+
+/* ═══ CALENDAR MODAL ═══ */
+function openCalModal(){document.getElementById('calModalOverlay').classList.add('open');document.body.style.overflow='hidden';}
+function closeCalModal(){document.getElementById('calModalOverlay').classList.remove('open');document.body.style.overflow='';}
+function notifyBooking(){const name=document.getElementById('cal_name').value.trim(),email=document.getElementById('cal_email').value.trim(),company=document.getElementById('cal_company').value.trim();if(!name||!email){showToast('Please enter your name and email');return;}document.getElementById('calConfirmBanner').style.display='block';const subject=encodeURIComponent(`Discovery Call Booked — ${name}${company?' / '+company:''}`);const body=encodeURIComponent(`Hi Tyler,\n\nNew discovery call booked via AISymmetric SMB page.\n\nName: ${name}\nEmail: ${email}\nCompany: ${company||'Not provided'}\nTime: Selected via Google Calendar\n\nAutomated notification.`);window.open(`mailto:tyler.perleberg@aisymmetricsolutions.com?subject=${subject}&body=${body}`,'_blank');showToast('Booking confirmed!');setTimeout(()=>{closeCalModal();document.getElementById('calConfirmBanner').style.display='none';},4000);}
 
 /* ═══ GOOGLE DRIVE ═══ */
 const GOOGLE_CLIENT_ID='144394253191-k4986h9nna4u55a1ng04gp6m75nat6hj.apps.googleusercontent.com';
