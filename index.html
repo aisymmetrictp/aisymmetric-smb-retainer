@@ -6,7 +6,7 @@
 <title>AISymmetric — SMB AI Retainer</title>
 <meta name="description" content="Your dedicated AI strategy partner. Weekly advisory, agile builds, automation & full-stack AI delivery in one flat monthly retainer.">
 <link rel="icon" type="image/png" href="./logo.png">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -272,15 +272,7 @@ footer a{color:rgba(255,255,255,0.2);text-decoration:none}
 .btn-export.primary-export{background:var(--dark);color:var(--white);border-color:transparent}
 .btn-export.primary-export:hover{background:var(--primary);box-shadow:var(--shadow-glow)}
 
-#pdfRender{width:816px;font-family:'Inter',sans-serif;color:#000;background:#fff;padding:72px;line-height:1.6;position:relative}
-#pdfRender h1{color:#17365D;font-size:26px;font-weight:800;text-align:center;margin-bottom:4px}
-#pdfRender .pdf-subtitle{color:#17365D;font-size:13px;font-weight:700;text-align:center;margin-bottom:24px}
-#pdfRender h2{color:#4F81BD;font-size:15px;font-weight:700;margin:20px 0 8px;border-bottom:1px solid #ddd;padding-bottom:4px}
-#pdfRender p,#pdfRender .meta{font-size:11px;margin-bottom:6px}
-#pdfRender .meta strong{font-weight:700}
-#pdfRender .sig-line{border-bottom:1px solid #000;width:250px;margin:24px 0 4px}
-#pdfRender .pdf-footer{text-align:center;font-size:9px;color:#666;font-style:italic;margin-top:40px;border-top:1px solid #ccc;padding-top:12px}
-#pdfRender .draft-watermark{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-35deg);font-size:120px;font-weight:800;color:rgba(59,130,246,.06);pointer-events:none;z-index:0}
+/* PDF generated programmatically via jsPDF — no HTML rendering needed */
 
 .toast{position:fixed;bottom:24px;right:24px;z-index:999;padding:14px 20px;border-radius:var(--radius-md);background:var(--gray-900);color:var(--white);font-size:14px;font-weight:500;display:flex;align-items:center;gap:10px;box-shadow:0 8px 32px rgba(0,0,0,0.2);transform:translateY(80px);opacity:0;transition:all 0.35s var(--ease)}
 .toast.show{transform:translateY(0);opacity:1}
@@ -540,7 +532,6 @@ footer a{color:rgba(255,255,255,0.2);text-decoration:none}
 
 <footer><div class="foot-brand">&copy; 2026 AISymmetric, LLC</div><div class="foot-note">Minnesota &middot; Nationwide &middot; <a href="https://aisymmetricsolutions.com" target="_blank">aisymmetricsolutions.com</a></div></footer>
 
-<!-- PDF rendered dynamically via JS -->
 
 <!-- DOCUMENT MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
@@ -573,22 +564,39 @@ footer a{color:rgba(255,255,255,0.2);text-decoration:none}
         <div class="form-row full"><div class="form-group"><label>Notes</label><textarea id="f_notes" placeholder="Additional context..."></textarea></div></div>
       </div>
       <div class="form-section" id="fsec2">
-        <p style="font-size:13px;color:var(--gray-400);margin-bottom:16px">Review documents. Download as branded PDFs or save to Google Drive.</p>
-        <div class="modal-tabs" style="margin-bottom:16px"><button class="mtab active" onclick="switchDocTab(0)" id="doctab0">MSA</button><button class="mtab" onclick="switchDocTab(1)" id="doctab1">SOW</button></div>
+        <!-- Preview tabs -->
+        <div class="modal-tabs" style="margin-bottom:16px"><button class="mtab active" onclick="switchDocTab(0)" id="doctab0">MSA Preview</button><button class="mtab" onclick="switchDocTab(1)" id="doctab1">SOW Preview</button></div>
         <div id="msaPreview" class="preview-pane"></div><div id="sowPreview" class="preview-pane" style="display:none"></div>
-        <div id="gdriveStatus" style="display:none;margin-top:14px;padding:10px 14px;border-radius:8px;font-size:13px"></div>
-        <div class="export-actions">
-          <button class="btn-export" id="btnGoogleAuth" onclick="handleGoogleAuth()" style="border:1.5px solid #dadce0;color:#3c4043"><svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z"/></svg>Google Drive</button>
-          <button class="btn-export" id="btnSaveDrive" onclick="saveBothToDrive()" style="display:none;background:var(--gradient);color:white;border-color:transparent">Save to Drive</button>
-          <button class="btn-export primary-export" onclick="downloadCustomPDF('msa')">&#x2B07; MSA (PDF)</button>
-          <button class="btn-export primary-export" onclick="downloadCustomPDF('sow')">&#x2B07; SOW (PDF)</button>
-          <button class="btn-export" onclick="copyDoc('msa')">Copy MSA</button>
-          <button class="btn-export" onclick="copyDoc('sow')">Copy SOW</button>
+
+        <!-- Export options -->
+        <div style="margin-top:20px;padding:20px;background:var(--gray-50);border-radius:12px;border:1px solid var(--gray-100)">
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--primary);margin-bottom:14px">Export Your Documents</div>
+          <div class="export-actions" style="margin-top:0">
+            <button class="btn-export primary-export" onclick="downloadCustomPDF('msa')">&#x2B07; Download MSA (PDF)</button>
+            <button class="btn-export primary-export" onclick="downloadCustomPDF('sow')">&#x2B07; Download SOW (PDF)</button>
+          </div>
+          <div class="export-actions" style="margin-top:10px">
+            <button class="btn-export" id="btnGoogleAuth" onclick="handleGoogleAuth()" style="border:1.5px solid #dadce0;color:#3c4043"><svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z"/></svg> Save to Google Drive</button>
+            <button class="btn-export" id="btnSaveDrive" onclick="saveBothToDrive()" style="display:none;background:var(--gradient);color:white;border-color:transparent">&#x2713; Save Both to Drive</button>
+            <button class="btn-export" onclick="copyDoc('msa')">Copy MSA</button>
+            <button class="btn-export" onclick="copyDoc('sow')">Copy SOW</button>
+          </div>
+          <div id="gdriveStatus" style="display:none;margin-top:14px;padding:10px 14px;border-radius:8px;font-size:13px"></div>
+          <div id="driveLinks" style="display:none;margin-top:14px;padding:14px;background:var(--white);border-radius:10px;border:1px solid var(--gray-100)"><div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--primary);margin-bottom:10px">Saved to Google Drive</div><div id="driveLinkMSA" style="margin-bottom:6px"></div><div id="driveLinkSOW"></div></div>
         </div>
-        <div id="driveLinks" style="display:none;margin-top:16px;padding:16px;background:var(--gray-50);border-radius:10px;border:1px solid var(--gray-100)"><div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--primary);margin-bottom:12px">Saved to Google Drive</div><div id="driveLinkMSA" style="margin-bottom:8px"></div><div id="driveLinkSOW"></div></div>
+
+        <!-- Signature process guide -->
+        <div style="margin-top:16px;padding:20px;background:rgba(59,130,246,0.03);border-radius:12px;border:1px solid rgba(59,130,246,0.1)">
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--primary);margin-bottom:10px">&#x270D;&#xFE0F; How to Sign</div>
+          <div style="font-size:13px;color:var(--gray-500);line-height:1.7">
+            <strong style="color:var(--gray-700)">Option 1 &mdash; Google Docs (Recommended):</strong> Save to Google Drive above, then share the doc with your counterpart. Both parties can type signatures directly or use Insert &rarr; Drawing to add handwritten signatures.<br><br>
+            <strong style="color:var(--gray-700)">Option 2 &mdash; PDF + eSign:</strong> Download the PDF, upload to DocuSign, Adobe Sign, or any eSignature platform to send for formal execution.<br><br>
+            <strong style="color:var(--gray-700)">Option 3 &mdash; Print &amp; Sign:</strong> Download the PDF, print, sign with wet ink, scan, and return to <span style="color:var(--primary)">evangelist@aisymmetricsolutions.com</span>.
+          </div>
+        </div>
       </div>
     </div>
-    <div class="modal-footer"><div class="step-indicator"><div class="step-dot active" id="sd0"></div><div class="step-dot" id="sd1"></div><div class="step-dot" id="sd2"></div></div><button class="btn-modal-prev" id="btnPrev" onclick="prevStep()" style="display:none">&larr; Back</button><button class="btn-modal-next" id="btnNext" onclick="nextStep()">Continue &rarr;</button><button class="btn-modal-generate" id="btnGenerate" onclick="generateDocs()" style="display:none">&#x26A1; Generate</button></div>
+    <div class="modal-footer"><div class="step-indicator"><div class="step-dot active" id="sd0"></div><div class="step-dot" id="sd1"></div><div class="step-dot" id="sd2"></div></div><button class="btn-modal-prev" id="btnPrev" onclick="prevStep()" style="display:none">&larr; Back</button><button class="btn-modal-next" id="btnNext" onclick="nextStep()">Continue &rarr;</button><button class="btn-modal-generate" id="btnGenerate" onclick="generateAndExport()" style="display:none">&#x26A1; Download All</button></div>
   </div>
 </div>
 
@@ -628,158 +636,121 @@ function generateDocs(){buildPreviews();submitMSAForm();showToast('Documents gen
 function buildMSA(d){return`MASTER SERVICES AGREEMENT (MSA)\n\nClient: ${d.company}\nService Provider: AISymmetric, LLC (Minnesota)\nEffective Date: ${d.date}\n\n1. PURPOSE\nGoverns advisory, technology, and AI services under applicable SOWs.\n\n2. SERVICES\nEach SOW details scope, deliverables, timelines, and compensation.\n\n3. TERM\n30 days written notice. Immediate termination for material breach.\n\n4. PAYMENT\nMonthly invoicing. Net 15. 1.5% monthly late fee.\n\n5. INDEPENDENT CONTRACTOR\nAISymmetric is an independent contractor of ${d.company}.\n\n6. CONFIDENTIALITY\nMutual. Survives 3 years (indefinitely for trade secrets).\n\n7. INTELLECTUAL PROPERTY\nClient owns deliverables. AISymmetric retains pre-existing IP with license.\n\n8. INDEMNIFICATION\nMutual for gross negligence or material breach.\n\n9. LIABILITY\nNo indirect damages. Cap: 3 months fees.\n\n10. NON-SOLICITATION\n12 months post-termination.\n\n11. GOVERNING LAW\nState of Minnesota.\n\n12. DISPUTES\n30-day negotiation, then binding arbitration (Hennepin County).\n\n13. ENTIRE AGREEMENT\nThis Agreement + SOWs = entire agreement.\n\nSIGNATURES\n\nClient (${d.company}):\nName: ${d.first} ${d.last} | ${d.title}\nSignature: ________________________________  Date: ___________\n\nService Provider (AISymmetric, LLC):\nName: Tyler Perleberg | Founder & CEO\nSignature: ________________________________  Date: ___________\n\nEXHIBIT A - NDA (see separate download)\n\n\u00A9 2026 AISymmetric, LLC. Proprietary & Confidential.`}
 function buildSOW(d){const fl=d.focusAreas.length>0?d.focusAreas.map(a=>`  \u2022 ${a}`).join('\n'):'  \u2022 To be defined';return`STATEMENT OF WORK\nAI Strategy & Delivery Retainer\n\nClient: ${d.company}\nContact: ${d.first} ${d.last}, ${d.title}\nEmail: ${d.email}\nRetainer: ${d.fee}/month\nEffective: ${d.date}\nBilling: ${d.billing}\n\n1. PURPOSE\n${d.goal}\n${d.stack?'Tech Stack: '+d.stack:''}\n\n2. SCOPE\n${fl}\n\n3. DELIVERABLES\n  \u2022 4\u00d7 weekly strategy sessions\n  \u2022 1-5 AI builds/sprint (tier dependent)\n  \u2022 Unlimited async support\n  \u2022 Monthly progress report\n\n4. SPRINT STRUCTURE\n  Week 1: Discovery & planning\n  Week 2: Build & configure\n  Week 3: Integrate & test\n  Week 4: Review & optimize\n\n5. PRICING\nRetainer: ${d.fee} | Billing: ${d.billing} | Net 15\n\n6. EXCLUSIONS\n  \u2022 Large migrations (>40hrs)\n  \u2022 Third-party licenses\n  \u2022 Out-of-scope (change order)\n\n${d.notes?'NOTES\n'+d.notes+'\n\n':''}SIGNATURES\n\nService Provider (AISymmetric, LLC):\nTyler Perleberg | Founder & CEO\nSignature: ________________________________  Date: ___________\n\nClient (${d.company}):\n${d.first} ${d.last} | ${d.title}\nSignature: ________________________________  Date: ___________\n\n\u00A9 2026 AISymmetric, LLC. Proprietary & Confidential.`}
 
-/* ═══ PDF — Full Word Template Content ═══ */
-function buildPDFHTML(type,d){
-d=d||{first:'[FIRST NAME]',last:'[LAST NAME]',company:'[CLIENT COMPANY NAME]',title:'[TITLE]',email:'[EMAIL]',date:'[EFFECTIVE DATE]',fee:'$5,000',billing:'[BILLING CYCLE]',goal:'[DESCRIBE PRIMARY ENGAGEMENT GOAL]',focusAreas:[],stack:'',notes:''};
-const sigBlock=`<div style="margin-top:32px"><p style="margin-bottom:2px"><strong>Service Provider</strong></p><p>Name: Tyler Perleberg</p><p>Title: Founder &amp; CEO</p><p>Company: AISymmetric, LLC</p><p>Signature: __________________________</p><p>Date: _______________</p><br><p style="margin-bottom:2px"><strong>Client</strong></p><p>Name: ${d.first} ${d.last}</p><p>Title: ${d.title}</p><p>Company: ${d.company}</p><p>Signature: __________________________</p><p>Date: _______________</p></div>`;
-const footer=`<div class="pdf-footer">\u00A9 2026 AISymmetric, LLC. All rights reserved. Proprietary &amp; Confidential.<br>DRAFT \u2014 Not binding until executed by both parties.</div>`;
-
-if(type==='msa') return `<div class="draft-watermark">DRAFT</div>
-<h1>Master Services Agreement</h1>
-<div class="pdf-subtitle">AISymmetric, LLC \u2022 AI Advisory &amp; Delivery</div>
-<div class="meta"><strong>Client:</strong> ${d.company}</div>
-<div class="meta"><strong>Contact:</strong> ${d.first} ${d.last}, ${d.title}</div>
-<div class="meta"><strong>Service Provider:</strong> AISymmetric, LLC, a Minnesota limited liability company</div>
-<div class="meta"><strong>Effective Date:</strong> ${d.date}</div>
-<h2>1. Purpose</h2>
-<p>This Agreement sets forth the general terms and conditions under which AISymmetric, LLC (\u201cService Provider\u201d) will provide advisory, technology, and AI-related professional services to ${d.company} (\u201cClient\u201d), as set forth in one or more Statements of Work (\u201cSOWs\u201d) governed by this Agreement.</p>
-<h2>2. Services &amp; Statements of Work</h2>
-<p>Each SOW shall detail the scope of services, deliverables, timelines, and compensation. SOWs will be incorporated into this Agreement by reference and shall be subject to the terms herein.</p>
-<h2>3. Term and Termination</h2>
-<p>This Agreement shall remain in effect until terminated by either party with 30 days\u2019 written notice. Either party may terminate immediately for cause in the event of a material breach.</p>
-<h2>4. Payment Terms</h2>
-<p>AISymmetric, LLC shall invoice monthly. Invoices are due within fifteen (15) days of receipt. Late payments are subject to a 1.5% monthly interest charge. AISymmetric, LLC reserves the right to suspend services upon ten (10) days\u2019 written notice if any invoice remains unpaid past thirty (30) days from due date, without waiving any other remedies.</p>
-<h2>5. Independent Contractor Relationship</h2>
-<p>AISymmetric, LLC is an independent contractor and not an employee, partner, or joint venture of ${d.company}. The Service Provider shall be solely responsible for all taxes, insurance, and employment-related obligations.</p>
-<h2>6. Confidentiality</h2>
-<p>Both parties agree to maintain the confidentiality of all proprietary and confidential information disclosed during the term of this Agreement. This obligation shall survive termination for three (3) years, or indefinitely with respect to trade secrets. Upon termination, each party shall promptly return or certifiably destroy all Confidential Information upon written request.</p>
-<h2>7. Intellectual Property</h2>
-<p>Subject to full payment of applicable fees, Client shall own all final deliverables expressly identified as such in an applicable Statement of Work. Notwithstanding the foregoing, AISymmetric, LLC retains all right, title, and interest in and to: pre-existing materials, methodologies, frameworks, tools, templates, models, and know-how; all AI models, machine learning models, prompt architectures, automation workflows, and system configurations; any enhancements or reusable components developed in connection with, but not exclusively for, Client deliverables. AISymmetric, LLC grants Client a non-exclusive, royalty-free license to use retained materials solely as incorporated into Deliverables for Client\u2019s internal business purposes.</p>
-<h2>8. Indemnification</h2>
-<p>Each party agrees to indemnify, defend, and hold harmless the other party from any third-party claims arising out of that party\u2019s gross negligence, willful misconduct, or material breach of this Agreement.</p>
-<h2>9. Limitation of Liability</h2>
-<p>Except for liability arising from breach of confidentiality or indemnification obligations, neither party shall be liable for indirect, incidental, or consequential damages. Total liability shall not exceed fees paid under the relevant SOW in the preceding three (3) months.</p>
-<h2>10. Non-Solicitation</h2>
-<p>During the term and for 12 months following termination, each party agrees not to directly solicit or hire employees or contractors of the other party without prior written consent.</p>
-<h2>11. Governing Law</h2>
-<p>This Agreement shall be governed by the laws of the State of Minnesota, without regard to its conflict of law principles.</p>
-<h2>12. Non-Circumvention &amp; Customer Protection</h2>
-<p>Introductions to AISymmetric, LLC\u2019s clients, prospects, partners, or vendors are confidential and proprietary to AISymmetric, LLC. This provision applies only to parties first introduced by AISymmetric, LLC.</p>
-<h2>13. Dispute Resolution</h2>
-<p>The parties agree to attempt good-faith negotiation for thirty (30) days before proceeding to binding arbitration in Hennepin County, Minnesota, under AAA rules. The prevailing party shall recover reasonable attorneys\u2019 fees and costs.</p>
-<h2>14. Force Majeure</h2>
-<p>Neither party shall be liable for delays caused by events beyond its reasonable control. If a Force Majeure Event continues beyond thirty (30) days, either party may terminate the affected SOW upon written notice.</p>
-<h2>15. Assignment</h2>
-<p>Neither party may assign this Agreement without prior written consent. Either party may assign in connection with a merger, acquisition, or sale of substantially all assets, provided the assignee agrees to be bound by this Agreement.</p>
-<h2>16. Entire Agreement</h2>
-<p>This Agreement, along with all applicable SOWs, constitutes the entire agreement between the parties. Amendments must be in writing and signed by both parties.</p>
-<h2>17. Signatures</h2>
-<p>IN WITNESS WHEREOF, the parties have executed this Agreement as of the Effective Date.</p>
-${sigBlock}
-<h2 style="margin-top:36px">Exhibit A \u2014 Non-Disclosure Agreement (NDA)</h2>
-<p>This Non-Disclosure Agreement is made and entered into as of the Effective Date by and between ${d.company} and AISymmetric, LLC. Each party may act as a Disclosing Party or Receiving Party.</p>
-<p><strong>Confidential Information:</strong> Includes all non-public business, technical, or financial information disclosed by Disclosing Party to Receiving Party.</p>
-<p><strong>Obligations:</strong> Receiving Party agrees to (a) maintain confidentiality, (b) use information solely to fulfill obligations under the MSA, and (c) not disclose without prior written consent.</p>
-<p><strong>Exclusions:</strong> Information that is publicly known, independently developed, or rightfully received from a third party is excluded.</p>
-<p><strong>Term:</strong> Obligations survive three (3) years following termination of the MSA, or indefinitely for trade secrets.</p>
-<p><strong>Return or Destruction:</strong> Upon request or termination, all Confidential Information shall be returned or certifiably destroyed within ten (10) business days.</p>
-<p>IN WITNESS WHEREOF, the parties have executed this NDA as of the Effective Date.</p>
-${sigBlock}${footer}`;
-
-if(type==='nda') return `<div class="draft-watermark">DRAFT</div>
-<h1>Non-Disclosure Agreement</h1>
-<div class="pdf-subtitle">Mutual Confidentiality Agreement</div>
-<div class="meta"><strong>Party 1 (Service Provider):</strong> AISymmetric, LLC, a Minnesota limited liability company</div>
-<div class="meta"><strong>Party 2 (Client):</strong> ${d.company}</div>
-<div class="meta"><strong>Contact:</strong> ${d.first} ${d.last}, ${d.title}</div>
-<div class="meta"><strong>Effective Date:</strong> ${d.date}</div>
-<p style="margin-top:12px">This Non-Disclosure Agreement (\u201cAgreement\u201d) is entered into as of the Effective Date by and between AISymmetric, LLC and ${d.company} (collectively, the \u201cParties\u201d). Each party may act as a Disclosing Party or Receiving Party.</p>
-<h2>1. Confidential Information</h2>
-<p>\u201cConfidential Information\u201d means any and all non-public, proprietary, or sensitive information disclosed by the Disclosing Party to the Receiving Party, whether orally, in writing, or electronically, including but not limited to: business plans, strategies, financial data, forecasts, and pricing information; customer and prospect lists, contact data, and relationship details; proprietary technology, software, source code, algorithms, and AI models; prompt architectures, automation workflows, and system configurations; marketing plans, product roadmaps, and operational processes.</p>
-<h2>2. Obligations of Receiving Party</h2>
-<p>Each Receiving Party agrees to: maintain confidentiality using at least reasonable care; use Confidential Information solely for the purpose of evaluating and performing obligations under the applicable MSA or SOW; not disclose to any third party without prior written consent; limit access to employees and contractors on a strict need-to-know basis; promptly notify the Disclosing Party upon becoming aware of any unauthorized use or breach.</p>
-<h2>3. Exclusions</h2>
-<p>Confidential Information does not include information that: is or becomes publicly known through no breach; was rightfully known prior to disclosure; is independently developed without use of Confidential Information; is rightfully received from a third party without restriction; is required to be disclosed by law or court order.</p>
-<h2>4. Intellectual Property</h2>
-<p>Nothing in this Agreement grants either party any right, title, license, or interest in the other party\u2019s Confidential Information or intellectual property, except as expressly set forth in a separate written agreement.</p>
-<h2>5. Term &amp; Survival</h2>
-<p>Obligations survive for three (3) years following termination of the applicable Master Services Agreement, or indefinitely with respect to trade secrets under applicable law.</p>
-<h2>6. Return or Destruction</h2>
-<p>Upon written request or termination, the Receiving Party shall return all tangible materials containing Confidential Information, or certifiably destroy all such materials. Written certification of destruction shall be provided within ten (10) business days upon request.</p>
-<h2>7. Remedies</h2>
-<p>Each party acknowledges that breach may cause irreparable harm for which monetary damages would be inadequate. The Disclosing Party shall be entitled to seek equitable relief, including injunction and specific performance, in addition to all other remedies.</p>
-<h2>8. Non-Solicitation</h2>
-<p>During the term and for twelve (12) months following termination, neither party shall directly solicit or hire employees, contractors, or clients of the other party introduced through this engagement, without prior written consent.</p>
-<h2>9. Non-Circumvention</h2>
-<p>The Receiving Party agrees not to circumvent the Disclosing Party\u2019s interest in any transaction or business opportunity introduced through this engagement. Introductions to AISymmetric, LLC\u2019s clients, partners, or vendors are proprietary.</p>
-<h2>10. Governing Law &amp; Dispute Resolution</h2>
-<p>This Agreement shall be governed by the laws of the State of Minnesota. Disputes shall be resolved through good-faith negotiation for thirty (30) days, then binding arbitration in Hennepin County, Minnesota, under AAA rules. The prevailing party shall recover reasonable attorneys\u2019 fees and costs.</p>
-<h2>11. Entire Agreement</h2>
-<p>This Agreement constitutes the entire agreement between the parties with respect to confidentiality. Amendments must be in writing and signed by both parties.</p>
-<h2>Signatures</h2>
-<p>IN WITNESS WHEREOF, the parties have executed this Non-Disclosure Agreement as of the Effective Date.</p>
-${sigBlock}${footer}`;
-
+/* Old HTML-based PDF builder removed — replaced by jsPDF createPDFDoc below */
+/* ═══ jsPDF Direct Text Rendering ═══ */
+function createPDFDoc(type,d){
+const{jsPDF}=window.jspdf;
+const doc=new jsPDF({orientation:'portrait',unit:'mm',format:'letter'});
+const pw=215.9,ph=279.4,ml=25,mr=25,mt=30,mb=25;
+const cw=pw-ml-mr;
+let y=mt;
+const clr={title:[23,54,93],subtitle:[23,54,93],h2:[79,129,189],body:[0,0,0],meta:[0,0,0],metaLabel:[0,0,0],footer:[102,102,102],draft:[59,130,246]};
+function checkPage(need){if(y+need>ph-mb){doc.addPage();y=mt;addHeaderFooter();}}
+function addHeaderFooter(){
+doc.setFontSize(8);doc.setTextColor(...clr.subtitle);
+doc.text('AISymmetric, LLC  |  '+(type==='msa'?'Master Services Agreement':type==='sow'?'Statement of Work':'Non-Disclosure Agreement'),ml,12);
+doc.setDrawColor(200);doc.line(ml,14,pw-mr,14);
+doc.setFontSize(7);doc.setTextColor(...clr.footer);
+doc.text('\u00A9 2026 AISymmetric, LLC. All rights reserved. Proprietary & Confidential.',pw/2,ph-10,{align:'center'});
+/* DRAFT watermark */
+doc.setFontSize(72);doc.setTextColor(59,130,246);doc.setGState(new doc.GState({opacity:0.04}));
+doc.text('DRAFT',pw/2,ph/2,{align:'center',angle:35});
+doc.setGState(new doc.GState({opacity:1}));}
+addHeaderFooter();
+function title(t){doc.setFont('helvetica','bold');doc.setFontSize(22);doc.setTextColor(...clr.title);const lines=doc.splitTextToSize(t,cw);checkPage(12);doc.text(lines,pw/2,y,{align:'center'});y+=lines.length*9+2;}
+function subtitle(t){doc.setFont('helvetica','bold');doc.setFontSize(10);doc.setTextColor(...clr.subtitle);checkPage(6);doc.text(t,pw/2,y,{align:'center'});y+=8;}
+function heading(t){checkPage(14);y+=6;doc.setFont('helvetica','bold');doc.setFontSize(12);doc.setTextColor(...clr.h2);doc.text(t,ml,y);y+=2;doc.setDrawColor(220);doc.line(ml,y,pw-mr,y);y+=6;}
+function body(t){doc.setFont('helvetica','normal');doc.setFontSize(10);doc.setTextColor(...clr.body);const lines=doc.splitTextToSize(t,cw);for(let i=0;i<lines.length;i++){checkPage(5);doc.text(lines[i],ml,y);y+=4.5;}y+=3;}
+function meta(label,val){doc.setFont('helvetica','bold');doc.setFontSize(10);doc.setTextColor(...clr.metaLabel);checkPage(6);doc.text(label,ml,y);const lw=doc.getTextWidth(label);doc.setFont('helvetica','normal');doc.text(val,ml+lw,y);y+=5.5;}
+function spacer(){y+=4;}
+function sigBlock(){checkPage(40);spacer();meta('Service Provider','');body('Name: Tyler Perleberg');body('Title: Founder & CEO');body('Company: AISymmetric, LLC');y+=2;doc.line(ml,y,ml+70,y);y+=4;body('Signature                                           Date');spacer();meta('Client','');body('Name: '+d.first+' '+d.last);body('Title: '+d.title);body('Company: '+d.company);y+=2;doc.line(ml,y,ml+70,y);y+=4;body('Signature                                           Date');}
+/* Build content based on type */
+if(type==='msa'){
+title('Master Services Agreement');subtitle('AISymmetric, LLC \u2022 AI Advisory & Delivery');spacer();
+meta('Client: ',d.company);meta('Contact: ',d.first+' '+d.last+', '+d.title);meta('Service Provider: ','AISymmetric, LLC, a Minnesota limited liability company');meta('Effective Date: ',d.date);spacer();
+heading('1. Purpose');body('This Agreement sets forth the general terms and conditions under which AISymmetric, LLC (\u201cService Provider\u201d) will provide advisory, technology, and AI-related professional services to '+d.company+' (\u201cClient\u201d), as set forth in one or more Statements of Work (\u201cSOWs\u201d) governed by this Agreement.');
+heading('2. Services & Statements of Work');body('Each SOW shall detail the scope of services, deliverables, timelines, and compensation. SOWs will be incorporated into this Agreement by reference and shall be subject to the terms herein.');
+heading('3. Term and Termination');body('This Agreement shall remain in effect until terminated by either party with 30 days\u2019 written notice. Either party may terminate immediately for cause in the event of a material breach.');
+heading('4. Payment Terms');body('AISymmetric, LLC shall invoice monthly. Invoices are due within fifteen (15) days of receipt. Late payments are subject to a 1.5% monthly interest charge. AISymmetric, LLC reserves the right to suspend services upon ten (10) days\u2019 written notice if any invoice remains unpaid past thirty (30) days from due date, without waiving any other remedies.');
+heading('5. Independent Contractor');body('AISymmetric, LLC is an independent contractor and not an employee, partner, or joint venture of '+d.company+'. The Service Provider shall be solely responsible for all taxes, insurance, and employment-related obligations.');
+heading('6. Confidentiality');body('Both parties agree to maintain the confidentiality of all proprietary and confidential information disclosed during the term of this Agreement. This obligation shall survive termination for three (3) years, or indefinitely with respect to trade secrets. Upon termination, each party shall promptly return or certifiably destroy all Confidential Information upon written request.');
+heading('7. Intellectual Property');body('Subject to full payment of applicable fees, Client shall own all final deliverables expressly identified as such in an applicable Statement of Work. AISymmetric, LLC retains all right, title, and interest in pre-existing materials, methodologies, frameworks, tools, AI models, prompt architectures, automation workflows, and reusable components. AISymmetric, LLC grants Client a non-exclusive, royalty-free license to use retained materials solely as incorporated into Deliverables for Client\u2019s internal business purposes.');
+heading('8. Indemnification');body('Each party agrees to indemnify, defend, and hold harmless the other party from any third-party claims arising out of that party\u2019s gross negligence, willful misconduct, or material breach of this Agreement.');
+heading('9. Limitation of Liability');body('Except for liability arising from breach of confidentiality or indemnification obligations, neither party shall be liable for indirect, incidental, or consequential damages. Total liability shall not exceed fees paid under the relevant SOW in the preceding three (3) months.');
+heading('10. Non-Solicitation');body('During the term and for 12 months following termination, each party agrees not to directly solicit or hire employees or contractors of the other party without prior written consent.');
+heading('11. Governing Law');body('This Agreement shall be governed by the laws of the State of Minnesota, without regard to its conflict of law principles.');
+heading('12. Non-Circumvention');body('Introductions to AISymmetric, LLC\u2019s clients, prospects, partners, or vendors are confidential and proprietary to AISymmetric, LLC. This provision applies only to parties first introduced by AISymmetric, LLC.');
+heading('13. Dispute Resolution');body('The parties agree to attempt good-faith negotiation for thirty (30) days before proceeding to binding arbitration in Hennepin County, Minnesota, under AAA rules. The prevailing party shall recover reasonable attorneys\u2019 fees and costs.');
+heading('14. Force Majeure');body('Neither party shall be liable for delays caused by events beyond its reasonable control. If a Force Majeure Event continues beyond thirty (30) days, either party may terminate the affected SOW upon written notice.');
+heading('15. Assignment');body('Neither party may assign this Agreement without prior written consent. Either party may assign in connection with a merger, acquisition, or sale of substantially all assets, provided the assignee agrees to be bound by this Agreement.');
+heading('16. Entire Agreement');body('This Agreement, along with all applicable SOWs, constitutes the entire agreement between the parties. Amendments must be in writing and signed by both parties.');
+heading('17. Signatures');body('IN WITNESS WHEREOF, the parties have executed this Agreement as of the Effective Date.');
+sigBlock();
+/* Exhibit A NDA */
+doc.addPage();y=mt;addHeaderFooter();
+heading('Exhibit A \u2014 Non-Disclosure Agreement (NDA)');
+body('This Non-Disclosure Agreement is made and entered into as of the Effective Date by and between '+d.company+' and AISymmetric, LLC. Each party may act as a Disclosing Party or Receiving Party.');spacer();
+meta('Confidential Information: ','Includes all non-public business, technical, or financial information disclosed by Disclosing Party to Receiving Party.');
+meta('Obligations: ','Receiving Party agrees to (a) maintain confidentiality, (b) use information solely to fulfill obligations under the MSA, and (c) not disclose without prior written consent.');
+meta('Exclusions: ','Information that is publicly known, independently developed, or rightfully received from a third party is excluded.');
+meta('Term: ','Obligations survive three (3) years following termination of the MSA, or indefinitely for trade secrets.');
+meta('Return or Destruction: ','Upon request or termination, all Confidential Information shall be returned or certifiably destroyed within ten (10) business days.');
+spacer();body('IN WITNESS WHEREOF, the parties have executed this NDA as of the Effective Date.');sigBlock();
+}else if(type==='nda'){
+title('Non-Disclosure Agreement');subtitle('Mutual Confidentiality Agreement');spacer();
+meta('Party 1 (Service Provider): ','AISymmetric, LLC, a Minnesota limited liability company');meta('Party 2 (Client): ',d.company);meta('Contact: ',d.first+' '+d.last+', '+d.title);meta('Effective Date: ',d.date);spacer();
+body('This Non-Disclosure Agreement (\u201cAgreement\u201d) is entered into as of the Effective Date by and between AISymmetric, LLC and '+d.company+' (collectively, the \u201cParties\u201d). Each party may act as a Disclosing Party or Receiving Party.');
+heading('1. Confidential Information');body('\u201cConfidential Information\u201d means any and all non-public, proprietary, or sensitive information disclosed by the Disclosing Party, whether orally, in writing, or electronically, including business plans, financial data, customer lists, proprietary technology, AI models, prompt architectures, automation workflows, and operational processes.');
+heading('2. Obligations');body('Each Receiving Party agrees to: maintain confidentiality using at least reasonable care; use Confidential Information solely for engagement purposes; not disclose to third parties without written consent; limit access to need-to-know personnel; promptly notify of any unauthorized use or breach.');
+heading('3. Exclusions');body('Confidential Information does not include information that: is or becomes publicly known through no breach; was rightfully known prior to disclosure; is independently developed; is rightfully received from a third party; is required by law or court order.');
+heading('4. Intellectual Property');body('Nothing in this Agreement grants either party any right, title, or interest in the other party\u2019s Confidential Information or intellectual property, except as set forth in a separate agreement.');
+heading('5. Term & Survival');body('Obligations survive for three (3) years following termination, or indefinitely for trade secrets.');
+heading('6. Return or Destruction');body('Upon request or termination, the Receiving Party shall return or certifiably destroy all materials. Written certification within ten (10) business days upon request.');
+heading('7. Remedies');body('Breach may cause irreparable harm. The Disclosing Party shall be entitled to equitable relief including injunction, in addition to all other remedies.');
+heading('8. Non-Solicitation');body('During the term and for twelve (12) months following termination, neither party shall directly solicit employees, contractors, or clients introduced through this engagement.');
+heading('9. Non-Circumvention');body('The Receiving Party agrees not to circumvent the Disclosing Party\u2019s interest in any transaction or opportunity introduced through this engagement.');
+heading('10. Governing Law');body('State of Minnesota. Disputes resolved through 30-day negotiation, then binding arbitration in Hennepin County under AAA rules.');
+heading('11. Entire Agreement');body('This Agreement constitutes the entire agreement with respect to confidentiality. Amendments must be in writing.');
+heading('Signatures');body('IN WITNESS WHEREOF, the parties have executed this Agreement as of the Effective Date.');sigBlock();
+}else{
 /* SOW */
-const fl=d.focusAreas.length>0?d.focusAreas.map(a=>`<br>\u2022 ${a}`).join(''):'<br>\u2022 [To be defined during kickoff]';
-return `<div class="draft-watermark">DRAFT</div>
-<h1>Statement of Work</h1>
-<div class="pdf-subtitle">AI Strategy &amp; Delivery Retainer</div>
-<div class="meta"><strong>Client:</strong> ${d.company}</div>
-<div class="meta"><strong>Contact:</strong> ${d.first} ${d.last}, ${d.title}</div>
-<div class="meta"><strong>Service Provider:</strong> Tyler Perleberg / AISymmetric, LLC</div>
-<div class="meta"><strong>Retainer Fee:</strong> ${d.fee} / month</div>
-<div class="meta"><strong>Effective Date:</strong> ${d.date}</div>
-<div class="meta"><strong>Billing:</strong> ${d.billing}</div>
-<div class="meta"><strong>Governing Agreements:</strong> Master Services Agreement and Non-Disclosure Agreement (both executed)</div>
-<h2>1. Purpose</h2>
-<p>This Statement of Work defines the scope, deliverables, and terms of the AI Strategy &amp; Delivery Retainer between AISymmetric, LLC (\u201cService Provider\u201d) and ${d.company} (\u201cClient\u201d). The purpose of this engagement is to:</p>
-<p>${d.goal}</p>
-${d.stack?'<p><strong>Current Tech Stack:</strong> '+d.stack+'</p>':''}
-<h2>2. Scope of Services</h2>
-<p>The engagement is structured as monthly agile sprints, prioritized collaboratively at the start of each billing cycle. Service focus areas:${fl}</p>
-<h2>3. Sprint Structure</h2>
-<p><strong>Week 1 \u2014 Discovery &amp; Planning:</strong> Sprint kickoff, system audit, quick win identification, backlog finalization.</p>
-<p><strong>Week 2 \u2014 Build &amp; Configure:</strong> Core automations built, CRM/platform configuration, AI model setup.</p>
-<p><strong>Week 3 \u2014 Integrate &amp; Test:</strong> Connect systems &amp; APIs, end-to-end testing, campaign launch.</p>
-<p><strong>Week 4 \u2014 Review &amp; Optimize:</strong> Performance review, optimization passes, sprint retrospective, next sprint planning.</p>
-<h2>4. Monthly Deliverables</h2>
-<p>\u2022 4 \u00d7 weekly 30-minute strategy &amp; advisory sessions (or equivalent async coverage)<br>\u2022 1\u20135 AI workflow, automation, or campaign builds per sprint (tier dependent)<br>\u2022 Continuous async support via Slack or email<br>\u2022 Sprint planning &amp; retrospective documentation<br>\u2022 Monthly progress summary with key metrics and next-cycle recommendations</p>
-<h2>5. Success Metrics</h2>
-<p>\u2022 Volume and quality of AI-driven outputs (leads generated, automations built, campaigns deployed)<br>\u2022 Hours of manual operational work eliminated per month<br>\u2022 Conversion rate improvements in targeted workflows<br>\u2022 Platform adoption and integration health</p>
-<p>Baseline metrics will be established during the kickoff session in Sprint 1.</p>
-<h2>6. Pricing &amp; Payment Terms</h2>
-<div class="meta"><strong>Monthly Retainer:</strong> ${d.fee} USD</div>
-<div class="meta"><strong>Billing Cycle:</strong> ${d.billing}</div>
-<div class="meta"><strong>Payment Due:</strong> Within 15 days of invoice receipt</div>
-<div class="meta"><strong>Late Fee:</strong> 1.5% per month on outstanding balances</div>
-<p style="margin-top:8px">Additional engagement models (performance-based, revenue share, or project-based hourly) are available upon mutual written agreement and amendment to this SOW.</p>
-<h2>7. Scope Exclusions</h2>
-<p>\u2022 Full platform migrations or large-scale CRM rebuilds (&gt;40 hours in a single sprint)<br>\u2022 Third-party software licensing or paid media/advertising costs<br>\u2022 Work outside agreed sprint scope (requires written change order)<br>\u2022 Dedicated developer or designer resources beyond AISymmetric, LLC principals</p>
-<h2>8. Immediate Next Steps</h2>
-<p><strong>${d.first} ${d.last} (${d.company}):</strong><br>\u2610 Execute MSA and this SOW<br>\u2610 Share access credentials for relevant platforms<br>\u2610 Confirm kickoff session availability<br>\u2610 Provide any existing data, prospect lists, or assets</p>
-<p><strong>AISymmetric, LLC:</strong><br>\u2610 Schedule 60-minute kickoff session<br>\u2610 Conduct initial tech stack &amp; process assessment<br>\u2610 Deliver Sprint 1 plan within 5 business days of kickoff</p>
-${d.notes?'<h2>Additional Notes</h2><p>'+d.notes+'</p>':''}
-<h2>9. Engagement Evolution</h2>
-<p>This SOW is designed to start focused and expand as the engagement matures. Scope, pricing, and service areas will be reviewed quarterly by mutual agreement to reflect ${d.company}\u2019s evolving needs and demonstrated results.</p>
-<h2>10. Signatures</h2>
-<p>By signing below, both parties agree to the terms of this Statement of Work, governed by the executed Master Services Agreement and Non-Disclosure Agreement.</p>
-${sigBlock}${footer}`;
+const fl=d.focusAreas.length>0?d.focusAreas.join(', '):'To be defined during kickoff';
+title('Statement of Work');subtitle('AI Strategy & Delivery Retainer');spacer();
+meta('Client: ',d.company);meta('Contact: ',d.first+' '+d.last+', '+d.title);meta('Service Provider: ','Tyler Perleberg / AISymmetric, LLC');meta('Retainer Fee: ',d.fee+' / month');meta('Effective Date: ',d.date);meta('Billing: ',d.billing);meta('Governing Agreements: ','Master Services Agreement and Non-Disclosure Agreement (both executed)');spacer();
+heading('1. Purpose');body('This Statement of Work defines the scope, deliverables, and terms of the AI Strategy & Delivery Retainer between AISymmetric, LLC (\u201cService Provider\u201d) and '+d.company+' (\u201cClient\u201d). The purpose of this engagement is to:');body(d.goal);
+if(d.stack){meta('Current Tech Stack: ',d.stack);}
+heading('2. Background');body(d.company+' is engaging AISymmetric, LLC to deploy AI-powered systems across its operations, leveraging the client\u2019s existing technology stack and business processes to identify and implement high-impact AI solutions.');
+heading('3. Scope of Services');body('The engagement is structured as monthly agile sprints, prioritized collaboratively at the start of each billing cycle. Service focus areas:');spacer();
+body('AI-Powered Outbound & Lead Generation. Personalized outreach campaigns, lead prioritization, multi-touch sequencing, and AI-assisted messaging. Example: Weekly AI-generated email refresh; automated multi-touch sequences.');spacer();
+body('CRM Setup, Automation & Data Hygiene. Pipeline management, contact cleanup, lead routing, and workflow automation. Example: Automated lead routing and tagging; clean data migration.');spacer();
+body('Weekly Strategy & Advisory Sessions. 30-minute focused working sessions covering priorities, blockers, and AI roadmap development.');spacer();
+body('Workflow Automation & Internal Tooling. Internal automations targeting operational efficiency, data hygiene, and time savings.');spacer();
+body('Platform Orchestration & API Integrations. Connecting your tech stack via APIs so data flows automatically.');spacer();
+body('AI Assessments & Strategic Roadmapping. Structured audits of operations, funnel, and tech stack to surface highest-leverage AI opportunities.');
+heading('4. Monthly Deliverables');body('\u2022 4 \u00d7 weekly 30-minute strategy & advisory sessions (or equivalent async coverage)\n\u2022 1\u20135 AI workflow, automation, or campaign builds per sprint (tier dependent)\n\u2022 Continuous async support via Slack or email\n\u2022 Sprint planning & retrospective documentation\n\u2022 Monthly progress summary with key metrics and next-cycle recommendations');body('Specific priorities are confirmed collaboratively at sprint kickoff.');
+heading('5. Success Metrics');body('\u2022 Volume and quality of AI-driven outputs\n\u2022 Hours of manual work eliminated per month\n\u2022 Conversion rate improvements\n\u2022 Platform adoption and integration health');body('Baseline metrics established during kickoff in Sprint 1.');
+heading('6. Pricing & Payment');meta('Monthly Retainer: ',d.fee+' USD');meta('Billing Cycle: ',d.billing);meta('Payment Due: ','Within 15 days of invoice receipt');meta('Late Fee: ','1.5% per month on outstanding balances');body('Additional models (performance-based, revenue share, project-based) available upon mutual agreement.');
+heading('7. Scope Exclusions');body('\u2022 Full platform migrations or large-scale CRM rebuilds (>40 hours/sprint)\n\u2022 Third-party software licensing or paid media costs\n\u2022 Work outside agreed sprint scope (requires change order)\n\u2022 Dedicated developer/designer resources beyond AISymmetric principals');
+heading('8. Immediate Next Steps');meta(d.first+' '+d.last+' ('+d.company+'):','');body('\u2022 Execute MSA and this SOW\n\u2022 Share access credentials for relevant platforms\n\u2022 Confirm kickoff session availability\n\u2022 Provide any existing data, prospect lists, or assets');spacer();meta('AISymmetric, LLC:','');body('\u2022 Schedule 60-minute kickoff session\n\u2022 Conduct initial tech stack & process assessment\n\u2022 Deliver Sprint 1 plan within 5 business days of kickoff');
+heading('9. Engagement Evolution');body('This SOW is designed to start focused and expand as the engagement matures. Scope, pricing, and service areas will be reviewed quarterly to reflect '+d.company+'\u2019s evolving needs and demonstrated results.');
+if(d.notes){heading('Additional Notes');body(d.notes);}
+heading('10. Signatures');body('By signing below, both parties agree to the terms of this Statement of Work.');sigBlock();
 }
-function renderPDF(html,filename){
-  const wrapper=document.createElement('div');
-  wrapper.style.cssText='position:fixed;top:0;left:0;width:816px;background:#fff;z-index:10000;padding:72px;font-family:Inter,sans-serif;color:#000;line-height:1.6;overflow:visible;';
-  wrapper.innerHTML=html;
-  document.body.appendChild(wrapper);
-  setTimeout(()=>{
-    html2pdf().set({margin:[15,15,15,15],filename,image:{type:'jpeg',quality:0.98},html2canvas:{scale:2,backgroundColor:'#ffffff',scrollY:0,windowWidth:816},jsPDF:{orientation:'portrait',unit:'mm',format:'letter'}}).from(wrapper).save().then(()=>{
-      document.body.removeChild(wrapper);
-      showToast('PDF downloaded!');
-    }).catch(()=>{document.body.removeChild(wrapper)});
-  },300);
-}
-function downloadPDF(type){renderPDF(buildPDFHTML(type),`AISymmetric_${type.toUpperCase()}_DRAFT.pdf`)}
-function downloadCustomPDF(type){buildPreviews();submitMSAForm();const d=getFormData();renderPDF(buildPDFHTML(type,d),`AISymmetric_${type.toUpperCase()}_${d.company.replace(/\s+/g,'_')}_DRAFT.pdf`)}
+return doc;}
+
+function downloadCustomPDF(type){
+buildPreviews();submitMSAForm();
+const d=getFormData();
+const doc=createPDFDoc(type,d);
+const company=d.company.replace(/[^a-zA-Z0-9]/g,'_');
+doc.save(`AISymmetric_${type.toUpperCase()}_${company}_DRAFT.pdf`);
+showToast(type.toUpperCase()+' PDF downloaded!');}
+
+function generateAndExport(){
+buildPreviews();submitMSAForm();
+const d=getFormData();
+const msa=createPDFDoc('msa',d);msa.save(`AISymmetric_MSA_${d.company.replace(/[^a-zA-Z0-9]/g,'_')}_DRAFT.pdf`);
+setTimeout(()=>{const sow=createPDFDoc('sow',d);sow.save(`AISymmetric_SOW_${d.company.replace(/[^a-zA-Z0-9]/g,'_')}_DRAFT.pdf`);showToast('MSA + SOW PDFs downloaded!');},500);}
 function copyDoc(type){buildPreviews();navigator.clipboard.writeText(type==='msa'?msaText:sowText).then(()=>showToast(type.toUpperCase()+' copied!'))}
 function showToast(msg){const t=document.getElementById('toast');document.getElementById('toastMsg').innerText=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000)}
 
